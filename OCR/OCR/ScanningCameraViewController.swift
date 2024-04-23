@@ -13,7 +13,7 @@ class ScanningCameraViewController: UIViewController {
     /// flashButton
     private lazy var flashButton: UIButton = {
         let _button: UIButton = .init(type: .custom)
-        _button.setImage(.init(named: "icns-flash"), for: .normal)
+        _button.setImage(.init(named: "icns-flash")?.withRenderingMode(.alwaysTemplate), for: .normal)
         _button.setImage(.init(named: "icns-flash"), for: .selected)
         _button.tintColor = .white
         _button.addTarget(self, action: #selector(Self.buttonActionHandler(_:)), for: .touchUpInside)
@@ -64,6 +64,7 @@ class ScanningCameraViewController: UIViewController {
         _button.setTitle("已扫描", for: .normal)
         _button.setImage(.init(named: "icns-arrow"), for: .normal)
         _button.semanticContentAttribute = .forceRightToLeft
+        _button.isHidden = true
         _button.addTarget(self, action: #selector(Self.buttonActionHandler(_:)), for: .touchUpInside)
         return _button
     }()
@@ -87,6 +88,14 @@ class ScanningCameraViewController: UIViewController {
     /// sessionQueue
     private let sessionQueue: DispatchQueue = .init(label: "AVCaptureSession.queue")
     
+    /// cropModels
+    private var cropModels: [ScanningCropModel] = [] {
+        didSet {
+            scannedButton.isHidden = cropModels.isEmpty
+            scannedButton.setTitle("已扫描\(cropModels.count)", for: .normal)
+        }
+    }
+    
     internal override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -101,18 +110,18 @@ class ScanningCameraViewController: UIViewController {
         
     }
 
-    override func viewWillAppear(_ animated: Bool) {
+    internal override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        guard session.isRunning == false else { return }
         sessionQueue.async {
+            guard self.session.isRunning == false else { return }
             self.session.startRunning()
         }
     }
 
-    override func viewWillDisappear(_ animated: Bool) {
+    internal override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        guard session.isRunning else { return }
         sessionQueue.async {
+            guard self.session.isRunning else { return }
             self.session.stopRunning()
         }
     }
@@ -238,7 +247,8 @@ extension ScanningCameraViewController {
             }
             output?.capturePhoto(with: setting, delegate: self)
         case scannedButton:
-            break
+            let controller: ScanningPreviewController = .init(cropModels: cropModels)
+            navigationController?.pushViewController(controller, animated: true)
         default: break
         }
         
@@ -254,7 +264,15 @@ extension ScanningCameraViewController: AVCapturePhotoCaptureDelegate {
     ///   - error: (any Error)?
     internal func photoOutput(_ output: AVCapturePhotoOutput, didFinishProcessingPhoto photo: AVCapturePhoto, error: (any Error)?) {
         guard let data = photo.fileDataRepresentation(), let image = UIImage(data: data)?.fixOrientation() else { return }
-        let controller: ScanningCropViewController = .init(image: .init(named: "a.PNG")!)
+        let model: ScanningCropModel = .init(image: .init(named: "abc.jpg")!)
+        let controller: ScanningCropViewController = .init(cropModel: model)
+        controller.reloadActionHandler = { [weak self] in
+            self?.cropModels.append(model)
+        }
+        controller.retakeActionHandler = { [weak self] in
+            guard let index = self?.cropModels.firstIndex(of: model) else { return }
+            self?.cropModels.remove(at: index)
+        }
         let navi: UINavigationController = .init(rootViewController: controller)
         navi.modalPresentationStyle = .fullScreen
         present(navi, animated: true)

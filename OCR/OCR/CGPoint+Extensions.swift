@@ -17,17 +17,18 @@ extension CGPoint {
         let y: CGFloat = y - point.y
         return sqrt(x * x + y * y)
     }
+
     
-    /// convertToCoreImage
+    /// convert
     /// - Parameters:
-    ///   - imageSize: CGSize
+    ///   - size: CGSize
     ///   - scale: CGFloat
     /// - Returns: CGPoint
-    internal func convertToCoreImage(imageSize: CGSize, scale: CGFloat) -> CGPoint {
+    internal func convert(for size: CGSize, scaleBy scale: CGFloat) -> CGPoint {
         // 根据缩放比例对 CGPoint 进行调整
         let scaledPoint = CGPoint(x: x * scale, y: y * scale)
         // Core Image 坐标系原点在左下角，因此需要对 y 值进行翻转
-        let flippedY = imageSize.height - scaledPoint.y
+        let flippedY = size.height - scaledPoint.y
         return CGPoint(x: scaledPoint.x, y: flippedY)
     }
 }

@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import CoreGraphics
 
 class ScanningCropViewController: UIViewController {
     
@@ -76,21 +77,28 @@ class ScanningCropViewController: UIViewController {
     /// 放大镜
     private var mMagnifier: ScanningMagnifierView?
     
-    /// 旋转角度
-    private var originAngle: OriginAngle = .deg0
-    
     /// maxResizeSize
     private var maxResizeSize: CGSize {
         return .init(width: view.bounds.width * 0.95, height: view.bounds.height * 0.6)
     }
     
     /// UIImage
-    private let image: UIImage
+    private let cropModel: ScanningCropModel
+    
+    /// image
+    private var image: UIImage {
+        cropModel.image
+    }
+    
+    /// 旋转角度
+    private var originAngle: OriginAngle {
+        cropModel.originAngle
+    }
 
     //MARK: - 生命周期
     
-    internal init(image: UIImage) {
-        self.image = image
+    internal init(cropModel: ScanningCropModel) {
+        self.cropModel = cropModel
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -103,18 +111,30 @@ class ScanningCropViewController: UIViewController {
         
         initialize()
         
-        if let rectangleFeature = CIDetector.rectangle(with: image) {
-            scanningCropView.position = Position.convert(topLeft: rectangleFeature.topLeft, 
-                                                         topRight: rectangleFeature.topRight,
-                                                         bottomLeft: rectangleFeature.bottomLeft,
-                                                         bottomRight: rectangleFeature.bottomRight,
-                                                         for: imageView)
+    }
+    
+    internal override func viewIsAppearing(_ animated: Bool) {
+        super.viewIsAppearing(animated)
+        if cropModel.cropImage != nil {
+            imageView.transform = .init(rotationAngle: originAngle.counterclockwiseRotationAngle)
+            imageView.frame = adjustResizeFrame()
+            scanningCropView.transform = imageView.transform
+            scanningCropView.frame = imageView.frame
+            scanningCropView.position = cropModel.rectangle.convertRectangle(with: scanningCropView.bounds.size, scale: scanningCropView.bounds.width / image.size.width)
         } else {
-            scanningCropView.position = Position.convert(topLeft: .init(x: 0, y: image.size.height), 
-                                                         topRight: .init(x: image.size.width, y: image.size.height),
-                                                         bottomLeft: .zero, 
-                                                         bottomRight: .init(x: image.size.width, y: 0),
-                                                         for: imageView)
+            if let rectangleFeature = CIDetector.rectangle(with: image) {
+                scanningCropView.position = Rectangle.convert(topLeft: rectangleFeature.topLeft,
+                                                             topRight: rectangleFeature.topRight,
+                                                             bottomLeft: rectangleFeature.bottomLeft,
+                                                             bottomRight: rectangleFeature.bottomRight,
+                                                             for: imageView)
+            } else {
+                scanningCropView.position = Rectangle.convert(topLeft: .init(x: 0, y: image.size.height),
+                                                             topRight: .init(x: image.size.width, y: image.size.height),
+                                                             bottomLeft: .zero,
+                                                             bottomRight: .init(x: image.size.width, y: 0),
+                                                             for: imageView)
+            }
         }
     }
 
@@ -135,11 +155,7 @@ extension ScanningCropViewController {
         let imageFrame = adjustResizeFrame()
         
         view.addSubview(imageView)
-        imageView.snp.makeConstraints {
-            $0.center.equalToSuperview()
-            $0.width.equalTo(imageFrame.width)
-            $0.height.equalTo(imageFrame.height)
-        }
+        imageView.frame = imageFrame
         
         view.addSubview(scanningCropView)
         scanningCropView.snp.makeConstraints {
@@ -189,7 +205,6 @@ extension ScanningCropViewController {
         let bottomLeft: CGPoint = .init(x: position.bottomLeft.x * scale, y: position.bottomLeft.y * scale)
         let bottomRight: CGPoint = .init(x: position.bottomRight.x * scale, y: position.bottomRight.y * scale)
         scanningCropView.position = .init(topLeft: topLeft, topRight: topRight, bottomLeft: bottomLeft, bottomRight: bottomRight)
-        scanningCropView.layer.setNeedsDisplay()
         scanningCropView.maxResizeFrame = scanningCropView.bounds
     }
     
@@ -248,7 +263,7 @@ extension ScanningCropViewController {
     @objc private func buttonActionHandler(_ button: UIButton) {
         switch button {
         case flipButton:
-            originAngle = originAngle.next
+            cropModel.originAngle = originAngle.next
             UIView.animate(withDuration: 0.25) {
                 self.imageView.transform = .init(rotationAngle: self.originAngle.counterclockwiseRotationAngle)
                 self.imageView.frame = self.adjustResizeFrame()
@@ -263,6 +278,14 @@ extension ScanningCropViewController {
             dismiss(animated: true)
             
         case confirmButton:
+            let scale = image.size.width / imageView.bounds.width
+            let rectangle = scanningCropView.position.convertRectangle(with: image.size, scale: scale)
+            let image = CIImage.applyingFilter(image: image,
+                                               rectangle: rectangle,
+                                               angle: originAngle.counterclockwiseRotationAngle)
+            cropModel.originAngle = originAngle
+            cropModel.rectangle = rectangle
+            cropModel.cropImage = image
             reloadActionHandler?()
             dismiss(animated: true)
             
@@ -291,6 +314,7 @@ extension ScanningCropViewController: ScanningCropViewDelegate {
         if mMagnifier == nil {
             mMagnifier = ScanningMagnifierView.init(frame: .zero, at: imageView)
             mMagnifier?.adjustPoint = .init(x: 0, y: -15)
+            mMagnifier?.originAngle = originAngle
             mMagnifier?.makeKeyAndVisible()
         }
         mMagnifier?.targetPoint = point
@@ -305,5 +329,34 @@ extension ScanningCropViewController: ScanningCropViewDelegate {
     /// cropEnded
     internal func cropEnded(at point: CGPoint) {
         mMagnifier = nil
+    }
+}
+
+
+fileprivate extension CIImage {
+    
+    static func applyingFilter(image: UIImage, rectangle: Rectangle, angle: CGFloat) -> UIImage {
+        guard var ciImage: CIImage = .init(image: image) else { return image }
+        var rectangleCoordinates: [String: Any] = [:]
+        rectangleCoordinates["inputTopLeft"] = CIVector(cgPoint: rectangle.topLeft)
+        rectangleCoordinates["inputTopRight"] = CIVector(cgPoint: rectangle.topRight)
+        rectangleCoordinates["inputBottomLeft"] = CIVector(cgPoint: rectangle.bottomLeft)
+        rectangleCoordinates["inputBottomRight"] = CIVector(cgPoint: rectangle.bottomRight)
+        ciImage = ciImage.applyingFilter("CIPerspectiveCorrection", parameters: rectangleCoordinates)
+        
+        let newImage: UIImage = .init(ciImage: ciImage)
+        // 图片大小
+        let rotatedSize = CGRect(origin: .zero, size: newImage.size)
+            .applying(CGAffineTransform(rotationAngle: angle))
+            .size
+        // 创建上下文
+        let renderer = UIGraphicsImageRenderer(size: rotatedSize)
+        
+        let rotatedImage = renderer.image { context in
+            context.cgContext.translateBy(x: rotatedSize.width * 0.5, y: rotatedSize.height * 0.5)
+            context.cgContext.rotate(by: angle)
+            newImage.draw(in: CGRect(x: -newImage.size.width * 0.5, y: -newImage.size.height * 0.5, width: newImage.size.width, height: newImage.size.height))
+        }
+        return rotatedImage
     }
 }

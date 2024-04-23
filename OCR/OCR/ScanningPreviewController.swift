@@ -38,7 +38,7 @@ class ScanningPreviewController: UIViewController {
     /// pagesLabel
     private lazy var pagesLabel: UILabel = {
         let _label: UILabel = .init()
-        _label.text = "1/1"
+        _label.text = "1/\(cropModels.count)"
         _label.font = .systemFont(ofSize: 17.0)
         _label.textColor = .white
         return _label
@@ -69,7 +69,19 @@ class ScanningPreviewController: UIViewController {
         return _button
     }()
     
+    /// cropModels
+    private var cropModels: [ScanningCropModel]
+    
     //MARK: - 生命周期
+    
+    internal init(cropModels: [ScanningCropModel]) {
+        self.cropModels = cropModels
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    internal required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     internal override func viewDidLoad() {
         super.viewDidLoad()
@@ -147,7 +159,12 @@ extension ScanningPreviewController {
     /// buttonActionHandler
     /// - Parameter button: UIButton
     @objc private func buttonActionHandler(_ button: UIButton) {
-
+        switch button {
+        case cameraButton:
+            navigationController?.popViewController(animated: true)
+            
+        default: break
+        }
     }
     
     /// itemActionHandler
@@ -192,7 +209,7 @@ extension ScanningPreviewController: UICollectionViewDelegate, UICollectionViewD
     ///   - section: Int
     /// - Returns: Int
     internal func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 3
+        return cropModels.count
     }
     
     /// cellForItemAt
@@ -202,6 +219,7 @@ extension ScanningPreviewController: UICollectionViewDelegate, UICollectionViewD
     /// - Returns: UICollectionViewCell
     internal func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "ScanningPreviewCell", for: indexPath) as! ScanningPreviewCell
+        cell.cropModel = cropModels[indexPath.item]
         return cell
     }
     
@@ -210,17 +228,18 @@ extension ScanningPreviewController: UICollectionViewDelegate, UICollectionViewD
     ///   - collectionView: UICollectionView
     ///   - indexPath: IndexPath
     internal func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let controller: ScanningCropViewController = .init(image: .init(named: "")!)
+        let model = cropModels[indexPath.item]
+        let controller: ScanningCropViewController = .init(cropModel: model)
         controller.retakeActionHandler = { [weak self] in
+            self?.cropModels.remove(at: indexPath.item)
             self?.navigationController?.popViewController(animated: true)
         }
         controller.reloadActionHandler = { [weak self] in
             self?.collectionView.reloadItems(at: [indexPath])
         }
-        controller.modalPresentationStyle = .overFullScreen
-//        let navi: UINavigationController = .init(rootViewController: controller)
-//        navi.modalPresentationStyle = .overFullScreen
-        present(controller, animated: true)
+        let navi: UINavigationController = .init(rootViewController: controller)
+        navi.modalPresentationStyle = .fullScreen
+        present(navi, animated: true)
     }
     
 }

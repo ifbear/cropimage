@@ -10,6 +10,11 @@ import UIKit
 /// ScanningPreviewCell
 class ScanningPreviewCell: UICollectionViewCell {
     
+    /// cropModel
+    internal var cropModel: ScanningCropModel? {
+        didSet { reloadUI() }
+    }
+    
     //MARK: - 私有属性
     
     /// closeButton
@@ -24,7 +29,7 @@ class ScanningPreviewCell: UICollectionViewCell {
     private lazy var imageView: UIImageView = {
         let _imageView: UIImageView = .init()
         _imageView.contentMode = .scaleAspectFit
-        _imageView.backgroundColor = .orange
+        _imageView.clipsToBounds = true
         return _imageView
     }()
     
@@ -72,5 +77,10 @@ extension ScanningPreviewCell {
             $0.right.equalTo(imageView).offset(-16.0)
             $0.height.width.equalTo(32.0)
         }
+    }
+    
+    /// reloadUI
+    private func reloadUI() {
+        imageView.image = cropModel?.cropImage
     }
 }

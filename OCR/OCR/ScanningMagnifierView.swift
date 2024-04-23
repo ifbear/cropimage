@@ -11,6 +11,9 @@ class ScanningMagnifierView: UIWindow {
     
     //MARK: - 公有属性
     
+    /// 旋转角度
+    internal var originAngle: OriginAngle = .deg0
+    
     /// adjustPoint
     internal var adjustPoint: CGPoint = .zero
     
@@ -82,6 +85,7 @@ class ScanningMagnifierView: UIWindow {
         //提前位移半个长宽
         ctx.translateBy(x: frame.width * 0.5, y: frame.height * 0.5);
         ctx.scaleBy(x: 1.5, y: 1.5)
+        ctx.rotate(by: originAngle.counterclockwiseRotationAngle)
         //再次位移后就可以把触摸点移至self.center的位置
         ctx.translateBy(x: -1 * targetPoint.x, y: -1 * targetPoint.y)
         target?.layer.render(in: ctx)

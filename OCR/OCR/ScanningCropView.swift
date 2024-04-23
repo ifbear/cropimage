@@ -32,8 +32,11 @@ class ScanningCropView: UIView {
     internal var lineColor: UIColor = .init(red: 61.0 / 255.0, green: 105.0 / 255.0, blue: 219.0 / 255.0, alpha: 1.0)
     
     /// position
-    internal var position: Position = .default {
-        didSet { setNeedsLayout() }
+    internal var position: Rectangle = .default {
+        didSet { 
+            setNeedsLayout()
+            layer.setNeedsDisplay()
+        }
     }
     
     /// 图片边缘
