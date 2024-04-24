@@ -39,9 +39,6 @@ class ScanningCropView: UIView {
         }
     }
     
-    /// 图片边缘
-    internal var imageEdgeRect: CGRect = .zero
-    
     /// 最大显示区域
     internal var maxResizeFrame: CGRect = .zero
     
@@ -96,6 +93,18 @@ extension ScanningCropView {
 }
 
 extension ScanningCropView {
+    
+    /// adjustPosition
+    internal func adjustPosition() {
+        let scale = bounds.height / maxResizeFrame.height
+        let transform = CGAffineTransform(scaleX: scale, y: scale)
+        let topLeft: CGPoint = position.topLeft.applying(transform)
+        let topRight: CGPoint = position.topRight.applying(transform)
+        let bottomLeft: CGPoint = position.bottomLeft.applying(transform)
+        let bottomRight: CGPoint = position.bottomRight.applying(transform)
+        position = .init(topLeft: topLeft, topRight: topRight, bottomLeft: bottomLeft, bottomRight: bottomRight)
+        maxResizeFrame = bounds
+    }
     
     /// touchesBegan
     /// - Parameters:

@@ -28,7 +28,7 @@ class ScanningPreviewCell: UICollectionViewCell {
     /// imageView
     private lazy var imageView: UIImageView = {
         let _imageView: UIImageView = .init()
-        _imageView.contentMode = .scaleAspectFit
+        _imageView.contentMode = .scaleToFill
         _imageView.clipsToBounds = true
         return _imageView
     }()

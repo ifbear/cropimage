@@ -86,7 +86,7 @@ class ScanningCameraViewController: UIViewController {
     private var previewLayer: AVCaptureVideoPreviewLayer?
     
     /// sessionQueue
-    private let sessionQueue: DispatchQueue = .init(label: "AVCaptureSession.queue")
+    private let sessionQueue: DispatchQueue = .init(label: "AVCaptureSession.sessionQueue")
     
     /// cropModels
     private var cropModels: [ScanningCropModel] = [] {
@@ -96,22 +96,23 @@ class ScanningCameraViewController: UIViewController {
         }
     }
     
+    //MARK: - 生命周期
+    
     internal override func viewDidLoad() {
         super.viewDidLoad()
         
         initialize()
-        
-        initSession()
 
-        requestStatus { finish in
+        requestCameraStatus { [unowned self] finish in
             guard finish == true else { return }
-            
+            initSession()
         }
         
     }
 
     internal override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        guard AVCaptureDevice.authorizationStatus(for: .video) != .notDetermined else { return }
         sessionQueue.async {
             guard self.session.isRunning == false else { return }
             self.session.startRunning()
@@ -129,6 +130,7 @@ class ScanningCameraViewController: UIViewController {
 
 extension ScanningCameraViewController {
     
+    /// initialize
     private func initialize() {
         view.backgroundColor = .black
         navigationItem.leftBarButtonItem = .init(customView: flashButton)
@@ -174,6 +176,7 @@ extension ScanningCameraViewController {
         view.layoutIfNeeded()
     }
     
+    /// 初始化session
     private func initSession() {
         guard let device = AVCaptureDevice.default(for: .video) else { return }
         guard let input = try? AVCaptureDeviceInput(device: device) else { return }
@@ -202,13 +205,15 @@ extension ScanningCameraViewController {
         
     }
     
-    private func requestStatus(_ handler: @escaping (Bool) -> Void) {
+    /// requestCameraStatus
+    /// - Parameter handler: (Bool) -> Void
+    private func requestCameraStatus(_ handler: @escaping (Bool) -> Void) {
         let status = AVCaptureDevice.authorizationStatus(for: .video)
         switch status {
         case .notDetermined:
             AVCaptureDevice.requestAccess(for: .video) { _ in
                 DispatchQueue.main.async {
-                    self.requestStatus(handler)
+                    self.requestCameraStatus(handler)
                 }
             }
         case .restricted, .denied:
@@ -219,14 +224,17 @@ extension ScanningCameraViewController {
                 UIApplication.shared.open(url)
             }))
             present(controller, animated: true)
-            break
+
         case .authorized:
             handler(true)
+            
         @unknown default:
             handler(false)
         }
     }
     
+    /// buttonActionHandler
+    /// - Parameter button: UIButton
     @objc private func buttonActionHandler(_ button: UIButton) {
         switch button {
         case flashButton:
@@ -264,7 +272,7 @@ extension ScanningCameraViewController: AVCapturePhotoCaptureDelegate {
     ///   - error: (any Error)?
     internal func photoOutput(_ output: AVCapturePhotoOutput, didFinishProcessingPhoto photo: AVCapturePhoto, error: (any Error)?) {
         guard let data = photo.fileDataRepresentation(), let image = UIImage(data: data)?.fixOrientation() else { return }
-        let model: ScanningCropModel = .init(image: .init(named: "abc.jpg")!)
+        let model: ScanningCropModel = .init(image: image)
         let controller: ScanningCropViewController = .init(cropModel: model)
         controller.reloadActionHandler = { [weak self] in
             self?.cropModels.append(model)
