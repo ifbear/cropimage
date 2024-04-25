@@ -9,16 +9,16 @@
 /* Begin PBXBuildFile section */
 		A01970B72BD0E22F00778B8A /* a.PNG in Resources */ = {isa = PBXBuildFile; fileRef = A01970B62BD0E22F00778B8A /* a.PNG */; };
 		A01970B92BD0F59000778B8A /* UIImageView+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = A01970B82BD0F59000778B8A /* UIImageView+Extensions.swift */; };
-		A01970BB2BD20A6500778B8A /* ScanningModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = A01970BA2BD20A6500778B8A /* ScanningModels.swift */; };
+		A01970BB2BD20A6500778B8A /* ScanModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = A01970BA2BD20A6500778B8A /* ScanModels.swift */; };
 		A01970BD2BD20D9200778B8A /* CIDetector+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = A01970BC2BD20D9200778B8A /* CIDetector+Extensions.swift */; };
 		A01970BF2BD20F5F00778B8A /* CGPoint+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = A01970BE2BD20F5F00778B8A /* CGPoint+Extensions.swift */; };
 		A01970C12BD2106A00778B8A /* CIImage+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = A01970C02BD2106A00778B8A /* CIImage+Extensions.swift */; };
-		A01970C32BD236F500778B8A /* ScanningPreviewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A01970C22BD236F500778B8A /* ScanningPreviewController.swift */; };
-		A01970C52BD2511700778B8A /* ScanningPreviewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A01970C42BD2511700778B8A /* ScanningPreviewCell.swift */; };
+		A01970C32BD236F500778B8A /* DSPreviewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A01970C22BD236F500778B8A /* DSPreviewController.swift */; };
+		A01970C52BD2511700778B8A /* DSPreviewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A01970C42BD2511700778B8A /* DSPreviewCell.swift */; };
 		A02233722BC687AA006E6EB7 /* View3Controller.swift in Sources */ = {isa = PBXBuildFile; fileRef = A02233712BC687AA006E6EB7 /* View3Controller.swift */; };
 		A02233742BC68A83006E6EB7 /* View4Controller.swift in Sources */ = {isa = PBXBuildFile; fileRef = A02233732BC68A83006E6EB7 /* View4Controller.swift */; };
 		A02233872BC68FD1006E6EB7 /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = A02233862BC68FD1006E6EB7 /* Alamofire */; };
-		A02A473C2BCD226200C80F8A /* ScanningCropView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A02A473B2BCD226200C80F8A /* ScanningCropView.swift */; };
+		A02A473C2BCD226200C80F8A /* DSCropView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A02A473B2BCD226200C80F8A /* DSCropView.swift */; };
 		A04EC53F2BB119DB007A7A45 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A04EC53E2BB119DB007A7A45 /* AppDelegate.swift */; };
 		A04EC5412BB119DB007A7A45 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A04EC5402BB119DB007A7A45 /* SceneDelegate.swift */; };
 		A04EC5432BB119DB007A7A45 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A04EC5422BB119DB007A7A45 /* ViewController.swift */; };
@@ -37,28 +37,39 @@
 		A05D2E862BC90D5500B4C264 /* AssetsLibrary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A05D2E852BC90D5500B4C264 /* AssetsLibrary.framework */; };
 		A05D2E882BC912EE00B4C264 /* OpenCVPictureOutlineViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A05D2E872BC912EE00B4C264 /* OpenCVPictureOutlineViewController.swift */; };
 		A05D2E8A2BC9133600B4C264 /* UIImage+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = A05D2E892BC9133600B4C264 /* UIImage+Extensions.swift */; };
+		A0714C3B2BD8D2FD0018B578 /* DSPannelController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0714C3A2BD8D2FD0018B578 /* DSPannelController.swift */; };
+		A0714C3D2BD8D39E0018B578 /* MultipleSelectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0714C3C2BD8D39E0018B578 /* MultipleSelectionViewController.swift */; };
+		A0714C402BD8D3F30018B578 /* PanModal in Frameworks */ = {isa = PBXBuildFile; productRef = A0714C3F2BD8D3F30018B578 /* PanModal */; };
+		A0714C422BD8D5AC0018B578 /* UICollectionViewAlignedFlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0714C412BD8D5AC0018B578 /* UICollectionViewAlignedFlowLayout.swift */; };
+		A0714C442BD8D76A0018B578 /* DSPannelCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0714C432BD8D76A0018B578 /* DSPannelCell.swift */; };
+		A0714C462BD8EBA60018B578 /* DSOcrModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0714C452BD8EBA60018B578 /* DSOcrModel.swift */; };
+		A0A5AF732BDA01E90030D13A /* Compatible.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0A5AF722BDA01E90030D13A /* Compatible.swift */; };
+		A0A5AF782BDA1BF90030D13A /* DSControlItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0A5AF772BDA1BF90030D13A /* DSControlItem.swift */; };
+		A0A5AF7B2BDA40630030D13A /* WeakProxy.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0A5AF7A2BDA40630030D13A /* WeakProxy.swift */; };
+		A0A5AF802BDA42860030D13A /* TensorFlowLiteC.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = A0A5AF7F2BDA42860030D13A /* TensorFlowLiteC.xcframework */; };
+		A0A5AF822BDA50A50030D13A /* UIColor+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0A5AF812BDA50A50030D13A /* UIColor+Extensions.swift */; };
 		A0BC027D2BC8F3A1002C3129 /* opencv2.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A0BC027C2BC8F3A1002C3129 /* opencv2.framework */; };
 		A0C2B27C2BBA9215008E9FEF /* View1Controller.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0C2B27B2BBA9215008E9FEF /* View1Controller.swift */; };
 		A0E5F0892BC7E70500B19500 /* OpenCVWrapper.mm in Sources */ = {isa = PBXBuildFile; fileRef = A0E5F0882BC7E70500B19500 /* OpenCVWrapper.mm */; };
-		A0E771A82BCE26F700F0A2B4 /* ScanningCropViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0E771A72BCE26F700F0A2B4 /* ScanningCropViewController.swift */; };
+		A0E771A82BCE26F700F0A2B4 /* DSCropViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0E771A72BCE26F700F0A2B4 /* DSCropViewController.swift */; };
 		A0E771AA2BCE3F2100F0A2B4 /* abc.jpg in Resources */ = {isa = PBXBuildFile; fileRef = A0E771A92BCE3F2100F0A2B4 /* abc.jpg */; };
-		A0E771AC2BCE52D100F0A2B4 /* ScanningMagnifierView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0E771AB2BCE52D100F0A2B4 /* ScanningMagnifierView.swift */; };
-		A0F00FB72BD5FE0C00F77B57 /* ScanningCameraViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0F00FB62BD5FE0C00F77B57 /* ScanningCameraViewController.swift */; };
+		A0E771AC2BCE52D100F0A2B4 /* DSMagnifierView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0E771AB2BCE52D100F0A2B4 /* DSMagnifierView.swift */; };
+		A0F00FB72BD5FE0C00F77B57 /* DSCameraViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0F00FB62BD5FE0C00F77B57 /* DSCameraViewController.swift */; };
 		A0F00FB92BD6083100F77B57 /* ScanningViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0F00FB82BD6083100F77B57 /* ScanningViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		A01970B62BD0E22F00778B8A /* a.PNG */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = a.PNG; sourceTree = "<group>"; };
 		A01970B82BD0F59000778B8A /* UIImageView+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImageView+Extensions.swift"; sourceTree = "<group>"; };
-		A01970BA2BD20A6500778B8A /* ScanningModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScanningModels.swift; sourceTree = "<group>"; };
+		A01970BA2BD20A6500778B8A /* ScanModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScanModels.swift; sourceTree = "<group>"; };
 		A01970BC2BD20D9200778B8A /* CIDetector+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CIDetector+Extensions.swift"; sourceTree = "<group>"; };
 		A01970BE2BD20F5F00778B8A /* CGPoint+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CGPoint+Extensions.swift"; sourceTree = "<group>"; };
 		A01970C02BD2106A00778B8A /* CIImage+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CIImage+Extensions.swift"; sourceTree = "<group>"; };
-		A01970C22BD236F500778B8A /* ScanningPreviewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScanningPreviewController.swift; sourceTree = "<group>"; };
-		A01970C42BD2511700778B8A /* ScanningPreviewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScanningPreviewCell.swift; sourceTree = "<group>"; };
+		A01970C22BD236F500778B8A /* DSPreviewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DSPreviewController.swift; sourceTree = "<group>"; };
+		A01970C42BD2511700778B8A /* DSPreviewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DSPreviewCell.swift; sourceTree = "<group>"; };
 		A02233712BC687AA006E6EB7 /* View3Controller.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = View3Controller.swift; sourceTree = "<group>"; };
 		A02233732BC68A83006E6EB7 /* View4Controller.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = View4Controller.swift; sourceTree = "<group>"; };
-		A02A473B2BCD226200C80F8A /* ScanningCropView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScanningCropView.swift; sourceTree = "<group>"; };
+		A02A473B2BCD226200C80F8A /* DSCropView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DSCropView.swift; sourceTree = "<group>"; };
 		A04EC53B2BB119DB007A7A45 /* OCR.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = OCR.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A04EC53E2BB119DB007A7A45 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		A04EC5402BB119DB007A7A45 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -79,15 +90,25 @@
 		A05D2E852BC90D5500B4C264 /* AssetsLibrary.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AssetsLibrary.framework; path = System/Library/Frameworks/AssetsLibrary.framework; sourceTree = SDKROOT; };
 		A05D2E872BC912EE00B4C264 /* OpenCVPictureOutlineViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenCVPictureOutlineViewController.swift; sourceTree = "<group>"; };
 		A05D2E892BC9133600B4C264 /* UIImage+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+Extensions.swift"; sourceTree = "<group>"; };
+		A0714C3A2BD8D2FD0018B578 /* DSPannelController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DSPannelController.swift; sourceTree = "<group>"; };
+		A0714C3C2BD8D39E0018B578 /* MultipleSelectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultipleSelectionViewController.swift; sourceTree = "<group>"; };
+		A0714C412BD8D5AC0018B578 /* UICollectionViewAlignedFlowLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UICollectionViewAlignedFlowLayout.swift; sourceTree = "<group>"; };
+		A0714C432BD8D76A0018B578 /* DSPannelCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DSPannelCell.swift; sourceTree = "<group>"; };
+		A0714C452BD8EBA60018B578 /* DSOcrModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DSOcrModel.swift; sourceTree = "<group>"; };
+		A0A5AF722BDA01E90030D13A /* Compatible.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Compatible.swift; sourceTree = "<group>"; };
+		A0A5AF772BDA1BF90030D13A /* DSControlItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DSControlItem.swift; sourceTree = "<group>"; };
+		A0A5AF7A2BDA40630030D13A /* WeakProxy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeakProxy.swift; sourceTree = "<group>"; };
+		A0A5AF7F2BDA42860030D13A /* TensorFlowLiteC.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; path = TensorFlowLiteC.xcframework; sourceTree = "<group>"; };
+		A0A5AF812BDA50A50030D13A /* UIColor+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Extensions.swift"; sourceTree = "<group>"; };
 		A0BC027C2BC8F3A1002C3129 /* opencv2.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = opencv2.framework; sourceTree = "<group>"; };
 		A0C2B27B2BBA9215008E9FEF /* View1Controller.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = View1Controller.swift; sourceTree = "<group>"; };
 		A0E5F0832BC7E5C400B19500 /* OCR-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "OCR-Bridging-Header.h"; sourceTree = "<group>"; };
 		A0E5F0872BC7E70500B19500 /* OpenCVWrapper.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OpenCVWrapper.h; sourceTree = "<group>"; };
 		A0E5F0882BC7E70500B19500 /* OpenCVWrapper.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = OpenCVWrapper.mm; sourceTree = "<group>"; };
-		A0E771A72BCE26F700F0A2B4 /* ScanningCropViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScanningCropViewController.swift; sourceTree = "<group>"; };
+		A0E771A72BCE26F700F0A2B4 /* DSCropViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DSCropViewController.swift; sourceTree = "<group>"; };
 		A0E771A92BCE3F2100F0A2B4 /* abc.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = abc.jpg; sourceTree = "<group>"; };
-		A0E771AB2BCE52D100F0A2B4 /* ScanningMagnifierView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScanningMagnifierView.swift; sourceTree = "<group>"; };
-		A0F00FB62BD5FE0C00F77B57 /* ScanningCameraViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScanningCameraViewController.swift; sourceTree = "<group>"; };
+		A0E771AB2BCE52D100F0A2B4 /* DSMagnifierView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DSMagnifierView.swift; sourceTree = "<group>"; };
+		A0F00FB62BD5FE0C00F77B57 /* DSCameraViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DSCameraViewController.swift; sourceTree = "<group>"; };
 		A0F00FB82BD6083100F77B57 /* ScanningViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScanningViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -104,7 +125,9 @@
 				A05D2E7C2BC90D2C00B4C264 /* CoreImage.framework in Frameworks */,
 				A04EC56A2BB1730D007A7A45 /* SnapKit in Frameworks */,
 				A02233872BC68FD1006E6EB7 /* Alamofire in Frameworks */,
+				A0714C402BD8D3F30018B578 /* PanModal in Frameworks */,
 				A05D2E822BC90D4300B4C264 /* CoreVideo.framework in Frameworks */,
+				A0A5AF802BDA42860030D13A /* TensorFlowLiteC.xcframework in Frameworks */,
 				A05D2E862BC90D5500B4C264 /* AssetsLibrary.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -116,6 +139,7 @@
 			isa = PBXGroup;
 			children = (
 				A0BC027C2BC8F3A1002C3129 /* opencv2.framework */,
+				A0A5AF7F2BDA42860030D13A /* TensorFlowLiteC.xcframework */,
 				A04EC53D2BB119DB007A7A45 /* OCR */,
 				A04EC53C2BB119DB007A7A45 /* Products */,
 				A05D2E772BC90D1300B4C264 /* Frameworks */,
@@ -133,6 +157,7 @@
 		A04EC53D2BB119DB007A7A45 /* OCR */ = {
 			isa = PBXGroup;
 			children = (
+				A0A5AF792BDA381D0030D13A /* DocScanner */,
 				A01970B62BD0E22F00778B8A /* a.PNG */,
 				A0E771A92BCE3F2100F0A2B4 /* abc.jpg */,
 				A04EC53E2BB119DB007A7A45 /* AppDelegate.swift */,
@@ -144,26 +169,24 @@
 				A05D2E752BC8F83A00B4C264 /* PictureOutlineViewController.swift */,
 				A05D2E872BC912EE00B4C264 /* OpenCVPictureOutlineViewController.swift */,
 				A0F00FB82BD6083100F77B57 /* ScanningViewController.swift */,
+				A0714C3C2BD8D39E0018B578 /* MultipleSelectionViewController.swift */,
 				A0E5F0872BC7E70500B19500 /* OpenCVWrapper.h */,
 				A0E5F0882BC7E70500B19500 /* OpenCVWrapper.mm */,
 				A04EC5442BB119DB007A7A45 /* Main.storyboard */,
 				A04EC5472BB119DC007A7A45 /* Assets.xcassets */,
 				A04EC5492BB119DC007A7A45 /* LaunchScreen.storyboard */,
 				A04EC54C2BB119DC007A7A45 /* Info.plist */,
+				A0A5AF722BDA01E90030D13A /* Compatible.swift */,
 				A04EC5522BB11A13007A7A45 /* OCRTool.swift */,
 				A0E5F0832BC7E5C400B19500 /* OCR-Bridging-Header.h */,
 				A01970B82BD0F59000778B8A /* UIImageView+Extensions.swift */,
 				A05D2E892BC9133600B4C264 /* UIImage+Extensions.swift */,
+				A0A5AF812BDA50A50030D13A /* UIColor+Extensions.swift */,
 				A01970BC2BD20D9200778B8A /* CIDetector+Extensions.swift */,
 				A01970BE2BD20F5F00778B8A /* CGPoint+Extensions.swift */,
 				A01970C02BD2106A00778B8A /* CIImage+Extensions.swift */,
-				A0F00FB62BD5FE0C00F77B57 /* ScanningCameraViewController.swift */,
-				A01970C22BD236F500778B8A /* ScanningPreviewController.swift */,
-				A01970C42BD2511700778B8A /* ScanningPreviewCell.swift */,
-				A0E771A72BCE26F700F0A2B4 /* ScanningCropViewController.swift */,
-				A02A473B2BCD226200C80F8A /* ScanningCropView.swift */,
-				A0E771AB2BCE52D100F0A2B4 /* ScanningMagnifierView.swift */,
-				A01970BA2BD20A6500778B8A /* ScanningModels.swift */,
+				A0714C412BD8D5AC0018B578 /* UICollectionViewAlignedFlowLayout.swift */,
+				A0A5AF7A2BDA40630030D13A /* WeakProxy.swift */,
 			);
 			path = OCR;
 			sourceTree = "<group>";
@@ -181,6 +204,48 @@
 				A05D2E782BC90D1300B4C264 /* libc++.tbd */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		A0A5AF792BDA381D0030D13A /* DocScanner */ = {
+			isa = PBXGroup;
+			children = (
+				A0A5AF7E2BDA41110030D13A /* Model */,
+				A0A5AF7D2BDA40FC0030D13A /* View */,
+				A0A5AF7C2BDA40EB0030D13A /* Controller */,
+			);
+			path = DocScanner;
+			sourceTree = "<group>";
+		};
+		A0A5AF7C2BDA40EB0030D13A /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				A0F00FB62BD5FE0C00F77B57 /* DSCameraViewController.swift */,
+				A01970C22BD236F500778B8A /* DSPreviewController.swift */,
+				A0E771A72BCE26F700F0A2B4 /* DSCropViewController.swift */,
+				A0714C3A2BD8D2FD0018B578 /* DSPannelController.swift */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		A0A5AF7D2BDA40FC0030D13A /* View */ = {
+			isa = PBXGroup;
+			children = (
+				A01970C42BD2511700778B8A /* DSPreviewCell.swift */,
+				A02A473B2BCD226200C80F8A /* DSCropView.swift */,
+				A0E771AB2BCE52D100F0A2B4 /* DSMagnifierView.swift */,
+				A0A5AF772BDA1BF90030D13A /* DSControlItem.swift */,
+				A0714C432BD8D76A0018B578 /* DSPannelCell.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		A0A5AF7E2BDA41110030D13A /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				A01970BA2BD20A6500778B8A /* ScanModels.swift */,
+				A0714C452BD8EBA60018B578 /* DSOcrModel.swift */,
+			);
+			path = Model;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -202,6 +267,7 @@
 			packageProductDependencies = (
 				A04EC5692BB1730D007A7A45 /* SnapKit */,
 				A02233862BC68FD1006E6EB7 /* Alamofire */,
+				A0714C3F2BD8D3F30018B578 /* PanModal */,
 			);
 			productName = OCR;
 			productReference = A04EC53B2BB119DB007A7A45 /* OCR.app */;
@@ -235,6 +301,7 @@
 			packageReferences = (
 				A04EC5682BB1730D007A7A45 /* XCRemoteSwiftPackageReference "SnapKit" */,
 				A02233852BC68FD1006E6EB7 /* XCRemoteSwiftPackageReference "Alamofire" */,
+				A0714C3E2BD8D3F30018B578 /* XCRemoteSwiftPackageReference "PanModal" */,
 			);
 			productRefGroup = A04EC53C2BB119DB007A7A45 /* Products */;
 			projectDirPath = "";
@@ -266,26 +333,35 @@
 			buildActionMask = 2147483647;
 			files = (
 				A01970B92BD0F59000778B8A /* UIImageView+Extensions.swift in Sources */,
-				A01970C52BD2511700778B8A /* ScanningPreviewCell.swift in Sources */,
+				A01970C52BD2511700778B8A /* DSPreviewCell.swift in Sources */,
 				A0F00FB92BD6083100F77B57 /* ScanningViewController.swift in Sources */,
+				A0A5AF7B2BDA40630030D13A /* WeakProxy.swift in Sources */,
+				A0714C462BD8EBA60018B578 /* DSOcrModel.swift in Sources */,
 				A02233742BC68A83006E6EB7 /* View4Controller.swift in Sources */,
 				A04EC5432BB119DB007A7A45 /* ViewController.swift in Sources */,
-				A0F00FB72BD5FE0C00F77B57 /* ScanningCameraViewController.swift in Sources */,
-				A0E771A82BCE26F700F0A2B4 /* ScanningCropViewController.swift in Sources */,
+				A0714C422BD8D5AC0018B578 /* UICollectionViewAlignedFlowLayout.swift in Sources */,
+				A0F00FB72BD5FE0C00F77B57 /* DSCameraViewController.swift in Sources */,
+				A0714C3B2BD8D2FD0018B578 /* DSPannelController.swift in Sources */,
+				A0E771A82BCE26F700F0A2B4 /* DSCropViewController.swift in Sources */,
+				A0A5AF822BDA50A50030D13A /* UIColor+Extensions.swift in Sources */,
 				A01970BF2BD20F5F00778B8A /* CGPoint+Extensions.swift in Sources */,
-				A01970BB2BD20A6500778B8A /* ScanningModels.swift in Sources */,
+				A0A5AF732BDA01E90030D13A /* Compatible.swift in Sources */,
+				A01970BB2BD20A6500778B8A /* ScanModels.swift in Sources */,
 				A04EC53F2BB119DB007A7A45 /* AppDelegate.swift in Sources */,
 				A05D2E882BC912EE00B4C264 /* OpenCVPictureOutlineViewController.swift in Sources */,
 				A05D2E8A2BC9133600B4C264 /* UIImage+Extensions.swift in Sources */,
-				A0E771AC2BCE52D100F0A2B4 /* ScanningMagnifierView.swift in Sources */,
+				A0E771AC2BCE52D100F0A2B4 /* DSMagnifierView.swift in Sources */,
 				A04EC5532BB11A13007A7A45 /* OCRTool.swift in Sources */,
 				A0C2B27C2BBA9215008E9FEF /* View1Controller.swift in Sources */,
 				A01970BD2BD20D9200778B8A /* CIDetector+Extensions.swift in Sources */,
-				A01970C32BD236F500778B8A /* ScanningPreviewController.swift in Sources */,
+				A0714C3D2BD8D39E0018B578 /* MultipleSelectionViewController.swift in Sources */,
+				A0714C442BD8D76A0018B578 /* DSPannelCell.swift in Sources */,
+				A01970C32BD236F500778B8A /* DSPreviewController.swift in Sources */,
 				A01970C12BD2106A00778B8A /* CIImage+Extensions.swift in Sources */,
 				A05D2E762BC8F83A00B4C264 /* PictureOutlineViewController.swift in Sources */,
 				A02233722BC687AA006E6EB7 /* View3Controller.swift in Sources */,
-				A02A473C2BCD226200C80F8A /* ScanningCropView.swift in Sources */,
+				A0A5AF782BDA1BF90030D13A /* DSControlItem.swift in Sources */,
+				A02A473C2BCD226200C80F8A /* DSCropView.swift in Sources */,
 				A0E5F0892BC7E70500B19500 /* OpenCVWrapper.mm in Sources */,
 				A04EC5412BB119DB007A7A45 /* SceneDelegate.swift in Sources */,
 			);
@@ -543,6 +619,14 @@
 				minimumVersion = 5.7.1;
 			};
 		};
+		A0714C3E2BD8D3F30018B578 /* XCRemoteSwiftPackageReference "PanModal" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/slackhq/PanModal.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.2.7;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -555,6 +639,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = A04EC5682BB1730D007A7A45 /* XCRemoteSwiftPackageReference "SnapKit" */;
 			productName = SnapKit;
+		};
+		A0714C3F2BD8D3F30018B578 /* PanModal */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = A0714C3E2BD8D3F30018B578 /* XCRemoteSwiftPackageReference "PanModal" */;
+			productName = PanModal;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

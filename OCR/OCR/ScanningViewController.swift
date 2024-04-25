@@ -18,7 +18,7 @@ class ScanningViewController: UIViewController {
 
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         super.touchesBegan(touches, with: event)
-        let controller: ScanningCameraViewController = .init()
+        let controller: DSCameraViewController = .init()
         let navi: UINavigationController = .init(rootViewController: controller)
         navi.modalPresentationStyle = .fullScreen
         present(navi, animated: true)

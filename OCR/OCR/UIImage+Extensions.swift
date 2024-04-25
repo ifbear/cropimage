@@ -48,65 +48,64 @@ extension UIImage {
         return image
     }
     
+    
+
+}
+
+extension UIImage: Compatible {}
+extension CompatibleWrapper where Base: UIImage {
     /// 修复转向
-    func fixOrientation() -> UIImage {
-        if imageOrientation == .up {
-            return self
-        }
+    internal func fixOrientation() -> UIImage {
+        if base.imageOrientation == .up { return base }
         
         var transform = CGAffineTransform.identity
         
-        switch imageOrientation {
+        switch base.imageOrientation {
         case .down, .downMirrored:
-            transform = CGAffineTransform(translationX: size.width, y: size.height)
+            transform = CGAffineTransform(translationX: base.size.width, y: base.size.height)
             transform = transform.rotated(by: .pi)
         case .left, .leftMirrored:
-            transform = CGAffineTransform(translationX: size.width, y: 0)
+            transform = CGAffineTransform(translationX: base.size.width, y: 0)
             transform = transform.rotated(by: CGFloat.pi / 2)
         case .right, .rightMirrored:
-            transform = CGAffineTransform(translationX: 0, y: size.height)
+            transform = CGAffineTransform(translationX: 0, y: base.size.height)
             transform = transform.rotated(by: -CGFloat.pi / 2)
         default:
             break
         }
         
-        switch imageOrientation {
+        switch base.imageOrientation {
         case .upMirrored, .downMirrored:
-            transform = transform.translatedBy(x: size.width, y: 0)
+            transform = transform.translatedBy(x: base.size.width, y: 0)
             transform = transform.scaledBy(x: -1, y: 1)
         case .leftMirrored, .rightMirrored:
-            transform = transform.translatedBy(x: size.height, y: 0)
+            transform = transform.translatedBy(x: base.size.height, y: 0)
             transform = transform.scaledBy(x: -1, y: 1)
         default:
             break
         }
         
-        guard let cgImage = cgImage, let colorSpace = cgImage.colorSpace else {
-            return self
-        }
+        guard let cgImage = base.cgImage, let colorSpace = cgImage.colorSpace else { return base }
         let context = CGContext(
             data: nil,
-            width: Int(size.width),
-            height: Int(size.height),
+            width: Int(base.size.width),
+            height: Int(base.size.height),
             bitsPerComponent: cgImage.bitsPerComponent,
             bytesPerRow: 0,
             space: colorSpace,
             bitmapInfo: cgImage.bitmapInfo.rawValue
         )
         context?.concatenate(transform)
-        switch imageOrientation {
+        switch base.imageOrientation {
         case .left, .leftMirrored, .right, .rightMirrored:
-            context?.draw(cgImage, in: CGRect(x: 0, y: 0, width: size.height, height: size.width))
+            context?.draw(cgImage, in: CGRect(x: 0, y: 0, width: base.size.height, height: base.size.width))
         default:
-            context?.draw(cgImage, in: CGRect(x: 0, y: 0, width: size.width, height: size.height))
+            context?.draw(cgImage, in: CGRect(x: 0, y: 0, width: base.size.width, height: base.size.height))
         }
         
-        guard let newCgImage = context?.makeImage() else {
-            return self
-        }
+        guard let newCgImage = context?.makeImage() else { return base }
         return UIImage(cgImage: newCgImage)
     }
-
 }
 
 extension UIImage {
