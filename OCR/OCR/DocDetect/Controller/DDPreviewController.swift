@@ -176,29 +176,36 @@ extension DDPreviewController {
                 case DDSheetItem.image.tag:
                     break
                 case DDSheetItem.pdf.tag:
-                    do {
-                        let pdfContext = UIGraphicsPDFRenderer(bounds: .zero, format: .init())
-                        let outputFile = FileManager.default.temporaryDirectory.appendingPathComponent("temp.pdf")
-                        try? FileManager.default.removeItem(at: outputFile)
-                        try FileManager.default.createDirectory(at: outputFile.deletingLastPathComponent(), withIntermediateDirectories: true, attributes: nil)
-                        var prevImage: UIImage?
-                        try pdfContext.writePDF(to: outputFile) { context in
-                            cropModels.forEach { model in
-                                let image = model.cropImage ?? model.image
-                                let y: CGFloat
-                                if let prev = prevImage, prev.size.height + image.size.height <= context.pdfContextBounds.height {
-                                    y = prev.size.height
-                                } else {
-                                    context.beginPage()
-                                    y = 0
+                    DispatchQueue.global().async { [unowned self] in
+                        do {
+                            let pdfContext = UIGraphicsPDFRenderer(bounds: .zero, format: .init())
+                            let outputFile = FileManager.default.temporaryDirectory.appendingPathComponent("temp.pdf")
+                            try? FileManager.default.removeItem(at: outputFile)
+                            var prev: CGFloat?
+                            try pdfContext.writePDF(to: outputFile) { context in
+                                let pdfW = context.pdfContextBounds.width
+                                let pdfH = context.pdfContextBounds.height
+                                cropModels.forEach { model in
+                                    let image = model.cropImage ?? model.image
+                                    let ratio = image.size.width < pdfW ? (image.size.height < pdfH ? 1.0 : pdfH / image.size.height) : pdfW / image.size.width
+                                    let w = image.size.width * ratio
+                                    let h = image.size.height * ratio
+                                    let y: CGFloat
+                                    if let prev = prev, prev + h < pdfH {
+                                        y = prev
+                                    } else {
+                                        context.beginPage()
+                                        y = 0
+                                    }
+                                    image.draw(in: CGRect(x: (pdfW - w) * 0.5, y: y, width: w, height: h))
+                                    prev = h
                                 }
-                                image.draw(in: CGRect(x: (context.pdfContextBounds.width - image.size.width) * 0.5, y: y, width: image.size.width, height: image.size.height))
-                                prevImage = model.cropImage
                             }
+                        } catch {
+                            print("Error creating directory: \(error)")
                         }
-                    } catch {
-                        print("Error creating directory: \(error)")
                     }
+                    
                     
                 case DDSheetItem.word.tag:
                     break

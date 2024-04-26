@@ -112,6 +112,7 @@ extension DDSheetViewController: UITableViewDelegate, UITableViewDataSource {
     ///   - indexPath: IndexPath
     internal func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         handler(items[indexPath.row])
+        dismiss(animated: true)
     }
 }
 
