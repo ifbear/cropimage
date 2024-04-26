@@ -1,5 +1,5 @@
 //
-//  DSPannelCell.swift
+//  DDPannelCell.swift
 //  OCR
 //
 //  Created by dexiong on 2024/4/24.
@@ -7,10 +7,10 @@
 
 import UIKit
 
-class DSPannelCell: UICollectionViewCell {
+class DDPannelCell: UICollectionViewCell {
     
     /// text
-    internal var model: DSOcrModel? {
+    internal var model: DDOcrModel? {
         didSet { updateUI() }
     }
     
@@ -28,10 +28,11 @@ class DSPannelCell: UICollectionViewCell {
         _label.textAlignment = .center
         _label.textColor = .init(hex: "#333333")
         _label.highlightedTextColor = .init(hex: "#3D69DB")
-        _label.font = .systemFont(ofSize: 17.0)
+        _label.font = .pingfang(ofSize: 17.0)
         return _label
     }()
     
+    //MARK: - 生命周期
     
     internal override init(frame: CGRect) {
         super.init(frame: frame)
@@ -42,9 +43,12 @@ class DSPannelCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
+    deinit {
+        print(#function, #file.hub.lastPathComponent)
+    }
 }
 
-extension DSPannelCell {
+extension DDPannelCell {
     
     /// initialize
     private func initialize() {

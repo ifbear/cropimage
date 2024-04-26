@@ -1,5 +1,5 @@
 //
-//  DSPreviewController.swift
+//  DDPreviewController.swift
 //  OCR
 //
 //  Created by dexiong on 2024/4/19.
@@ -7,14 +7,13 @@
 
 import UIKit
 
-class DSPreviewController: UIViewController {
-
+class DDPreviewController: UIViewController {
     
     /// titleLabel
     private lazy var titleLabel: UILabel = {
         let _label: UILabel = .init()
         _label.text = "点击图片进行调整"
-        _label.font = .systemFont(ofSize: 17.0)
+        _label.font = .pingfang(ofSize: 17.0)
         _label.textColor = .white
         return _label
     }()
@@ -26,7 +25,7 @@ class DSPreviewController: UIViewController {
         _layout.minimumLineSpacing = 0.0
         _layout.minimumInteritemSpacing = 0.0
         let _view: UICollectionView = .init(frame: .zero, collectionViewLayout: _layout)
-        _view.register(DSPreviewCell.self, forCellWithReuseIdentifier: "ScanningPreviewCell")
+        _view.register(DDPreviewCell.self, forCellWithReuseIdentifier: "ScanningPreviewCell")
         _view.showsHorizontalScrollIndicator = false
         _view.backgroundColor = .clear
         _view.isPagingEnabled = true
@@ -39,7 +38,7 @@ class DSPreviewController: UIViewController {
     private lazy var pagesLabel: UILabel = {
         let _label: UILabel = .init()
         _label.text = "1/\(cropModels.count)"
-        _label.font = .systemFont(ofSize: 17.0)
+        _label.font = .pingfang(ofSize: 17.0)
         _label.textColor = .white
         return _label
     }()
@@ -70,25 +69,32 @@ class DSPreviewController: UIViewController {
     }()
     
     /// cropModels
-    private var cropModels: [DSCropModel]
+    private var cropModels: [DDCropModel]
     
     //MARK: - 生命周期
     
-    internal init(cropModels: [DSCropModel]) {
+    /// init
+    /// - Parameter cropModels: [DDCropModel]]
+    internal init(cropModels: [DDCropModel]) {
         self.cropModels = cropModels
         super.init(nibName: nil, bundle: nil)
     }
     
+    /// init
+    /// - Parameter coder: NSCoder
     internal required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
+    /// viewDidLoad
     internal override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         initialize()
     }
     
+    /// viewWillAppear
+    /// - Parameter animated: Bool
     internal override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         let buttonAppearance: UIBarButtonItemAppearance = .init(style: .plain)
@@ -102,11 +108,11 @@ class DSPreviewController: UIViewController {
         navigationController?.navigationBar.standardAppearance = appearance
         navigationController?.navigationBar.tintColor = UIColor.white
     }
-
-
+    
+    
 }
 
-extension DSPreviewController {
+extension DDPreviewController {
     
     /// initialize
     private func initialize() {
@@ -163,6 +169,48 @@ extension DSPreviewController {
         case cameraButton:
             navigationController?.popViewController(animated: true)
             
+        case sendButton:
+            let items: [DDSheetItem] = [.image, .pdf, .word, .ppt, .excel]
+            let controller: DDSheetViewController = .init(items: items) { [unowned self] item in
+                switch item.tag {
+                case DDSheetItem.image.tag:
+                    break
+                case DDSheetItem.pdf.tag:
+                    do {
+                        let pdfContext = UIGraphicsPDFRenderer(bounds: .zero, format: .init())
+                        let outputFile = FileManager.default.temporaryDirectory.appendingPathComponent("temp.pdf")
+                        try? FileManager.default.removeItem(at: outputFile)
+                        try FileManager.default.createDirectory(at: outputFile.deletingLastPathComponent(), withIntermediateDirectories: true, attributes: nil)
+                        var prevImage: UIImage?
+                        try pdfContext.writePDF(to: outputFile) { context in
+                            cropModels.forEach { model in
+                                let image = model.cropImage ?? model.image
+                                let y: CGFloat
+                                if let prev = prevImage, prev.size.height + image.size.height <= context.pdfContextBounds.height {
+                                    y = prev.size.height
+                                } else {
+                                    context.beginPage()
+                                    y = 0
+                                }
+                                image.draw(in: CGRect(x: (context.pdfContextBounds.width - image.size.width) * 0.5, y: y, width: image.size.width, height: image.size.height))
+                                prevImage = model.cropImage
+                            }
+                        }
+                    } catch {
+                        print("Error creating directory: \(error)")
+                    }
+                    
+                case DDSheetItem.word.tag:
+                    break
+                case DDSheetItem.ppt.tag:
+                    break
+                case DDSheetItem.excel.tag:
+                    break
+                default: break
+                }
+            }
+            presentPanModal(controller)
+            
         default: break
         }
     }
@@ -182,7 +230,7 @@ extension DSPreviewController {
 }
 
 //MARK: - UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout
-extension DSPreviewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+extension DDPreviewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
     /// sizeForItemAt
     /// - Parameters:
@@ -202,7 +250,7 @@ extension DSPreviewController: UICollectionViewDelegate, UICollectionViewDataSou
         let index = min(Int(scrollView.contentOffset.x / collectionView.bounds.width + 0.5) + 1, count)
         self.pagesLabel.text = "\(index)/\(count)"
     }
-
+    
     
     /// numberOfItemsInSection
     /// - Parameters:
@@ -219,7 +267,7 @@ extension DSPreviewController: UICollectionViewDelegate, UICollectionViewDataSou
     ///   - indexPath: IndexPath
     /// - Returns: UICollectionViewCell
     internal func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "ScanningPreviewCell", for: indexPath) as! DSPreviewCell
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "ScanningPreviewCell", for: indexPath) as! DDPreviewCell
         cell.cropModel = cropModels[indexPath.item]
         cell.delegate = self
         return cell
@@ -231,7 +279,7 @@ extension DSPreviewController: UICollectionViewDelegate, UICollectionViewDataSou
     ///   - indexPath: IndexPath
     internal func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let model = cropModels[indexPath.item]
-        let controller: DSCropViewController = .init(cropModel: model)
+        let controller: DDCropViewController = .init(cropModel: model)
         controller.retakeActionHandler = { [weak self] in
             self?.cropModels.remove(at: indexPath.item)
             self?.navigationController?.popViewController(animated: true)
@@ -246,14 +294,14 @@ extension DSPreviewController: UICollectionViewDelegate, UICollectionViewDataSou
     
 }
 
-//MARK: - DSPreviewCellDelegate
-extension DSPreviewController: DSPreviewCellDelegate {
+//MARK: - DDPreviewCellDelegate
+extension DDPreviewController: DDPreviewCellDelegate {
     
     /// delete
     /// - Parameters:
     ///   - cell: ScanningPreviewCell
-    ///   - model: DSCropModel
-    internal func cell(_ cell: DSPreviewCell, delete model: DSCropModel) {
+    ///   - model: DDCropModel
+    internal func cell(_ cell: DDPreviewCell, delete model: DDCropModel) {
         guard let index = cropModels.firstIndex(where: { $0 == model }) else { return }
         cropModels.remove(at: index)
         collectionView.reloadData()
@@ -266,8 +314,8 @@ extension DSPreviewController: DSPreviewCellDelegate {
     /// ocr
     /// - Parameters:
     ///   - cell: ScanningPreviewCell
-    ///   - model: DSCropModel
-    internal func cell(_ cell: DSPreviewCell, ocr model: DSCropModel) {
+    ///   - model: DDCropModel
+    internal func cell(_ cell: DDPreviewCell, ocr model: DDCropModel) {
         
     }
 }

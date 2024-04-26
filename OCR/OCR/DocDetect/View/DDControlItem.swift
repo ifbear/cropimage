@@ -1,5 +1,5 @@
 //
-//  DSControlItem.swift
+//  DDControlItem.swift
 //  OCR
 //
 //  Created by dexiong on 2024/4/25.
@@ -7,7 +7,7 @@
 
 import UIKit
 
-class DSControlItem: UIControl {
+class DDControlItem: UIControl {
     
     /// image
     internal var image: UIImage? {
@@ -19,6 +19,7 @@ class DSControlItem: UIControl {
         didSet { textLabel.text = text }
     }
     
+    /// isEnabled
     internal override var isEnabled: Bool {
         didSet { 
             if isEnabled {
@@ -31,6 +32,8 @@ class DSControlItem: UIControl {
         }
     }
     
+    //MARK: - 私有属性
+    
     /// imageView
     private lazy var imageView: UIImageView = {
         let _view: UIImageView = .init()
@@ -41,9 +44,12 @@ class DSControlItem: UIControl {
     /// textLabel
     private lazy var textLabel: UILabel = {
         let _label: UILabel = .init()
+        _label.font = .pingfang(ofSize: 14.0)
         return _label
     }()
 
+    //MARK: - 生命周期
+    
     internal override init(frame: CGRect) {
         super.init(frame: frame)
         initialize()
@@ -52,9 +58,13 @@ class DSControlItem: UIControl {
     internal required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    
+    deinit {
+        print(#function, #file.hub.lastPathComponent)
+    }
 }
 
-extension DSControlItem {
+extension DDControlItem {
     
     /// initialize
     private func initialize() {

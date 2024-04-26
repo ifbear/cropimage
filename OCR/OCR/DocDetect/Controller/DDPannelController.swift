@@ -1,5 +1,5 @@
 //
-//  ScanOcrTextViewController.swift
+//  DDPannelController.swift
 //  OCR
 //
 //  Created by dexiong on 2024/4/24.
@@ -9,7 +9,7 @@ import UIKit
 import PanModal
 
 
-extension DSPannelController {
+extension DDPannelController {
     private enum SlideSelectType {
         case none
         case select
@@ -22,7 +22,7 @@ extension DSPannelController {
     }
 }
 
-class DSPannelController: UIViewController {
+class DDPannelController: UIViewController {
     
     /// topView
     private lazy var topView: UIView = {
@@ -42,7 +42,7 @@ class DSPannelController: UIViewController {
         let _button: UIButton = .init()
         _button.setTitle("取消", for: .normal)
         _button.setTitleColor(.black, for: .normal)
-        _button.titleLabel?.font = .systemFont(ofSize: 16.0)
+        _button.titleLabel?.font = .pingfang(ofSize: 16.0)
         _button.addTarget(self, action: #selector(Self.controlActionHander(_:)), for: .touchUpInside)
         return _button
     }()
@@ -51,7 +51,7 @@ class DSPannelController: UIViewController {
     private lazy var titleLabel: UILabel = {
         let _label: UILabel = .init()
         _label.text = "在文字上滑动选择"
-        _label.font = .systemFont(ofSize: 17.0)
+        _label.font = .pingfang(ofSize: 17.0)
         return _label
     }()
     
@@ -62,7 +62,7 @@ class DSPannelController: UIViewController {
         _layout.minimumInteritemSpacing = 8.0
         _layout.sectionInset = .init(top: 36.0, left: 36.0, bottom: 36.0, right: 36.0)
         let _view: UICollectionView = .init(frame: .zero, collectionViewLayout: _layout)
-        _view.register(DSPannelCell.self, forCellWithReuseIdentifier: "ScanningOCRTextCell")
+        _view.register(DDPannelCell.self, forCellWithReuseIdentifier: "ScanningOCRTextCell")
         _view.allowsMultipleSelection = true
         _view.delegate = self
         _view.dataSource = self
@@ -83,8 +83,8 @@ class DSPannelController: UIViewController {
     }()
     
     /// selectItem
-    private lazy var selectItem: DSControlItem = {
-        let _item: DSControlItem = .init()
+    private lazy var selectItem: DDControlItem = {
+        let _item: DDControlItem = .init()
         _item.image = .init(named: "icns-multiple-selection")
         _item.text = "多选"
         _item.addTarget(self, action: #selector(Self.controlActionHander(_:)), for: .touchUpInside)
@@ -92,8 +92,8 @@ class DSPannelController: UIViewController {
     }()
     
     /// copyItem
-    private lazy var copyItem: DSControlItem = {
-        let _item: DSControlItem = .init()
+    private lazy var copyItem: DDControlItem = {
+        let _item: DDControlItem = .init()
         _item.image = .init(named: "icns-copy")
         _item.text = "拷贝"
         _item.isEnabled = false
@@ -102,8 +102,8 @@ class DSPannelController: UIViewController {
     }()
     
     /// translateItem
-    private lazy var translateItem: DSControlItem = {
-        let _item: DSControlItem = .init()
+    private lazy var translateItem: DDControlItem = {
+        let _item: DDControlItem = .init()
         _item.image = .init(named: "icns-translate")
         _item.text = "翻译"
         _item.isEnabled = false
@@ -112,8 +112,8 @@ class DSPannelController: UIViewController {
     }()
     
     /// mailItem
-    private lazy var mailItem: DSControlItem = {
-        let _item: DSControlItem = .init()
+    private lazy var mailItem: DDControlItem = {
+        let _item: DDControlItem = .init()
         _item.image = .init(named: "icns-mail")
         _item.text = "发送邮件"
         _item.isEnabled = false
@@ -129,19 +129,7 @@ class DSPannelController: UIViewController {
     }()
     
     /// dataList
-    private lazy var dataList: [DSOcrModel] = [] {
-        didSet {
-            if dataList.filter({ $0.isSelected == true }).isEmpty {
-                copyItem.isEnabled = false
-                translateItem.isEnabled = false
-                mailItem.isEnabled = false
-            } else {
-                copyItem.isEnabled = true
-                translateItem.isEnabled = true
-                mailItem.isEnabled = true
-            }
-        }
-    }
+    private lazy var dataList: [DDOcrModel] = []
         
     /// 滑动选择 或 取消
     /// 当初始滑动的cell处于未选择状态，则开始选择，反之，则开始取消选择
@@ -165,13 +153,16 @@ class DSPannelController: UIViewController {
     /// lastPanUpdateTime
     private var lastPanUpdateTime = CACurrentMediaTime()
 
+    //MARK: - 生命周期
+    
+    /// viewDidLoad
     internal override func viewDidLoad() {
         super.viewDidLoad()
         
         initialize()
         
         for i in 0...100 {
-            let model: DSOcrModel = .init()
+            let model: DDOcrModel = .init()
             model.text = "cell: \(i)"
             dataList.append(model)
         }
@@ -180,12 +171,12 @@ class DSPannelController: UIViewController {
     }
 
     deinit {
-        print(#function, #line)
+        print(#function, #file.hub.lastPathComponent)
     }
 
 }
 
-extension DSPannelController {
+extension DDPannelController {
     
     /// initialize
     private func initialize() {
@@ -256,7 +247,15 @@ extension DSPannelController {
     }
 }
 
-extension DSPannelController {
+extension DDPannelController {
+    
+    /// refreshBottomView
+    private func refreshBottomView() {
+        let isEnabled = dataList.filter({ $0.isSelected == true }).isEmpty == false
+        copyItem.isEnabled = isEnabled
+        mailItem.isEnabled = isEnabled
+        translateItem.isEnabled = isEnabled
+    }
     
     /// autoScrollWhenSlideSelect
     /// - Parameter pan: UIPanGestureRecognizer
@@ -336,7 +335,11 @@ extension DSPannelController {
                 let model = dataList[indexPath.row]
                 panSelectType = model.isSelected ? .cancel : .select
                 model.isSelected = !model.isSelected
-                cell?.isSelected = model.isSelected
+                if model.isSelected {
+                    collectionView.selectItem(at: indexPath, animated: false, scrollPosition: [])
+                } else {
+                    collectionView.deselectItem(at: indexPath, animated: false)
+                }
                 lastSlideIndexPath = indexPath
             }
             
@@ -349,14 +352,26 @@ extension DSPannelController {
             let minIndex = min(indexPath.row, beginIndexPath.row)
             let maxIndex = max(indexPath.row, beginIndexPath.row)
             let minIsBegin = minIndex == beginIndexPath.row
+            var isSelectedChanged: Bool = false
             var i = beginIndexPath.row
             while minIsBegin ? i <= maxIndex : i >= minIndex {
                 if i != beginIndexPath.row {
+                    let p: IndexPath = .init(row: i, section: 0)
                     let m = dataList[i]
-                    m.isSelected = panSelectType == .cancel ? false : true
-                    collectionView.cellForItem(at: .init(row: i, section: 0))?.isSelected = m.isSelected
+                    if panSelectType == .cancel, m.isSelected == true {
+                        m.isSelected = false
+                        collectionView.deselectItem(at: p, animated: false)
+                        isSelectedChanged = true
+                    } else if panSelectType == .select, m.isSelected == false {
+                        m.isSelected = true
+                        collectionView.selectItem(at: p, animated: false, scrollPosition: [])
+                        isSelectedChanged = true
+                    }
                 }
                 i += (minIsBegin ? 1 : -1)
+            }
+            if isSelectedChanged {
+                refreshBottomView()
             }
             
         case .cancelled, .ended:
@@ -369,7 +384,8 @@ extension DSPannelController {
     }
 }
 
-extension DSPannelController: UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
+//MARK: - UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout
+extension DDPannelController: UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
     
     /// numberOfItemsInSection
     /// - Parameters:
@@ -386,7 +402,7 @@ extension DSPannelController: UICollectionViewDataSource, UICollectionViewDelega
     ///   - indexPath: IndexPath
     /// - Returns: UICollectionViewCell
     internal func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "ScanningOCRTextCell", for: indexPath) as! DSPannelCell
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "ScanningOCRTextCell", for: indexPath) as! DDPannelCell
         cell.model = dataList[indexPath.item]
         return cell
     }
@@ -425,6 +441,7 @@ extension DSPannelController: UICollectionViewDataSource, UICollectionViewDelega
     internal func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let model = dataList[indexPath.item]
         model.isSelected = true
+        refreshBottomView()
     }
     
     /// didDeselectItemAt
@@ -434,10 +451,12 @@ extension DSPannelController: UICollectionViewDataSource, UICollectionViewDelega
     internal func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
         let model = dataList[indexPath.item]
         model.isSelected = false
+        refreshBottomView()
     }
 }
 
-extension DSPannelController: UIGestureRecognizerDelegate {
+//MARK: - UIGestureRecognizerDelegate
+extension DDPannelController: UIGestureRecognizerDelegate {
     
     /// gestureRecognizerShouldBegin
     /// - Parameter gestureRecognizer: UIGestureRecognizer
@@ -458,7 +477,7 @@ extension DSPannelController: UIGestureRecognizerDelegate {
 }
 
 //MARK: - PanModalPresentable
-extension DSPannelController: PanModalPresentable {
+extension DDPannelController: PanModalPresentable {
     internal var panScrollable: UIScrollView? {
         return nil
     }

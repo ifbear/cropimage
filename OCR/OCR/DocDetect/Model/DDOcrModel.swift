@@ -1,5 +1,5 @@
 //
-//  DSOcrModel.swift
+//  DDOcrModel.swift
 //  OCR
 //
 //  Created by dexiong on 2024/4/24.
@@ -7,7 +7,7 @@
 
 import UIKit
 
-class DSOcrModel: NSObject {
+class DDOcrModel: NSObject {
 
     internal var text: String = ""
     

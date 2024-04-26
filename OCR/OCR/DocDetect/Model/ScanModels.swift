@@ -103,7 +103,7 @@ struct Rectangle {
     }
 }
 
-class DSCropModel {
+class DDCropModel {
     
     /// uniqueID
     internal let uniqueID: String
@@ -129,7 +129,7 @@ class DSCropModel {
     }
 }
 
-extension DSCropModel: Hashable {
+extension DDCropModel: Hashable {
     /// hash
     /// - Parameter hasher: Hasher
     internal func hash(into hasher: inout Hasher) {
@@ -138,10 +138,10 @@ extension DSCropModel: Hashable {
     
     /// ==
     /// - Parameters:
-    ///   - lhs: DSCropModel
-    ///   - rhs: DSCropModel
+    ///   - lhs: DDCropModel
+    ///   - rhs: DDCropModel
     /// - Returns: Bool
-    internal static func == (lhs: DSCropModel, rhs: DSCropModel) -> Bool {
+    internal static func == (lhs: DDCropModel, rhs: DDCropModel) -> Bool {
         return lhs.uniqueID == rhs.uniqueID
     }
     

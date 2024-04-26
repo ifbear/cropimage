@@ -1,5 +1,5 @@
 //
-//  DSMagnifierView.swift
+//  DDMagnifierView.swift
 //  OCR
 //
 //  Created by dexiong on 2024/4/16.
@@ -7,7 +7,7 @@
 
 import Foundation
 
-class DSMagnifierView: UIWindow {
+class DDMagnifierView: UIWindow {
     
     //MARK: - 公有属性
     
@@ -57,6 +57,12 @@ class DSMagnifierView: UIWindow {
 
     //MARK: - 生命周期
     
+    /// init
+    /// - Parameters:
+    ///   - frame: CGRect 放大镜frame
+    ///   - target: UIView 放大镜目标
+    ///   - scale: CGFloat 放大倍数
+    ///   - offset: CGPoint 偏移
     internal init(frame: CGRect, at target: UIView, scale: CGFloat = 2, offset: CGPoint = .zero) {
         super.init(frame: frame)
         if frame.size == .zero {
@@ -75,11 +81,16 @@ class DSMagnifierView: UIWindow {
         addAccurate()
     }
     
+    /// init corder
+    /// - Parameter aDecoder: NSCoder
     internal required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
-    
+    /// draw
+    /// - Parameters:
+    ///   - layer: CALayer
+    ///   - ctx: CGContext
     internal override func draw(_ layer: CALayer, in ctx: CGContext) {
         super.draw(layer, in: ctx)
         //提前位移半个长宽
@@ -91,7 +102,7 @@ class DSMagnifierView: UIWindow {
         target?.layer.render(in: ctx)
     }
     
-    /// 锚点
+    /// “+”锚点
     private func addAccurate() {
         if let sublayers = layer.sublayers {
             for layer in sublayers {
@@ -114,4 +125,7 @@ class DSMagnifierView: UIWindow {
         layer.addSublayer(lineLayer)
     }
     
+    deinit {
+        print(#function, #file.hub.lastPathComponent)
+    }
 }

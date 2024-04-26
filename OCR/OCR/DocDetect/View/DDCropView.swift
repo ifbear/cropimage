@@ -1,5 +1,5 @@
 //
-//  DSCropView.swift
+//  DDCropView.swift
 //  OCR
 //
 //  Created by dexiong on 2024/4/15.
@@ -13,17 +13,17 @@ enum NearstPosition: Int {
 }
 
 
-protocol DSCropViewDelegate: NSObjectProtocol {
+protocol DDCropViewDelegate: NSObjectProtocol {
     func cropBegin(at point: CGPoint)
     func cropMoved(at point: CGPoint)
     func cropEnded(at potin: CGPoint)
 }
 
-class DSCropView: UIView {
+class DDCropView: UIView {
     //MARK: - 公有属性
     
     /// DSCropViewDelegate
-    internal weak var delegate: DSCropViewDelegate? = nil
+    internal weak var delegate: DDCropViewDelegate? = nil
     
     /// 线宽
     internal var lineWidth: CGFloat = 2.0
@@ -31,16 +31,16 @@ class DSCropView: UIView {
     /// 线颜色
     internal var lineColor: UIColor = .init(red: 61.0 / 255.0, green: 105.0 / 255.0, blue: 219.0 / 255.0, alpha: 1.0)
     
+    /// 最大显示区域
+    internal var maxResizeFrame: CGRect = .zero
+    
     /// position
     internal var position: Rectangle = .default {
-        didSet { 
+        didSet {
             setNeedsLayout()
             layer.setNeedsDisplay()
         }
     }
-    
-    /// 最大显示区域
-    internal var maxResizeFrame: CGRect = .zero
     
     //MARK: - 私有属性
     
@@ -63,11 +63,12 @@ class DSCropView: UIView {
     /// UIImage
     private let image: UIImage
     
-    
-    
     //MARK: - 生命周期
     
-    
+    /// init
+    /// - Parameters:
+    ///   - frame: CGRect
+    ///   - image: UIImage
     internal init(frame: CGRect, image: UIImage) {
         self.image = image
         super.init(frame: frame)
@@ -75,14 +76,18 @@ class DSCropView: UIView {
         initialize()
     }
     
+    /// init coder
+    /// - Parameter coder: NSCoder
     internal required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
 
+    deinit {
+        print(#function, #file.hub.lastPathComponent)
+    }
 }
 
-extension DSCropView {
+extension DDCropView {
     
     /// initialize
     private func initialize() {
@@ -92,7 +97,7 @@ extension DSCropView {
     }
 }
 
-extension DSCropView {
+extension DDCropView {
     
     /// adjustPosition
     internal func adjustPosition() {

@@ -1,5 +1,5 @@
 //
-//  DSCameraViewController.swift
+//  DDCameraViewController.swift
 //  OCR
 //
 //  Created by dexiong on 2024/4/22.
@@ -14,7 +14,7 @@ extension Notification.Name {
     internal static var corpModelDeleted: Notification.Name = .init(rawValue: "Notification.Name.corpModelDeleted")
 }
 
-class DSCameraViewController: UIViewController {
+class DDCameraViewController: UIViewController {
     
     /// flashButton
     private lazy var flashButton: UIButton = {
@@ -95,7 +95,7 @@ class DSCameraViewController: UIViewController {
     private let sessionQueue: DispatchQueue = .init(label: "AVCaptureSession.sessionQueue")
     
     /// cropModels
-    private var cropModels: [DSCropModel] = [] {
+    private var cropModels: [DDCropModel] = [] {
         didSet {
             scannedButton.isHidden = cropModels.isEmpty
             scannedButton.setTitle("已扫描\(cropModels.count)", for: .normal)
@@ -104,19 +104,24 @@ class DSCameraViewController: UIViewController {
     
     //MARK: - 生命周期
     
+    /// viewDidLoad
     internal override func viewDidLoad() {
         super.viewDidLoad()
         
         initialize()
-
+        
+        // 获取摄像头状态
         requestCameraStatus { [unowned self] finish in
             guard finish == true else { return }
             initSession()
         }
         
+        // 添加监听
         NotificationCenter.default.addObserver(self, selector: #selector(Self.notificationActionHandler(_:)), name: .corpModelDeleted, object: nil)
     }
-
+    
+    /// viewWillAppear
+    /// - Parameter animated: Bool
     internal override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         guard AVCaptureDevice.authorizationStatus(for: .video) != .notDetermined else { return }
@@ -125,7 +130,9 @@ class DSCameraViewController: UIViewController {
             self.session.startRunning()
         }
     }
-
+    
+    /// viewWillDisappear
+    /// - Parameter animated: Bool
     internal override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         sessionQueue.async {
@@ -140,7 +147,7 @@ class DSCameraViewController: UIViewController {
     }
 }
 
-extension DSCameraViewController {
+extension DDCameraViewController {
     
     /// initialize
     private func initialize() {
@@ -160,8 +167,6 @@ extension DSCameraViewController {
             $0.left.right.bottom.equalToSuperview()
         }
         
-
-        
         bottomView.addSubview(takeButton)
         takeButton.snp.makeConstraints {
             $0.centerX.equalToSuperview()
@@ -169,7 +174,6 @@ extension DSCameraViewController {
             $0.top.equalTo(bottomView).offset(49.0)
             $0.bottom.equalTo(bottomView.safeAreaLayoutGuide)
         }
-        
         
         bottomView.addSubview(cancelButton)
         cancelButton.snp.makeConstraints {
@@ -192,7 +196,6 @@ extension DSCameraViewController {
     private func initSession() {
         guard let device = AVCaptureDevice.default(for: .video) else { return }
         guard let input = try? AVCaptureDeviceInput(device: device) else { return }
-        session.beginConfiguration()
         self.input = input
         if session.canAddInput(input) {
             session.addInput(input)
@@ -209,7 +212,6 @@ extension DSCameraViewController {
         if let previewLayer = previewLayer {
             videoLayerView.layer.insertSublayer(previewLayer, at: 0)
         }
-        session.commitConfiguration()
         
         sessionQueue.async {
             self.session.startRunning()
@@ -267,7 +269,7 @@ extension DSCameraViewController {
             }
             output?.capturePhoto(with: setting, delegate: self)
         case scannedButton:
-            let controller: DSPreviewController = .init(cropModels: cropModels)
+            let controller: DDPreviewController = .init(cropModels: cropModels)
             navigationController?.pushViewController(controller, animated: true)
         default: break
         }
@@ -276,7 +278,7 @@ extension DSCameraViewController {
     @objc private func notificationActionHandler(_ noti: Notification) {
         switch noti.name {
         case .corpModelDeleted:
-            guard let model = noti.userInfo?["model"] as? DSCropModel, let index = cropModels.firstIndex(of: model) else { return }
+            guard let model = noti.userInfo?["model"] as? DDCropModel, let index = cropModels.firstIndex(of: model) else { return }
             cropModels.remove(at: index)
             
         default: break
@@ -284,7 +286,7 @@ extension DSCameraViewController {
     }
 }
 
-extension DSCameraViewController: AVCapturePhotoCaptureDelegate {
+extension DDCameraViewController: AVCapturePhotoCaptureDelegate {
     
     /// didFinishProcessingPhoto
     /// - Parameters:
@@ -293,8 +295,8 @@ extension DSCameraViewController: AVCapturePhotoCaptureDelegate {
     ///   - error: (any Error)?
     internal func photoOutput(_ output: AVCapturePhotoOutput, didFinishProcessingPhoto photo: AVCapturePhoto, error: (any Error)?) {
         guard let data = photo.fileDataRepresentation(), let image = UIImage(data: data)?.hub.fixOrientation() else { return }
-        let model: DSCropModel = .init(image: image)
-        let controller: DSCropViewController = .init(cropModel: model)
+        let model: DDCropModel = .init(image: image)
+        let controller: DDCropViewController = .init(cropModel: model)
         controller.reloadActionHandler = { [weak self] in
             self?.cropModels.append(model)
         }

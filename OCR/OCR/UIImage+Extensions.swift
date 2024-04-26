@@ -8,6 +8,7 @@
 import Foundation
 import UIKit
 import Vision
+import Kingfisher
 
 extension UIImage {
     
@@ -54,6 +55,19 @@ extension UIImage {
 
 extension UIImage: Compatible {}
 extension CompatibleWrapper where Base: UIImage {
+    
+    /// redraw
+    /// - Parameter size: CGSize
+    /// - Returns: UIImage
+    internal func redraw(with size: CGSize, renderingMode: UIImage.RenderingMode = .alwaysTemplate) -> UIImage {
+        let size = base.size.kf.resize(to: size, for: .aspectFit)
+        let render: UIGraphicsImageRenderer = .init(size: size)
+        return render.image { _ in
+            base.withRenderingMode(.alwaysTemplate).draw(in: .init(x: 0.0, y: 0.0, width: size.width, height: size.height))
+        }.withRenderingMode(renderingMode)
+    }
+    
+    
     /// 修复转向
     internal func fixOrientation() -> UIImage {
         if base.imageOrientation == .up { return base }

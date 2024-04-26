@@ -1,5 +1,5 @@
 //
-//  DSCropViewController.swift
+//  DDCropViewController.swift
 //  OCR
 //
 //  Created by dexiong on 2024/4/16.
@@ -8,13 +8,13 @@
 import UIKit
 import CoreGraphics
 
-extension DSCropViewController {
+extension DDCropViewController {
     enum Source {
         case camera, album
     }
 }
 
-class DSCropViewController: UIViewController {
+class DDCropViewController: UIViewController {
     
     /// 重拍回调
     internal var retakeActionHandler: (() -> Void)? = nil
@@ -23,8 +23,8 @@ class DSCropViewController: UIViewController {
     internal var reloadActionHandler: (() -> Void)? = nil
     
     /// scanningCropView
-    private lazy var scanningCropView: DSCropView = {
-        let _view: DSCropView = .init(frame: view.bounds, image: image)
+    private lazy var scanningCropView: DDCropView = {
+        let _view: DDCropView = .init(frame: view.bounds, image: image)
         _view.delegate = self
         return _view
     }()
@@ -33,7 +33,7 @@ class DSCropViewController: UIViewController {
     private lazy var titleView: UILabel = {
         let _label: UILabel = .init()
         _label.text = "拖动圆点调整边缘"
-        _label.font = .systemFont(ofSize: 17.0)
+        _label.font = .pingfang(ofSize: 17.0)
         _label.textColor = .white
         return _label
     }()
@@ -81,7 +81,7 @@ class DSCropViewController: UIViewController {
     }()
     
     /// 放大镜
-    private var mMagnifier: DSMagnifierView?
+    private var mMagnifier: DDMagnifierView?
     
     /// maxResizeSize
     private var maxResizeSize: CGSize {
@@ -89,7 +89,7 @@ class DSCropViewController: UIViewController {
     }
     
     /// UIImage
-    private let cropModel: DSCropModel
+    private let cropModel: DDCropModel
     
     /// 来源
     private let source: Source
@@ -106,16 +106,23 @@ class DSCropViewController: UIViewController {
 
     //MARK: - 生命周期
     
-    internal init(cropModel: DSCropModel, source: Source = .camera) {
+    /// init
+    /// - Parameters:
+    ///   - cropModel: DDCropModel
+    ///   - source: Source
+    internal init(cropModel: DDCropModel, source: Source = .camera) {
         self.cropModel = cropModel
         self.source = source
         super.init(nibName: nil, bundle: nil)
     }
     
+    /// init corder
+    /// - Parameter coder: NSCoder
     internal required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
+    /// viewDidLoad
     internal override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -123,6 +130,8 @@ class DSCropViewController: UIViewController {
         
     }
     
+    /// viewIsAppearing
+    /// - Parameter animated: Bool
     internal override func viewIsAppearing(_ animated: Bool) {
         super.viewIsAppearing(animated)
         if cropModel.cropImage != nil {
@@ -151,7 +160,7 @@ class DSCropViewController: UIViewController {
 
 }
 
-extension DSCropViewController {
+extension DDCropViewController {
     
     /// initialize
     private func initialize() {
@@ -321,13 +330,14 @@ extension DSCropViewController {
     }
 }
 
-extension DSCropViewController: DSCropViewDelegate {
+//MARK: - DDCropViewDelegate
+extension DDCropViewController: DDCropViewDelegate {
     
     /// cropBegin
     /// - Parameter point: CGPoint
     internal func cropBegin(at point: CGPoint) {
         if mMagnifier == nil {
-            mMagnifier = DSMagnifierView.init(frame: .zero, at: imageView)
+            mMagnifier = DDMagnifierView.init(frame: .zero, at: imageView)
             mMagnifier?.adjustPoint = .init(x: 0, y: -15)
             mMagnifier?.originAngle = originAngle
             mMagnifier?.makeKeyAndVisible()

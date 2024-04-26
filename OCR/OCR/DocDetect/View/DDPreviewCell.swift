@@ -1,5 +1,5 @@
 //
-//  DSPreviewCell.swift
+//  DDPreviewCell.swift
 //  OCR
 //
 //  Created by dexiong on 2024/4/19.
@@ -7,19 +7,19 @@
 
 import UIKit
 
-protocol DSPreviewCellDelegate: NSObjectProtocol {
-    func cell(_ cell: DSPreviewCell, delete model: DSCropModel)
-    func cell(_ cell: DSPreviewCell, ocr model: DSCropModel)
+protocol DDPreviewCellDelegate: NSObjectProtocol {
+    func cell(_ cell: DDPreviewCell, delete model: DDCropModel)
+    func cell(_ cell: DDPreviewCell, ocr model: DDCropModel)
 }
 
-/// DSPreviewCell
-class DSPreviewCell: UICollectionViewCell {
+/// DDPreviewCell
+class DDPreviewCell: UICollectionViewCell {
     
     /// delegate
-    internal weak var delegate: DSPreviewCellDelegate?
+    internal weak var delegate: DDPreviewCellDelegate?
     
     /// cropModel
-    internal var cropModel: DSCropModel? {
+    internal var cropModel: DDCropModel? {
         didSet { reloadUI() }
     }
     
@@ -64,9 +64,12 @@ class DSPreviewCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
+    deinit {
+        print(#function, #file.hub.lastPathComponent)
+    }
 }
 
-extension DSPreviewCell {
+extension DDPreviewCell {
     
     /// initialize
     private func initialize() {
