@@ -25,7 +25,7 @@ class DDPreviewController: UIViewController {
         _layout.minimumLineSpacing = 0.0
         _layout.minimumInteritemSpacing = 0.0
         let _view: UICollectionView = .init(frame: .zero, collectionViewLayout: _layout)
-        _view.register(DDPreviewCell.self, forCellWithReuseIdentifier: "ScanningPreviewCell")
+        _view.register(DDPreviewCell.self, forCellWithReuseIdentifier: DDPreviewCell.reusedID)
         _view.showsHorizontalScrollIndicator = false
         _view.backgroundColor = .clear
         _view.isPagingEnabled = true
@@ -176,36 +176,40 @@ extension DDPreviewController {
                 case DDSheetItem.image.tag:
                     break
                 case DDSheetItem.pdf.tag:
-                    DispatchQueue.global().async { [unowned self] in
-                        do {
-                            let pdfContext = UIGraphicsPDFRenderer(bounds: .zero, format: .init())
-                            let outputFile = FileManager.default.temporaryDirectory.appendingPathComponent("temp.pdf")
-                            try? FileManager.default.removeItem(at: outputFile)
-                            var prev: CGFloat?
-                            try pdfContext.writePDF(to: outputFile) { context in
-                                let pdfW = context.pdfContextBounds.width
-                                let pdfH = context.pdfContextBounds.height
-                                cropModels.forEach { model in
-                                    let image = model.cropImage ?? model.image
-                                    let ratio = image.size.width < pdfW ? (image.size.height < pdfH ? 1.0 : pdfH / image.size.height) : pdfW / image.size.width
-                                    let w = image.size.width * ratio
-                                    let h = image.size.height * ratio
-                                    let y: CGFloat
-                                    if let prev = prev, prev + h < pdfH {
-                                        y = prev
-                                    } else {
-                                        context.beginPage()
-                                        y = 0
-                                    }
-                                    image.draw(in: CGRect(x: (pdfW - w) * 0.5, y: y, width: w, height: h))
-                                    prev = h
+                    do {
+                        let pdfContext = UIGraphicsPDFRenderer(bounds: .zero, format: .init())
+                        let outputFile = FileManager.default.temporaryDirectory.appendingPathComponent("temp.pdf")
+                        try? FileManager.default.removeItem(at: outputFile)
+                        var prev: CGFloat?
+                        try pdfContext.writePDF(to: outputFile) { context in
+                            let pdfW = context.pdfContextBounds.width
+                            let pdfH = context.pdfContextBounds.height
+                            cropModels.forEach { model in
+                                let image = model.cropImage ?? model.image
+                                let ratio = image.size.width < pdfW ? (image.size.height < pdfH ? 1.0 : pdfH / image.size.height) : pdfW / image.size.width
+                                let w = image.size.width * ratio
+                                let h = image.size.height * ratio
+                                let y: CGFloat
+                                if let prev = prev, prev + h < pdfH {
+                                    y = prev
+                                } else {
+                                    context.beginPage()
+                                    y = 0
                                 }
+                                image.draw(in: CGRect(x: (pdfW - w) * 0.5, y: y, width: w, height: h))
+                                prev = h
                             }
-                        } catch {
-                            print("Error creating directory: \(error)")
                         }
+                        let quickLook: DDQuickLookViewController = .init(items: [.init(file: outputFile, name: outputFile.lastPathComponent)]) { finish in
+                            guard finish == true else { return }
+                            // 添加邮件操作
+                        }
+                        let navi: UINavigationController = .init(rootViewController: quickLook)
+                        navi.modalPresentationStyle = .fullScreen
+                        self.present(navi, animated: true)
+                    } catch {
+                        print("Error creating directory: \(error)")
                     }
-                    
                     
                 case DDSheetItem.word.tag:
                     break
@@ -274,7 +278,7 @@ extension DDPreviewController: UICollectionViewDelegate, UICollectionViewDataSou
     ///   - indexPath: IndexPath
     /// - Returns: UICollectionViewCell
     internal func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "ScanningPreviewCell", for: indexPath) as! DDPreviewCell
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: DDPreviewCell.reusedID, for: indexPath) as! DDPreviewCell
         cell.cropModel = cropModels[indexPath.item]
         cell.delegate = self
         return cell
@@ -323,6 +327,7 @@ extension DDPreviewController: DDPreviewCellDelegate {
     ///   - cell: ScanningPreviewCell
     ///   - model: DDCropModel
     internal func cell(_ cell: DDPreviewCell, ocr model: DDCropModel) {
-        
+        let controller: DDTextSelectionViewController = .init()
+        presentPanModal(controller)
     }
 }

@@ -19,7 +19,7 @@ class MultipleSelectionViewController: UIViewController {
 
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         super.touchesBegan(touches, with: event)
-        let controller: DDPannelController = .init()
+        let controller: DDTextSelectionViewController = .init()
         presentPanModal(controller)
     }
 }

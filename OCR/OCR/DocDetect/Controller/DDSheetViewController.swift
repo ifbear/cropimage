@@ -26,7 +26,7 @@ class DDSheetViewController: UIViewController {
         _tableView.isScrollEnabled = false
         _tableView.separatorInset = .zero
         _tableView.separatorColor = .init(hex: "#F5F5F5")
-        _tableView.register(DDSheetViewCell.self, forCellReuseIdentifier: "DDSheetViewCell")
+        _tableView.register(DDSheetTableViewCell.self, forCellReuseIdentifier: DDSheetTableViewCell.reusedID)
         return _tableView
     }()
     
@@ -101,7 +101,7 @@ extension DDSheetViewController: UITableViewDelegate, UITableViewDataSource {
     ///   - indexPath: IndexPath
     /// - Returns: UITableViewCell
     internal func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "DDSheetViewCell", for: indexPath) as! DDSheetViewCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: DDSheetTableViewCell.reusedID, for: indexPath) as! DDSheetTableViewCell
         cell.item = items[indexPath.row]
         return cell
     }
@@ -111,8 +111,10 @@ extension DDSheetViewController: UITableViewDelegate, UITableViewDataSource {
     ///   - tableView: UITableView
     ///   - indexPath: IndexPath
     internal func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        handler(items[indexPath.row])
-        dismiss(animated: true)
+        dismiss(animated: true) { [weak self] in
+            guard let this = self else { return }
+            this.handler(this.items[indexPath.row])
+        }
     }
 }
 
