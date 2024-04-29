@@ -1,5 +1,5 @@
 {
-  "originHash" : "f586c7edddf48dc504d9a5086fbb7adaf954d52f4aedef6fd37f92f935823a33",
+  "originHash" : "294e5c259670a5a23c207ae21e0c089d095e19f0ca01b80d9e4caf665a427713",
   "pins" : [
     {
       "identity" : "alamofire",
@@ -35,6 +35,24 @@
       "state" : {
         "revision" : "2842e6e84e82eb9a8dac0100ca90d9444b0307f4",
         "version" : "5.7.1"
+      }
+    },
+    {
+      "identity" : "tensorflowlitec",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/kewlbear/TensorFlowLiteC.git",
+      "state" : {
+        "branch" : "master",
+        "revision" : "f20b6ee1386afb646c0f7ecd39495b4369f3da75"
+      }
+    },
+    {
+      "identity" : "tensorflowliteswift",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/kewlbear/TensorFlowLiteSwift.git",
+      "state" : {
+        "branch" : "master",
+        "revision" : "73c997b5ee87ffba411048b51e886582358b33a3"
       }
     }
   ],

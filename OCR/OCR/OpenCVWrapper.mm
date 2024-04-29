@@ -15,10 +15,12 @@
 #import <opencv2/imgproc.hpp>//cv::域名下的东西会用到
 #import <opencv2/highgui.hpp>
 
-
 #import "OpenCVWrapper.h"
 
+@interface OpenCVWrapper()
 
+
+@end
 
 @implementation OpenCVWrapper
 

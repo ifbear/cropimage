@@ -37,20 +37,21 @@
 		A05D2E862BC90D5500B4C264 /* AssetsLibrary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A05D2E852BC90D5500B4C264 /* AssetsLibrary.framework */; };
 		A05D2E882BC912EE00B4C264 /* OpenCVPictureOutlineViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A05D2E872BC912EE00B4C264 /* OpenCVPictureOutlineViewController.swift */; };
 		A05D2E8A2BC9133600B4C264 /* UIImage+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = A05D2E892BC9133600B4C264 /* UIImage+Extensions.swift */; };
+		A069EA002BDF87D200940C33 /* TensorFlowLiteSwift in Frameworks */ = {isa = PBXBuildFile; productRef = A069E9FF2BDF87D200940C33 /* TensorFlowLiteSwift */; };
 		A0714C3B2BD8D2FD0018B578 /* DDTextSelectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0714C3A2BD8D2FD0018B578 /* DDTextSelectionViewController.swift */; };
 		A0714C3D2BD8D39E0018B578 /* MultipleSelectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0714C3C2BD8D39E0018B578 /* MultipleSelectionViewController.swift */; };
 		A0714C402BD8D3F30018B578 /* PanModal in Frameworks */ = {isa = PBXBuildFile; productRef = A0714C3F2BD8D3F30018B578 /* PanModal */; };
 		A0714C422BD8D5AC0018B578 /* UICollectionViewAlignedFlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0714C412BD8D5AC0018B578 /* UICollectionViewAlignedFlowLayout.swift */; };
 		A0714C442BD8D76A0018B578 /* DDTextCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0714C432BD8D76A0018B578 /* DDTextCollectionViewCell.swift */; };
 		A0714C462BD8EBA60018B578 /* DDOcrModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0714C452BD8EBA60018B578 /* DDOcrModel.swift */; };
-		A08326A32BDE479100EFD3D2 /* libFMHEDNet.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A08326A12BDE479100EFD3D2 /* libFMHEDNet.a */; };
 		A08326A92BDF71C200EFD3D2 /* Reusable.swift in Sources */ = {isa = PBXBuildFile; fileRef = A08326A82BDF71C200EFD3D2 /* Reusable.swift */; };
 		A08326AB2BDF721300EFD3D2 /* UITableViewCell+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = A08326AA2BDF721300EFD3D2 /* UITableViewCell+Extensions.swift */; };
+		A08326B12BDF807F00EFD3D2 /* fm_ocr_scanner.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A08326AE2BDF807F00EFD3D2 /* fm_ocr_scanner.cpp */; };
+		A08326B42BDF82FD00EFD3D2 /* FMHEDNet.swift in Sources */ = {isa = PBXBuildFile; fileRef = A08326B32BDF82FD00EFD3D2 /* FMHEDNet.swift */; };
 		A09FDAC12BDDEA7A003F3114 /* DDQuickLookViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A09FDAC02BDDEA7A003F3114 /* DDQuickLookViewController.swift */; };
 		A0A5AF732BDA01E90030D13A /* Compatible.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0A5AF722BDA01E90030D13A /* Compatible.swift */; };
 		A0A5AF782BDA1BF90030D13A /* DDControlItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0A5AF772BDA1BF90030D13A /* DDControlItem.swift */; };
 		A0A5AF7B2BDA40630030D13A /* WeakProxy.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0A5AF7A2BDA40630030D13A /* WeakProxy.swift */; };
-		A0A5AF802BDA42860030D13A /* TensorFlowLiteC.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = A0A5AF7F2BDA42860030D13A /* TensorFlowLiteC.xcframework */; };
 		A0A5AF822BDA50A50030D13A /* UIColor+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0A5AF812BDA50A50030D13A /* UIColor+Extensions.swift */; };
 		A0A5AF852BDB4EA50030D13A /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = A0A5AF842BDB4EA50030D13A /* Kingfisher */; };
 		A0A5AF872BDB7B140030D13A /* String+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0A5AF862BDB7B140030D13A /* String+Extensions.swift */; };
@@ -108,16 +109,15 @@
 		A0714C412BD8D5AC0018B578 /* UICollectionViewAlignedFlowLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UICollectionViewAlignedFlowLayout.swift; sourceTree = "<group>"; };
 		A0714C432BD8D76A0018B578 /* DDTextCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DDTextCollectionViewCell.swift; sourceTree = "<group>"; };
 		A0714C452BD8EBA60018B578 /* DDOcrModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DDOcrModel.swift; sourceTree = "<group>"; };
-		A083269D2BDE479100EFD3D2 /* fm_ocr_scanner.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = fm_ocr_scanner.hpp; sourceTree = "<group>"; };
-		A083269E2BDE479100EFD3D2 /* FMHEDNet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMHEDNet.h; sourceTree = "<group>"; };
-		A08326A12BDE479100EFD3D2 /* libFMHEDNet.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libFMHEDNet.a; sourceTree = "<group>"; };
 		A08326A82BDF71C200EFD3D2 /* Reusable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Reusable.swift; sourceTree = "<group>"; };
 		A08326AA2BDF721300EFD3D2 /* UITableViewCell+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITableViewCell+Extensions.swift"; sourceTree = "<group>"; };
+		A08326AE2BDF807F00EFD3D2 /* fm_ocr_scanner.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = fm_ocr_scanner.cpp; sourceTree = "<group>"; };
+		A08326AF2BDF807F00EFD3D2 /* fm_ocr_scanner.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = fm_ocr_scanner.hpp; sourceTree = "<group>"; };
+		A08326B32BDF82FD00EFD3D2 /* FMHEDNet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FMHEDNet.swift; sourceTree = "<group>"; };
 		A09FDAC02BDDEA7A003F3114 /* DDQuickLookViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DDQuickLookViewController.swift; sourceTree = "<group>"; };
 		A0A5AF722BDA01E90030D13A /* Compatible.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Compatible.swift; sourceTree = "<group>"; };
 		A0A5AF772BDA1BF90030D13A /* DDControlItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DDControlItem.swift; sourceTree = "<group>"; };
 		A0A5AF7A2BDA40630030D13A /* WeakProxy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeakProxy.swift; sourceTree = "<group>"; };
-		A0A5AF7F2BDA42860030D13A /* TensorFlowLiteC.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; path = TensorFlowLiteC.xcframework; sourceTree = "<group>"; };
 		A0A5AF812BDA50A50030D13A /* UIColor+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Extensions.swift"; sourceTree = "<group>"; };
 		A0A5AF862BDB7B140030D13A /* String+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Extensions.swift"; sourceTree = "<group>"; };
 		A0A5AF882BDB80E00030D13A /* DDSheetViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DDSheetViewController.swift; sourceTree = "<group>"; };
@@ -149,14 +149,13 @@
 				A0BC027D2BC8F3A1002C3129 /* opencv2.framework in Frameworks */,
 				A05D2E842BC90D4D00B4C264 /* CoreMedia.framework in Frameworks */,
 				A05D2E7E2BC90D3400B4C264 /* QuartzCore.framework in Frameworks */,
+				A069EA002BDF87D200940C33 /* TensorFlowLiteSwift in Frameworks */,
 				A05D2E7C2BC90D2C00B4C264 /* CoreImage.framework in Frameworks */,
 				A04EC56A2BB1730D007A7A45 /* SnapKit in Frameworks */,
 				A02233872BC68FD1006E6EB7 /* Alamofire in Frameworks */,
-				A08326A32BDE479100EFD3D2 /* libFMHEDNet.a in Frameworks */,
 				A0A5AF852BDB4EA50030D13A /* Kingfisher in Frameworks */,
 				A0714C402BD8D3F30018B578 /* PanModal in Frameworks */,
 				A05D2E822BC90D4300B4C264 /* CoreVideo.framework in Frameworks */,
-				A0A5AF802BDA42860030D13A /* TensorFlowLiteC.xcframework in Frameworks */,
 				A05D2E862BC90D5500B4C264 /* AssetsLibrary.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -167,9 +166,7 @@
 		A04EC5322BB119DB007A7A45 = {
 			isa = PBXGroup;
 			children = (
-				A08326A22BDE479100EFD3D2 /* FMHEDNet */,
 				A0BC027C2BC8F3A1002C3129 /* opencv2.framework */,
-				A0A5AF7F2BDA42860030D13A /* TensorFlowLiteC.xcframework */,
 				A04EC53D2BB119DB007A7A45 /* OCR */,
 				A04EC53C2BB119DB007A7A45 /* Products */,
 				A05D2E772BC90D1300B4C264 /* Frameworks */,
@@ -187,6 +184,7 @@
 		A04EC53D2BB119DB007A7A45 /* OCR */ = {
 			isa = PBXGroup;
 			children = (
+				A08326AC2BDF805B00EFD3D2 /* FMHEDNet */,
 				A0A5AF792BDA381D0030D13A /* DocDetect */,
 				A01970B62BD0E22F00778B8A /* a.PNG */,
 				A0E771A92BCE3F2100F0A2B4 /* abc.jpg */,
@@ -243,28 +241,12 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		A083269F2BDE479100EFD3D2 /* FMHEDNet */ = {
+		A08326AC2BDF805B00EFD3D2 /* FMHEDNet */ = {
 			isa = PBXGroup;
 			children = (
-				A083269D2BDE479100EFD3D2 /* fm_ocr_scanner.hpp */,
-				A083269E2BDE479100EFD3D2 /* FMHEDNet.h */,
-			);
-			path = FMHEDNet;
-			sourceTree = "<group>";
-		};
-		A08326A02BDE479100EFD3D2 /* include */ = {
-			isa = PBXGroup;
-			children = (
-				A083269F2BDE479100EFD3D2 /* FMHEDNet */,
-			);
-			path = include;
-			sourceTree = "<group>";
-		};
-		A08326A22BDE479100EFD3D2 /* FMHEDNet */ = {
-			isa = PBXGroup;
-			children = (
-				A08326A02BDE479100EFD3D2 /* include */,
-				A08326A12BDE479100EFD3D2 /* libFMHEDNet.a */,
+				A08326AE2BDF807F00EFD3D2 /* fm_ocr_scanner.cpp */,
+				A08326AF2BDF807F00EFD3D2 /* fm_ocr_scanner.hpp */,
+				A08326B32BDF82FD00EFD3D2 /* FMHEDNet.swift */,
 			);
 			path = FMHEDNet;
 			sourceTree = "<group>";
@@ -336,6 +318,7 @@
 				A02233862BC68FD1006E6EB7 /* Alamofire */,
 				A0714C3F2BD8D3F30018B578 /* PanModal */,
 				A0A5AF842BDB4EA50030D13A /* Kingfisher */,
+				A069E9FF2BDF87D200940C33 /* TensorFlowLiteSwift */,
 			);
 			productName = OCR;
 			productReference = A04EC53B2BB119DB007A7A45 /* OCR.app */;
@@ -371,6 +354,7 @@
 				A02233852BC68FD1006E6EB7 /* XCRemoteSwiftPackageReference "Alamofire" */,
 				A0714C3E2BD8D3F30018B578 /* XCRemoteSwiftPackageReference "PanModal" */,
 				A0A5AF832BDB4EA50030D13A /* XCRemoteSwiftPackageReference "Kingfisher" */,
+				A069E9FE2BDF87D200940C33 /* XCRemoteSwiftPackageReference "TensorFlowLiteSwift" */,
 			);
 			productRefGroup = A04EC53C2BB119DB007A7A45 /* Products */;
 			projectDirPath = "";
@@ -403,9 +387,11 @@
 			files = (
 				A0A5AF8F2BDB83440030D13A /* DDSheetItem.swift in Sources */,
 				A0A5AF8B2BDB82B60030D13A /* UIApplication+Extensions.swift in Sources */,
+				A08326B12BDF807F00EFD3D2 /* fm_ocr_scanner.cpp in Sources */,
 				A01970B92BD0F59000778B8A /* UIImageView+Extensions.swift in Sources */,
 				A0A5AF872BDB7B140030D13A /* String+Extensions.swift in Sources */,
 				A01970C52BD2511700778B8A /* DDPreviewCell.swift in Sources */,
+				A08326B42BDF82FD00EFD3D2 /* FMHEDNet.swift in Sources */,
 				A0F00FB92BD6083100F77B57 /* ScanningViewController.swift in Sources */,
 				A08326A92BDF71C200EFD3D2 /* Reusable.swift in Sources */,
 				A0A5AF7B2BDA40630030D13A /* WeakProxy.swift in Sources */,
@@ -616,7 +602,6 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
-					"$(PROJECT_DIR)/FMHEDNet",
 				);
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.dx.OCR;
@@ -657,7 +642,6 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
-					"$(PROJECT_DIR)/FMHEDNet",
 				);
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.dx.OCR;
@@ -709,6 +693,14 @@
 				minimumVersion = 5.7.1;
 			};
 		};
+		A069E9FE2BDF87D200940C33 /* XCRemoteSwiftPackageReference "TensorFlowLiteSwift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/kewlbear/TensorFlowLiteSwift.git";
+			requirement = {
+				branch = master;
+				kind = branch;
+			};
+		};
 		A0714C3E2BD8D3F30018B578 /* XCRemoteSwiftPackageReference "PanModal" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/slackhq/PanModal.git";
@@ -737,6 +729,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = A04EC5682BB1730D007A7A45 /* XCRemoteSwiftPackageReference "SnapKit" */;
 			productName = SnapKit;
+		};
+		A069E9FF2BDF87D200940C33 /* TensorFlowLiteSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = A069E9FE2BDF87D200940C33 /* XCRemoteSwiftPackageReference "TensorFlowLiteSwift" */;
+			productName = TensorFlowLiteSwift;
 		};
 		A0714C3F2BD8D3F30018B578 /* PanModal */ = {
 			isa = XCSwiftPackageProductDependency;
