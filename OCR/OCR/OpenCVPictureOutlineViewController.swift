@@ -75,9 +75,8 @@ extension OpenCVPictureOutlineViewController {
                 try? FileManager.default.removeItem(at: tempUrl)
                 try FileManager.default.copyItem(at: url, to: tempUrl)
                 guard let image: UIImage = .init(contentsOfFile: tempUrl.path) else { return }
-                let img = OpenCVWrapper.contours(image)
                 DispatchQueue.main.async {
-                    self.imageView.image = img
+                    self.imageView.image = image
                 }
                 
 

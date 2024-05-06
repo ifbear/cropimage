@@ -79,10 +79,8 @@ extension View4Controller {
                 try? FileManager.default.removeItem(at: tempUrl)
                 try FileManager.default.copyItem(at: url, to: tempUrl)
                 guard let image: UIImage = .init(contentsOfFile: tempUrl.path) else { return }
-                let wrapper = OpenCVWrapper()
-                let img = OpenCVWrapper.change(image)
                 DispatchQueue.main.async {
-                    self.imageView.image = img
+                    self.imageView.image = image
                 }
 //                if #available(iOS 15.0, *) {
 //                    let request: VNDetectDocumentSegmentationRequest = .init { request, error in

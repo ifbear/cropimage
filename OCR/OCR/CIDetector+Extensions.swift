@@ -6,6 +6,8 @@
 //
 
 import Foundation
+import CoreImage
+import UIKit
 
 extension CIDetector {
  

@@ -181,16 +181,8 @@ extension View3Controller {
     // 计算最小外接矩形的顶点
     func minimumBoundingRectangleVertices(_ points: [CGPoint]) -> [CGPoint]? {
         let hull = convexHull(points)
+        return []
         
-        
-        
-        
-        
-        
-        
-        let wrapper = OpenCVWrapper()
-        let values = wrapper.minimumBoundingRectangleVertices(points.map { NSValue(cgPoint: $0) })
-        return values.map { $0.cgPointValue }
     }
 
     func rotatingCalipers(points: [CGPoint]) -> [CGPoint] {
