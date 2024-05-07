@@ -71,11 +71,11 @@ struct Rectangle {
     
     /// 转换坐标
     /// - Parameters:
-    ///   - topLeft: <#topLeft description#>
-    ///   - topRight: <#topRight description#>
-    ///   - bottomLeft: <#bottomLeft description#>
-    ///   - bottomRight: <#bottomRight description#>
-    ///   - view: <#view description#>
+    ///   - topLeft: CGPoint
+    ///   - topRight: CGPoint
+    ///   - bottomLeft: CGPoint
+    ///   - bottomRight: CGPoint
+    ///   - view: UIImageView
     internal static func convert(topLeft: CGPoint, topRight: CGPoint, bottomLeft: CGPoint, bottomRight: CGPoint, for imageView: UIImageView) -> Rectangle {
         guard let image = imageView.image else { return .default }
         let rect = imageView.contentClippingRect

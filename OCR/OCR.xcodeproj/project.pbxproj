@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		A01970B72BD0E22F00778B8A /* a.PNG in Resources */ = {isa = PBXBuildFile; fileRef = A01970B62BD0E22F00778B8A /* a.PNG */; };
 		A01970B92BD0F59000778B8A /* UIImageView+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = A01970B82BD0F59000778B8A /* UIImageView+Extensions.swift */; };
 		A01970BD2BD20D9200778B8A /* CIDetector+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = A01970BC2BD20D9200778B8A /* CIDetector+Extensions.swift */; };
 		A01970BF2BD20F5F00778B8A /* CGPoint+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = A01970BE2BD20F5F00778B8A /* CGPoint+Extensions.swift */; };
@@ -15,6 +14,9 @@
 		A02233722BC687AA006E6EB7 /* View3Controller.swift in Sources */ = {isa = PBXBuildFile; fileRef = A02233712BC687AA006E6EB7 /* View3Controller.swift */; };
 		A02233742BC68A83006E6EB7 /* View4Controller.swift in Sources */ = {isa = PBXBuildFile; fileRef = A02233732BC68A83006E6EB7 /* View4Controller.swift */; };
 		A02233872BC68FD1006E6EB7 /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = A02233862BC68FD1006E6EB7 /* Alamofire */; };
+		A02FCCBE2BE9CE1B002983A6 /* hed_graph.pb in Resources */ = {isa = PBXBuildFile; fileRef = A02FCCBD2BE9CE1B002983A6 /* hed_graph.pb */; };
+		A02FCCC02BE9D565002983A6 /* IMG_3213.jpg in Resources */ = {isa = PBXBuildFile; fileRef = A02FCCBF2BE9D564002983A6 /* IMG_3213.jpg */; };
+		A02FCCC42BEA0EE8002983A6 /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = A02FCCC32BEA0EE8002983A6 /* Utils.swift */; };
 		A04EC53F2BB119DB007A7A45 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A04EC53E2BB119DB007A7A45 /* AppDelegate.swift */; };
 		A04EC5412BB119DB007A7A45 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A04EC5402BB119DB007A7A45 /* SceneDelegate.swift */; };
 		A04EC5432BB119DB007A7A45 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A04EC5422BB119DB007A7A45 /* ViewController.swift */; };
@@ -64,18 +66,27 @@
 		A0CEF0BC2BE0D15A007C9718 /* DDSheetTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0CEF09F2BE0D15A007C9718 /* DDSheetTableViewCell.swift */; };
 		A0CEF0BD2BE0D15A007C9718 /* DDTextCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0CEF0A02BE0D15A007C9718 /* DDTextCollectionViewCell.swift */; };
 		A0CEF0C12BE0D1E9007C9718 /* HEDNetViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0CEF0C02BE0D1E9007C9718 /* HEDNetViewController.swift */; };
+		A0DB50DC2BE9C3810033B4D9 /* libFMHEDNet.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A0DB50CE2BE9C3810033B4D9 /* libFMHEDNet.a */; };
+		A0DB50DE2BE9C3810033B4D9 /* libprotobuf.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A0DB50D12BE9C3810033B4D9 /* libprotobuf.a */; };
+		A0DB50E42BE9C3810033B4D9 /* libtensorflow-core.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A0DB50D72BE9C3810033B4D9 /* libtensorflow-core.a */; };
+		A0DB50E52BE9C3810033B4D9 /* nsync.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A0DB50D82BE9C3810033B4D9 /* nsync.a */; };
+		A0DB50E62BE9C3810033B4D9 /* opencv2.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A0DB50DA2BE9C3810033B4D9 /* opencv2.framework */; };
+		A0DB50E92BE9C4790033B4D9 /* OpenCVUtils.mm in Sources */ = {isa = PBXBuildFile; fileRef = A0DB50E82BE9C4790033B4D9 /* OpenCVUtils.mm */; };
+		A0DB50EC2BE9C4990033B4D9 /* OpenCVUtils+Extensions.mm in Sources */ = {isa = PBXBuildFile; fileRef = A0DB50EB2BE9C4990033B4D9 /* OpenCVUtils+Extensions.mm */; };
 		A0E771AA2BCE3F2100F0A2B4 /* abc.jpg in Resources */ = {isa = PBXBuildFile; fileRef = A0E771A92BCE3F2100F0A2B4 /* abc.jpg */; };
 		A0F00FB92BD6083100F77B57 /* ScanningViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0F00FB82BD6083100F77B57 /* ScanningViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		A01970B62BD0E22F00778B8A /* a.PNG */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = a.PNG; sourceTree = "<group>"; };
 		A01970B82BD0F59000778B8A /* UIImageView+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImageView+Extensions.swift"; sourceTree = "<group>"; };
 		A01970BC2BD20D9200778B8A /* CIDetector+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CIDetector+Extensions.swift"; sourceTree = "<group>"; };
 		A01970BE2BD20F5F00778B8A /* CGPoint+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CGPoint+Extensions.swift"; sourceTree = "<group>"; };
 		A01970C02BD2106A00778B8A /* CIImage+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CIImage+Extensions.swift"; sourceTree = "<group>"; };
 		A02233712BC687AA006E6EB7 /* View3Controller.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = View3Controller.swift; sourceTree = "<group>"; };
 		A02233732BC68A83006E6EB7 /* View4Controller.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = View4Controller.swift; sourceTree = "<group>"; };
+		A02FCCBD2BE9CE1B002983A6 /* hed_graph.pb */ = {isa = PBXFileReference; lastKnownFileType = file; path = hed_graph.pb; sourceTree = "<group>"; };
+		A02FCCBF2BE9D564002983A6 /* IMG_3213.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = IMG_3213.jpg; sourceTree = "<group>"; };
+		A02FCCC32BEA0EE8002983A6 /* Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
 		A04EC53B2BB119DB007A7A45 /* OCR.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = OCR.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A04EC53E2BB119DB007A7A45 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		A04EC5402BB119DB007A7A45 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -125,6 +136,17 @@
 		A0CEF09F2BE0D15A007C9718 /* DDSheetTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DDSheetTableViewCell.swift; sourceTree = "<group>"; };
 		A0CEF0A02BE0D15A007C9718 /* DDTextCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DDTextCollectionViewCell.swift; sourceTree = "<group>"; };
 		A0CEF0C02BE0D1E9007C9718 /* HEDNetViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HEDNetViewController.swift; sourceTree = "<group>"; };
+		A0DB50CA2BE9C3810033B4D9 /* fm_ocr_scanner.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = fm_ocr_scanner.hpp; sourceTree = "<group>"; };
+		A0DB50CB2BE9C3810033B4D9 /* FMHEDNet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMHEDNet.h; sourceTree = "<group>"; };
+		A0DB50CE2BE9C3810033B4D9 /* libFMHEDNet.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libFMHEDNet.a; sourceTree = "<group>"; };
+		A0DB50D12BE9C3810033B4D9 /* libprotobuf.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libprotobuf.a; sourceTree = "<group>"; };
+		A0DB50D72BE9C3810033B4D9 /* libtensorflow-core.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = "libtensorflow-core.a"; sourceTree = "<group>"; };
+		A0DB50D82BE9C3810033B4D9 /* nsync.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = nsync.a; sourceTree = "<group>"; };
+		A0DB50DA2BE9C3810033B4D9 /* opencv2.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = opencv2.framework; sourceTree = "<group>"; };
+		A0DB50E72BE9C4790033B4D9 /* OpenCVUtils.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OpenCVUtils.h; sourceTree = "<group>"; };
+		A0DB50E82BE9C4790033B4D9 /* OpenCVUtils.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = OpenCVUtils.mm; sourceTree = "<group>"; };
+		A0DB50EA2BE9C4990033B4D9 /* OpenCVUtils+Extensions.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "OpenCVUtils+Extensions.h"; sourceTree = "<group>"; };
+		A0DB50EB2BE9C4990033B4D9 /* OpenCVUtils+Extensions.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = "OpenCVUtils+Extensions.mm"; sourceTree = "<group>"; };
 		A0E5F0832BC7E5C400B19500 /* OCR-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "OCR-Bridging-Header.h"; sourceTree = "<group>"; };
 		A0E771A92BCE3F2100F0A2B4 /* abc.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = abc.jpg; sourceTree = "<group>"; };
 		A0F00FB82BD6083100F77B57 /* ScanningViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScanningViewController.swift; sourceTree = "<group>"; };
@@ -137,15 +159,20 @@
 			files = (
 				A05D2E7A2BC90D2200B4C264 /* AVFoundation.framework in Frameworks */,
 				A05D2E802BC90D3C00B4C264 /* Accelerate.framework in Frameworks */,
+				A0DB50E52BE9C3810033B4D9 /* nsync.a in Frameworks */,
+				A0DB50DE2BE9C3810033B4D9 /* libprotobuf.a in Frameworks */,
+				A0DB50DC2BE9C3810033B4D9 /* libFMHEDNet.a in Frameworks */,
 				A05D2E842BC90D4D00B4C264 /* CoreMedia.framework in Frameworks */,
 				A05D2E7E2BC90D3400B4C264 /* QuartzCore.framework in Frameworks */,
 				A05D2E7C2BC90D2C00B4C264 /* CoreImage.framework in Frameworks */,
+				A0DB50E62BE9C3810033B4D9 /* opencv2.framework in Frameworks */,
 				A04EC56A2BB1730D007A7A45 /* SnapKit in Frameworks */,
 				A02233872BC68FD1006E6EB7 /* Alamofire in Frameworks */,
 				A0A5AF852BDB4EA50030D13A /* Kingfisher in Frameworks */,
 				A0714C402BD8D3F30018B578 /* PanModal in Frameworks */,
 				A05D2E822BC90D4300B4C264 /* CoreVideo.framework in Frameworks */,
 				A05D2E862BC90D5500B4C264 /* AssetsLibrary.framework in Frameworks */,
+				A0DB50E42BE9C3810033B4D9 /* libtensorflow-core.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -155,7 +182,8 @@
 		A04EC5322BB119DB007A7A45 = {
 			isa = PBXGroup;
 			children = (
-				A0CEF0CA2BE0D61C007C9718 /* FMHEDNet */,
+				A0DB50DB2BE9C3810033B4D9 /* Libs */,
+				A0DB50C92BE9C34C0033B4D9 /* HED */,
 				A0CEF0A22BE0D15A007C9718 /* DocDetect */,
 				A04EC53D2BB119DB007A7A45 /* OCR */,
 				A04EC53C2BB119DB007A7A45 /* Products */,
@@ -174,7 +202,7 @@
 		A04EC53D2BB119DB007A7A45 /* OCR */ = {
 			isa = PBXGroup;
 			children = (
-				A01970B62BD0E22F00778B8A /* a.PNG */,
+				A02FCCBF2BE9D564002983A6 /* IMG_3213.jpg */,
 				A0E771A92BCE3F2100F0A2B4 /* abc.jpg */,
 				A04EC53E2BB119DB007A7A45 /* AppDelegate.swift */,
 				A04EC5402BB119DB007A7A45 /* SceneDelegate.swift */,
@@ -206,6 +234,7 @@
 				A0A5AF8A2BDB82B60030D13A /* UIApplication+Extensions.swift */,
 				A0A5AF922BDB861A0030D13A /* UIScreen+extensions.swift */,
 				A0A5AF8C2BDB82E00030D13A /* UIWindow+Extensions.swift */,
+				A02FCCC32BEA0EE8002983A6 /* Utils.swift */,
 				A0714C412BD8D5AC0018B578 /* UICollectionViewAlignedFlowLayout.swift */,
 				A0A5AF7A2BDA40630030D13A /* WeakProxy.swift */,
 				A08326A82BDF71C200EFD3D2 /* Reusable.swift */,
@@ -274,11 +303,62 @@
 			path = DocDetect;
 			sourceTree = "<group>";
 		};
-		A0CEF0CA2BE0D61C007C9718 /* FMHEDNet */ = {
+		A0DB50C92BE9C34C0033B4D9 /* HED */ = {
 			isa = PBXGroup;
 			children = (
+				A02FCCBD2BE9CE1B002983A6 /* hed_graph.pb */,
+				A0DB50E72BE9C4790033B4D9 /* OpenCVUtils.h */,
+				A0DB50E82BE9C4790033B4D9 /* OpenCVUtils.mm */,
+				A0DB50EA2BE9C4990033B4D9 /* OpenCVUtils+Extensions.h */,
+				A0DB50EB2BE9C4990033B4D9 /* OpenCVUtils+Extensions.mm */,
+			);
+			path = HED;
+			sourceTree = "<group>";
+		};
+		A0DB50CC2BE9C3810033B4D9 /* FMHEDNet */ = {
+			isa = PBXGroup;
+			children = (
+				A0DB50CA2BE9C3810033B4D9 /* fm_ocr_scanner.hpp */,
+				A0DB50CB2BE9C3810033B4D9 /* FMHEDNet.h */,
 			);
 			path = FMHEDNet;
+			sourceTree = "<group>";
+		};
+		A0DB50CD2BE9C3810033B4D9 /* include */ = {
+			isa = PBXGroup;
+			children = (
+				A0DB50CC2BE9C3810033B4D9 /* FMHEDNet */,
+			);
+			path = include;
+			sourceTree = "<group>";
+		};
+		A0DB50CF2BE9C3810033B4D9 /* FMHEDNet */ = {
+			isa = PBXGroup;
+			children = (
+				A0DB50CD2BE9C3810033B4D9 /* include */,
+				A0DB50CE2BE9C3810033B4D9 /* libFMHEDNet.a */,
+			);
+			path = FMHEDNet;
+			sourceTree = "<group>";
+		};
+		A0DB50D92BE9C3810033B4D9 /* TensorFlow */ = {
+			isa = PBXGroup;
+			children = (
+				A0DB50D12BE9C3810033B4D9 /* libprotobuf.a */,
+				A0DB50D72BE9C3810033B4D9 /* libtensorflow-core.a */,
+				A0DB50D82BE9C3810033B4D9 /* nsync.a */,
+			);
+			path = TensorFlow;
+			sourceTree = "<group>";
+		};
+		A0DB50DB2BE9C3810033B4D9 /* Libs */ = {
+			isa = PBXGroup;
+			children = (
+				A0DB50CF2BE9C3810033B4D9 /* FMHEDNet */,
+				A0DB50D92BE9C3810033B4D9 /* TensorFlow */,
+				A0DB50DA2BE9C3810033B4D9 /* opencv2.framework */,
+			);
+			path = Libs;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -352,8 +432,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A02FCCBE2BE9CE1B002983A6 /* hed_graph.pb in Resources */,
 				A0E771AA2BCE3F2100F0A2B4 /* abc.jpg in Resources */,
-				A01970B72BD0E22F00778B8A /* a.PNG in Resources */,
+				A02FCCC02BE9D565002983A6 /* IMG_3213.jpg in Resources */,
 				A04EC5482BB119DC007A7A45 /* Assets.xcassets in Resources */,
 				A04EC54B2BB119DC007A7A45 /* Base in Resources */,
 				A04EC5462BB119DB007A7A45 /* Base in Resources */,
@@ -382,6 +463,7 @@
 				A0CEF0B52BE0D15A007C9718 /* DDOcrModel.swift in Sources */,
 				A04EC5432BB119DB007A7A45 /* ViewController.swift in Sources */,
 				A0A5AF8D2BDB82E00030D13A /* UIWindow+Extensions.swift in Sources */,
+				A02FCCC42BEA0EE8002983A6 /* Utils.swift in Sources */,
 				A0714C422BD8D5AC0018B578 /* UICollectionViewAlignedFlowLayout.swift in Sources */,
 				A0CEF0BB2BE0D15A007C9718 /* DDPreviewCell.swift in Sources */,
 				A0A5AF932BDB861A0030D13A /* UIScreen+extensions.swift in Sources */,
@@ -397,12 +479,14 @@
 				A05D2E8A2BC9133600B4C264 /* UIImage+Extensions.swift in Sources */,
 				A04EC5532BB11A13007A7A45 /* OCRTool.swift in Sources */,
 				A08326AB2BDF721300EFD3D2 /* UITableViewCell+Extensions.swift in Sources */,
+				A0DB50EC2BE9C4990033B4D9 /* OpenCVUtils+Extensions.mm in Sources */,
 				A0C2B27C2BBA9215008E9FEF /* View1Controller.swift in Sources */,
 				A0CEF0B72BE0D15A007C9718 /* ScanModels.swift in Sources */,
 				A01970BD2BD20D9200778B8A /* CIDetector+Extensions.swift in Sources */,
 				A0CEF0B92BE0D15A007C9718 /* DDCropView.swift in Sources */,
 				A0714C3D2BD8D39E0018B578 /* MultipleSelectionViewController.swift in Sources */,
 				A01970C12BD2106A00778B8A /* CIImage+Extensions.swift in Sources */,
+				A0DB50E92BE9C4790033B4D9 /* OpenCVUtils.mm in Sources */,
 				A05D2E762BC8F83A00B4C264 /* PictureOutlineViewController.swift in Sources */,
 				A0CEF0BC2BE0D15A007C9718 /* DDSheetTableViewCell.swift in Sources */,
 				A0CEF0B32BE0D15A007C9718 /* DDSheetViewController.swift in Sources */,
@@ -566,9 +650,10 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
+					"$(PROJECT_DIR)/Libs",
 				);
 				GENERATE_INFOPLIST_FILE = YES;
-				HEADER_SEARCH_PATHS = "";
+				HEADER_SEARCH_PATHS = "$(PROJECT_DIR)/Libs/FMHEDNet/include";
 				INFOPLIST_FILE = OCR/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
@@ -583,8 +668,14 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/TensorFlow",
+					"$(PROJECT_DIR)/Libs/FMHEDNet",
+					"$(PROJECT_DIR)/Libs/TensorFlow",
 				);
 				MARKETING_VERSION = 1.0;
+				OTHER_LDFLAGS = (
+					"-force_load",
+					"$(PROJECT_DIR)/Libs/TensorFlow/libtensorflow-core.a",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.dx.OCR;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -607,9 +698,10 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
+					"$(PROJECT_DIR)/Libs",
 				);
 				GENERATE_INFOPLIST_FILE = YES;
-				HEADER_SEARCH_PATHS = "";
+				HEADER_SEARCH_PATHS = "$(PROJECT_DIR)/Libs/FMHEDNet/include";
 				INFOPLIST_FILE = OCR/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
@@ -624,8 +716,14 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/TensorFlow",
+					"$(PROJECT_DIR)/Libs/FMHEDNet",
+					"$(PROJECT_DIR)/Libs/TensorFlow",
 				);
 				MARKETING_VERSION = 1.0;
+				OTHER_LDFLAGS = (
+					"-force_load",
+					"$(PROJECT_DIR)/Libs/TensorFlow/libtensorflow-core.a",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.dx.OCR;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;

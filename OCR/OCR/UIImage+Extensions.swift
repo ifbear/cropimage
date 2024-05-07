@@ -120,6 +120,36 @@ extension CompatibleWrapper where Base: UIImage {
         guard let newCgImage = context?.makeImage() else { return base }
         return UIImage(cgImage: newCgImage)
     }
+    
+    /// crop
+    /// - Parameters:
+    ///   - rectangle: Rectangle
+    ///   - angle: CGFloat
+    /// - Returns: UIImage
+    internal func crop(rectangle: Rectangle, angle: CGFloat) -> UIImage {
+        guard var ciImage: CIImage = .init(image: base) else { return base }
+        var rectangleCoordinates: [String: Any] = [:]
+        rectangleCoordinates["inputTopLeft"] = CIVector(cgPoint: rectangle.topLeft)
+        rectangleCoordinates["inputTopRight"] = CIVector(cgPoint: rectangle.topRight)
+        rectangleCoordinates["inputBottomLeft"] = CIVector(cgPoint: rectangle.bottomLeft)
+        rectangleCoordinates["inputBottomRight"] = CIVector(cgPoint: rectangle.bottomRight)
+        ciImage = ciImage.applyingFilter("CIPerspectiveCorrection", parameters: rectangleCoordinates)
+        
+        let newImage: UIImage = .init(ciImage: ciImage)
+        // 图片大小
+        let rotatedSize = CGRect(origin: .zero, size: newImage.size)
+            .applying(CGAffineTransform(rotationAngle: angle))
+            .size
+        // 创建上下文
+        let renderer = UIGraphicsImageRenderer(size: rotatedSize)
+        
+        let rotatedImage = renderer.image { context in
+            context.cgContext.translateBy(x: rotatedSize.width * 0.5, y: rotatedSize.height * 0.5)
+            context.cgContext.rotate(by: angle)
+            newImage.draw(in: CGRect(x: -newImage.size.width * 0.5, y: -newImage.size.height * 0.5, width: newImage.size.width, height: newImage.size.height))
+        }
+        return rotatedImage
+    }
 }
 
 extension UIImage {

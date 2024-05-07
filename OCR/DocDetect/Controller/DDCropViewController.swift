@@ -80,6 +80,9 @@ class DDCropViewController: UIViewController {
         return _button
     }()
     
+    /// OpenCVUtils
+    private lazy var openCVUtils: OpenCVUtils = .init()
+    
     /// 放大镜
     private var mMagnifier: DDMagnifierView?
     
@@ -103,7 +106,7 @@ class DDCropViewController: UIViewController {
     private var originAngle: OriginAngle {
         cropModel.originAngle
     }
-
+    
     //MARK: - 生命周期
     
     /// init
@@ -142,22 +145,29 @@ class DDCropViewController: UIViewController {
             scanningCropView.position = cropModel.rectangle.convertRectangle(with: scanningCropView.bounds.size, scale: scanningCropView.bounds.width / image.size.width)
             scanningCropView.maxResizeFrame = scanningCropView.bounds
         } else {
-            if let rectangleFeature = CIDetector.rectangle(with: image) {
-                scanningCropView.position = Rectangle.convert(topLeft: rectangleFeature.topLeft,
-                                                             topRight: rectangleFeature.topRight,
-                                                             bottomLeft: rectangleFeature.bottomLeft,
-                                                             bottomRight: rectangleFeature.bottomRight,
-                                                             for: imageView)
-            } else {
-                scanningCropView.position = Rectangle.convert(topLeft: .init(x: 0, y: image.size.height),
-                                                             topRight: .init(x: image.size.width, y: image.size.height),
-                                                             bottomLeft: .zero,
-                                                             bottomRight: .init(x: image.size.width, y: 0),
-                                                             for: imageView)
+            openCVUtils.processUIImage(image) { [weak self] points, image in
+                guard let this = self else { return }
+                if let points = points, let image = image {
+                    let cgPoints = points.map(\.cgPointValue).map { point in
+                        return point.convert(for: image.size, scaleBy: 1)
+                    }
+                    this.scanningCropView.position = .init(topLeft: cgPoints[0], 
+                                                           topRight: cgPoints[1],
+                                                           bottomLeft: cgPoints[3],
+                                                           bottomRight: cgPoints[2])
+                } else {
+                    let maxX = this.image.size.width - 10
+                    let maxY = this.image.size.height - 10
+                    this.scanningCropView.position = Rectangle.convert(topLeft: .init(x: 10, y: maxY),
+                                                                       topRight: .init(x: maxX, y: maxY),
+                                                                       bottomLeft: .init(x: 10, y: 10),
+                                                                       bottomRight: .init(x: maxX, y: 10),
+                                                                       for: this.imageView)
+                }
             }
         }
     }
-
+    
 }
 
 extension DDCropViewController {
@@ -260,10 +270,10 @@ extension DDCropViewController {
                 }
             }
             return .init(x: (view.bounds.width - w) * 0.5, y: (view.bounds.height - h) * 0.5, width: w, height: h)
-
+            
         }
     }
-
+    
     /// buttonActionHandler
     /// - Parameter button: UIButton
     @objc private func buttonActionHandler(_ button: UIButton) {
@@ -286,7 +296,7 @@ extension DDCropViewController {
             guard scanningCropView.checkValid() == true else { return }
             let scale = image.size.width / imageView.bounds.width
             let rectangle = scanningCropView.position.convertRectangle(with: image.size, scale: scale)
-            let image = crop(image: image, rectangle: rectangle, angle: originAngle.counterclockwiseRotationAngle)
+            let image = image.hub.crop(rectangle: rectangle, angle: originAngle.counterclockwiseRotationAngle)
             cropModel.originAngle = originAngle
             cropModel.rectangle = rectangle
             cropModel.cropImage = image
@@ -295,7 +305,7 @@ extension DDCropViewController {
             
         default: break
         }
-
+        
     }
     
     /// crop

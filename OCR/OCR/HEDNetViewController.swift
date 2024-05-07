@@ -9,52 +9,34 @@ import UIKit
 
 class HEDNetViewController: UIViewController {
     
+    let image: UIImage = .init(named: "IMG_3213.jpg")!
+    
     private lazy var imageView1: UIImageView = {
         let _imageView: UIImageView = .init()
-        
+        _imageView.image = image
         return _imageView
     }()
-    private lazy var imageView2: UIImageView = {
-        let _imageView: UIImageView = .init()
-        
-        return _imageView
-    }()
-    private lazy var imageView3: UIImageView = {
-        let _imageView: UIImageView = .init()
-        
-        return _imageView
-    }()
-    private lazy var imageView4: UIImageView = {
-        let _imageView: UIImageView = .init()
-        
-        return _imageView
-    }()
-
+    
+    private lazy var openCVUtils: OpenCVUtils = .init()
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         view.addSubview(imageView1)
         imageView1.snp.makeConstraints {
-            $0.left.top.equalTo(view.safeAreaLayoutGuide)
-            $0.height.width.equalToSuperview().multipliedBy(0.4)
+            $0.edges.equalToSuperview()
         }
         
-        view.addSubview(imageView2)
-        imageView2.snp.makeConstraints {
-            $0.right.top.equalTo(view.safeAreaLayoutGuide)
-            $0.height.width.equalToSuperview().multipliedBy(0.4)
-        }
-        
-        view.addSubview(imageView3)
-        imageView3.snp.makeConstraints {
-            $0.left.bottom.equalTo(view.safeAreaLayoutGuide)
-            $0.height.width.equalToSuperview().multipliedBy(0.4)
-        }
-        
-        view.addSubview(imageView4)
-        imageView4.snp.makeConstraints {
-            $0.right.bottom.equalTo(view.safeAreaLayoutGuide)
-            $0.height.width.equalToSuperview().multipliedBy(0.4)
+        openCVUtils.processUIImage(image) { values, image in
+            guard let values = values else { return }
+            let p1 = values[0].cgPointValue
+            let p2 = values[1].cgPointValue
+            let p3 = values[2].cgPointValue
+            let p4 = values[3].cgPointValue
+            
+            let _image = image?.drawBezierPath(with: [p1, p2, p3, p4])
+            self.imageView1.image = _image
         }
     }
     

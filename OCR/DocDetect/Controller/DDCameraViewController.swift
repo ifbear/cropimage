@@ -82,11 +82,20 @@ class DDCameraViewController: UIViewController {
         return session
     }()
     
-    /// input
-    private var input: AVCaptureDeviceInput?
+    /// deviceInput
+    private var deviceInput: AVCaptureDeviceInput?
+    
+    /// photoOutput
+    private lazy var photoOutput: AVCapturePhotoOutput = .init()
     
     /// output
-    private var output: AVCapturePhotoOutput?
+    private lazy var videoDataOutput: AVCaptureVideoDataOutput = {
+        let _output: AVCaptureVideoDataOutput = .init()
+        _output.setSampleBufferDelegate(self, queue: videoDataOutputQueue)
+        _output.alwaysDiscardsLateVideoFrames = true
+        _output.videoSettings = [ String(kCVPixelBufferPixelFormatTypeKey) : kCMPixelFormat_32BGRA]
+        return _output
+    }()
     
     /// previewLayer
     private var previewLayer: AVCaptureVideoPreviewLayer?
@@ -94,12 +103,27 @@ class DDCameraViewController: UIViewController {
     /// sessionQueue
     private let sessionQueue: DispatchQueue = .init(label: "AVCaptureSession.sessionQueue")
     
+    /// videoDataOutputQueue
+    private let videoDataOutputQueue: DispatchQueue = .init(label: "AVCaptureVideoDataOutput.videoDataOutputQueue")
+    
     /// cropModels
     private var cropModels: [DDCropModel] = [] {
         didSet {
             scannedButton.isHidden = cropModels.isEmpty
             scannedButton.setTitle("已扫描\(cropModels.count)", for: .normal)
         }
+    }
+    
+    /// OpenCVUtils
+    private lazy var openCVUtils: OpenCVUtils = .init()
+    
+    /// _isScanning
+    private var _isScanning: Bool = false
+    
+    /// isScanning
+    private var isScanning: Bool {
+        get { Utils.synchronized(for: self) { _isScanning } }
+        set { Utils.synchronized(for: self) { _isScanning = newValue } }
     }
     
     //MARK: - 生命周期
@@ -196,14 +220,17 @@ extension DDCameraViewController {
     private func initSession() {
         guard let device = AVCaptureDevice.default(for: .video) else { return }
         guard let input = try? AVCaptureDeviceInput(device: device) else { return }
-        self.input = input
+        self.deviceInput = input
         if session.canAddInput(input) {
             session.addInput(input)
         }
-        let output = AVCapturePhotoOutput()
-        self.output = output
-        if session.canAddOutput(output) {
-            session.addOutput(output)
+        
+        if session.canAddOutput(videoDataOutput) {
+            session.addOutput(videoDataOutput)
+        }
+        
+        if session.canAddOutput(photoOutput) {
+            session.addOutput(photoOutput)
         }
         
         previewLayer = .init(session: session)
@@ -259,15 +286,17 @@ extension DDCameraViewController {
         case cancelButton:
             dismiss(animated: true)
         case takeButton:
-            guard let connection = output?.connection(with: .video) else { return }
+            guard let connection = photoOutput.connection(with: .video) else { return }
             connection.videoOrientation = .portrait
             let setting = AVCapturePhotoSettings(format: [AVVideoCodecKey: AVVideoCodecType.jpeg])
-            if input?.device.hasFlash == true, flashButton.isSelected {
+            
+            if deviceInput?.device.hasFlash == true, flashButton.isSelected {
                 setting.flashMode = .on
             } else {
                 setting.flashMode = .off
             }
-            output?.capturePhoto(with: setting, delegate: self)
+            photoOutput.capturePhoto(with: setting, delegate: self)
+
         case scannedButton:
             let controller: DDPreviewController = .init(cropModels: cropModels)
             navigationController?.pushViewController(controller, animated: true)
@@ -307,5 +336,33 @@ extension DDCameraViewController: AVCapturePhotoCaptureDelegate {
         let navi: UINavigationController = .init(rootViewController: controller)
         navi.modalPresentationStyle = .fullScreen
         present(navi, animated: true)
+    }
+}
+
+extension DDCameraViewController: AVCaptureVideoDataOutputSampleBufferDelegate {
+    
+    /// didOutput
+    /// - Parameters:
+    ///   - output: AVCaptureOutput
+    ///   - sampleBuffer: CMSampleBuffer
+    ///   - connection: AVCaptureConnection
+    internal func captureOutput(_ output: AVCaptureOutput, didOutput sampleBuffer: CMSampleBuffer, from connection: AVCaptureConnection) {
+        guard isScanning == false else { return }
+        isScanning = true
+        openCVUtils.processCVImageBuffer(sampleBuffer) { [weak self] (points, image) in
+            guard let this = self, let points = points, let image = image else {
+                self?.isScanning = false
+                return
+            }
+            let cgPoints = points.map(\.cgPointValue).map { point in
+                return point.convert(for: image.size, scaleBy: 1)
+            }
+            let position: Rectangle = .init(topLeft: cgPoints[0], topRight: cgPoints[1], bottomLeft: cgPoints[3], bottomRight: cgPoints[2])
+            let cropImage = image.hub.crop(rectangle: position, angle: 0)
+            DispatchQueue.main.async {
+                this.cropModels.append(.init(image: image, cropImage: cropImage, cropPosition: position))
+                this.isScanning = false
+            }
+        }
     }
 }
