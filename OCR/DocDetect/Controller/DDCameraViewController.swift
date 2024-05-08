@@ -8,13 +8,22 @@
 import UIKit
 import AVFoundation
 
-extension Notification.Name {
+extension DDCameraViewController {
     
-    /// corpModelDeleted
-    internal static var corpModelDeleted: Notification.Name = .init(rawValue: "Notification.Name.corpModelDeleted")
+    /// showDocumentDetectController
+    /// - Parameter target: UIViewController
+    internal static func showDocumentDetectController(at target: UIViewController, complateBlock: (([URL]) -> Void)? = nil) {
+        let controller: DDCameraViewController = .init()
+        controller.complateBlock = complateBlock
+        let navi: DDNavigationController = .init(rootViewController: controller)
+        target.present(navi, animated: true)
+    }
 }
 
 class DDCameraViewController: UIViewController {
+    
+    /// ([URL]) -> Void
+    internal var complateBlock: (([URL]) -> Void)? = nil
     
     /// flashButton
     private lazy var flashButton: UIButton = {
@@ -64,8 +73,8 @@ class DDCameraViewController: UIViewController {
         return _button
     }()
     
-    /// scannedButton
-    private lazy var scannedButton: UIButton = {
+    /// previewButton
+    private lazy var previewButton: UIButton = {
         let _button: UIButton = .init(type: .custom)
         _button.setTitle("已扫描", for: .normal)
         _button.setImage(.init(named: "icns-arrow"), for: .normal)
@@ -86,7 +95,10 @@ class DDCameraViewController: UIViewController {
     private var deviceInput: AVCaptureDeviceInput?
     
     /// photoOutput
-    private lazy var photoOutput: AVCapturePhotoOutput = .init()
+    private lazy var photoOutput: AVCapturePhotoOutput = {
+        let _output: AVCapturePhotoOutput = .init()
+        return _output
+    }()
     
     /// output
     private lazy var videoDataOutput: AVCaptureVideoDataOutput = {
@@ -98,7 +110,11 @@ class DDCameraViewController: UIViewController {
     }()
     
     /// previewLayer
-    private var previewLayer: AVCaptureVideoPreviewLayer?
+    private lazy var previewLayer: AVCaptureVideoPreviewLayer = {
+        let _layer: AVCaptureVideoPreviewLayer = .init(session: session)
+        _layer.videoGravity = .resizeAspectFill
+        return _layer
+    }()
     
     /// sessionQueue
     private let sessionQueue: DispatchQueue = .init(label: "AVCaptureSession.sessionQueue")
@@ -107,10 +123,12 @@ class DDCameraViewController: UIViewController {
     private let videoDataOutputQueue: DispatchQueue = .init(label: "AVCaptureVideoDataOutput.videoDataOutputQueue")
     
     /// cropModels
-    private var cropModels: [DDCropModel] = [] {
-        didSet {
-            scannedButton.isHidden = cropModels.isEmpty
-            scannedButton.setTitle("已扫描\(cropModels.count)", for: .normal)
+    private var cropModels: [DDCropModel] {
+        get { (navigationController as! DDNavigationController).cropModels }
+        set {
+            (navigationController as! DDNavigationController).cropModels = newValue
+            previewButton.isHidden = newValue.isEmpty
+            previewButton.setTitle("已扫描\(newValue.count)", for: .normal)
         }
     }
     
@@ -139,35 +157,29 @@ class DDCameraViewController: UIViewController {
             guard finish == true else { return }
             initSession()
         }
-        
-        // 添加监听
-        NotificationCenter.default.addObserver(self, selector: #selector(Self.notificationActionHandler(_:)), name: .corpModelDeleted, object: nil)
     }
     
     /// viewWillAppear
     /// - Parameter animated: Bool
     internal override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        guard AVCaptureDevice.authorizationStatus(for: .video) != .notDetermined else { return }
-        sessionQueue.async {
-            guard self.session.isRunning == false else { return }
-            self.session.startRunning()
+        if AVCaptureDevice.authorizationStatus(for: .video) != .notDetermined {
+            startRunning()
         }
+        // 刷新
+        previewButton.isHidden = cropModels.isEmpty
+        previewButton.setTitle("已扫描\(cropModels.count)", for: .normal)
     }
     
     /// viewWillDisappear
     /// - Parameter animated: Bool
     internal override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        sessionQueue.async {
-            guard self.session.isRunning else { return }
-            self.session.stopRunning()
-        }
+        stopRunning()
     }
     
     deinit {
-        print(#function, #file)
-        NotificationCenter.default.removeObserver(self)
+        print(#function, #file.hub.lastPathComponent)
     }
 }
 
@@ -206,8 +218,8 @@ extension DDCameraViewController {
             $0.height.equalTo(49.0)
         }
 
-        bottomView.addSubview(scannedButton)
-        scannedButton.snp.makeConstraints {
+        bottomView.addSubview(previewButton)
+        previewButton.snp.makeConstraints {
             $0.right.equalToSuperview().offset(-16.0)
             $0.centerY.equalTo(takeButton.snp.centerY)
             $0.height.equalTo(49.0)
@@ -220,30 +232,55 @@ extension DDCameraViewController {
     private func initSession() {
         guard let device = AVCaptureDevice.default(for: .video) else { return }
         guard let input = try? AVCaptureDeviceInput(device: device) else { return }
+        session.beginConfiguration()
         self.deviceInput = input
         if session.canAddInput(input) {
             session.addInput(input)
         }
         
+        /// addOutput videoDataOutput
         if session.canAddOutput(videoDataOutput) {
             session.addOutput(videoDataOutput)
         }
+        if let connection = videoDataOutput.connection(with: .video), connection.hub.isVideoOrientationSupported {
+            connection.hub.videoOrientation = .portrait
+        }
         
+        /// addOutput photoOutput
         if session.canAddOutput(photoOutput) {
             session.addOutput(photoOutput)
         }
-        
-        previewLayer = .init(session: session)
-        previewLayer?.frame = videoLayerView.bounds
-        previewLayer?.videoGravity = .resizeAspectFill
-        if let previewLayer = previewLayer {
-            videoLayerView.layer.insertSublayer(previewLayer, at: 0)
+        if let connection = photoOutput.connection(with: .video), connection.hub.isVideoOrientationSupported {
+            connection.hub.videoOrientation = .portrait
         }
         
-        sessionQueue.async {
-            self.session.startRunning()
+        /// previewLayer
+        previewLayer.frame = videoLayerView.bounds
+        videoLayerView.layer.insertSublayer(previewLayer, at: 0)
+        if let connection = previewLayer.connection, connection.hub.isVideoOrientationSupported {
+            connection.hub.videoOrientation = .portrait
         }
+        session.commitConfiguration()
         
+        startRunning()
+    }
+    
+    /// startRunning
+    private func startRunning() {
+        sessionQueue.async { [weak self] in
+            guard let this = self else { return }
+            guard this.session.isRunning == false else { return }
+            this.session.startRunning()
+        }
+    }
+    
+    /// stopRunning
+    private func stopRunning() {
+        sessionQueue.async { [weak self] in
+            guard let this = self else { return }
+            guard this.session.isRunning == true else { return }
+            this.session.stopRunning()
+        }
     }
     
     /// requestCameraStatus
@@ -283,8 +320,10 @@ extension DDCameraViewController {
             
         case albumButton:
             break
+            
         case cancelButton:
             dismiss(animated: true)
+            
         case takeButton:
             guard let connection = photoOutput.connection(with: .video) else { return }
             connection.videoOrientation = .portrait
@@ -297,24 +336,17 @@ extension DDCameraViewController {
             }
             photoOutput.capturePhoto(with: setting, delegate: self)
 
-        case scannedButton:
-            let controller: DDPreviewController = .init(cropModels: cropModels)
+        case previewButton:
+            let controller: DDPreviewController = .init()
+            controller.complateBlock = complateBlock
             navigationController?.pushViewController(controller, animated: true)
-        default: break
-        }
-    }
-    
-    @objc private func notificationActionHandler(_ noti: Notification) {
-        switch noti.name {
-        case .corpModelDeleted:
-            guard let model = noti.userInfo?["model"] as? DDCropModel, let index = cropModels.firstIndex(of: model) else { return }
-            cropModels.remove(at: index)
             
         default: break
         }
     }
 }
 
+//MARK: - AVCapturePhotoCaptureDelegate
 extension DDCameraViewController: AVCapturePhotoCaptureDelegate {
     
     /// didFinishProcessingPhoto
@@ -337,8 +369,10 @@ extension DDCameraViewController: AVCapturePhotoCaptureDelegate {
         navi.modalPresentationStyle = .fullScreen
         present(navi, animated: true)
     }
+    
 }
 
+//MARK: - AVCaptureVideoDataOutputSampleBufferDelegate
 extension DDCameraViewController: AVCaptureVideoDataOutputSampleBufferDelegate {
     
     /// didOutput
@@ -349,7 +383,7 @@ extension DDCameraViewController: AVCaptureVideoDataOutputSampleBufferDelegate {
     internal func captureOutput(_ output: AVCaptureOutput, didOutput sampleBuffer: CMSampleBuffer, from connection: AVCaptureConnection) {
         guard isScanning == false else { return }
         isScanning = true
-        openCVUtils.processCVImageBuffer(sampleBuffer) { [weak self] (points, image) in
+        openCVUtils.processCVImageBuffer(sampleBuffer, callbackQueue: .main) { [weak self] (points, image) in
             guard let this = self, let points = points, let image = image else {
                 self?.isScanning = false
                 return
@@ -358,9 +392,15 @@ extension DDCameraViewController: AVCaptureVideoDataOutputSampleBufferDelegate {
                 return point.convert(for: image.size, scaleBy: 1)
             }
             let position: Rectangle = .init(topLeft: cgPoints[0], topRight: cgPoints[1], bottomLeft: cgPoints[3], bottomRight: cgPoints[2])
+            if position.checkValid() == false {
+                self?.isScanning = false
+                return
+            }
             let cropImage = image.hub.crop(rectangle: position, angle: 0)
             DispatchQueue.main.async {
                 this.cropModels.append(.init(image: image, cropImage: cropImage, cropPosition: position))
+            }
+            DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
                 this.isScanning = false
             }
         }

@@ -137,37 +137,12 @@ class DDCropViewController: UIViewController {
     /// - Parameter animated: Bool
     internal override func viewIsAppearing(_ animated: Bool) {
         super.viewIsAppearing(animated)
-        if cropModel.cropImage != nil {
-            imageView.transform = .init(rotationAngle: originAngle.counterclockwiseRotationAngle)
-            imageView.frame = adjustResizeFrame()
-            scanningCropView.transform = imageView.transform
-            scanningCropView.frame = imageView.frame
-            scanningCropView.position = cropModel.rectangle.convertRectangle(with: scanningCropView.bounds.size, scale: scanningCropView.bounds.width / image.size.width)
-            scanningCropView.maxResizeFrame = scanningCropView.bounds
-        } else {
-            openCVUtils.processUIImage(image) { [weak self] points, image in
-                guard let this = self else { return }
-                if let points = points, let image = image {
-                    let cgPoints = points.map(\.cgPointValue).map { point in
-                        return point.convert(for: image.size, scaleBy: 1)
-                    }
-                    this.scanningCropView.position = .init(topLeft: cgPoints[0], 
-                                                           topRight: cgPoints[1],
-                                                           bottomLeft: cgPoints[3],
-                                                           bottomRight: cgPoints[2])
-                } else {
-                    let maxX = this.image.size.width - 10
-                    let maxY = this.image.size.height - 10
-                    this.scanningCropView.position = Rectangle.convert(topLeft: .init(x: 10, y: maxY),
-                                                                       topRight: .init(x: maxX, y: maxY),
-                                                                       bottomLeft: .init(x: 10, y: 10),
-                                                                       bottomRight: .init(x: maxX, y: 10),
-                                                                       for: this.imageView)
-                }
-            }
-        }
+        refreshUI()
     }
     
+    deinit {
+        print(#function, #file.hub.lastPathComponent)
+    }
 }
 
 extension DDCropViewController {
@@ -222,6 +197,43 @@ extension DDCropViewController {
         view.layoutIfNeeded()
         
         scanningCropView.maxResizeFrame = scanningCropView.bounds
+    }
+    
+    /// refreshUI
+    private func refreshUI() {
+        func handler(_ rectangle: Rectangle) {
+            imageView.transform = .init(rotationAngle: originAngle.counterclockwiseRotationAngle)
+            imageView.frame = adjustResizeFrame()
+            scanningCropView.transform = imageView.transform
+            scanningCropView.frame = imageView.frame
+            scanningCropView.position = rectangle.convertRectangle(with: scanningCropView.bounds.size, scale: scanningCropView.bounds.width / image.size.width)
+            scanningCropView.maxResizeFrame = scanningCropView.bounds
+        }
+        if cropModel.cropImage != nil {
+            handler(cropModel.rectangle)
+        } else {
+            openCVUtils.processUIImage(image, callbackQueue: .main) { [weak self] points, image in
+                guard let this = self else { return }
+                if let points = points, let image = image {
+                    let cgPoints = points.map(\.cgPointValue).map { point in
+                        return point.convert(for: image.size, scaleBy: 1)
+                    }
+                    this.cropModel.image = image
+                    this.imageView.image = image
+                    handler(.init(topLeft: cgPoints[0],
+                                  topRight: cgPoints[1],
+                                  bottomLeft: cgPoints[3],
+                                  bottomRight: cgPoints[2]))
+                } else {
+                    let maxX = this.image.size.width - 10
+                    let maxY = this.image.size.height - 10
+                    handler(.init(topLeft: .init(x: 10, y: maxY),
+                                  topRight: .init(x: maxX, y: maxY),
+                                  bottomLeft: .init(x: 10, y: 10),
+                                  bottomRight: .init(x: maxX, y: 10)))
+                }
+            }
+        }
     }
     
     /// adjustResizeFrame
@@ -293,7 +305,7 @@ extension DDCropViewController {
             dismiss(animated: true)
             
         case confirmButton:
-            guard scanningCropView.checkValid() == true else { return }
+            guard scanningCropView.position.checkValid() == true else { return }
             let scale = image.size.width / imageView.bounds.width
             let rectangle = scanningCropView.position.convertRectangle(with: image.size, scale: scale)
             let image = image.hub.crop(rectangle: rectangle, angle: originAngle.counterclockwiseRotationAngle)
@@ -308,36 +320,6 @@ extension DDCropViewController {
         
     }
     
-    /// crop
-    /// - Parameters:
-    ///   - image: UIImage
-    ///   - rectangle: Rectangle
-    ///   - angle: CGFloat
-    /// - Returns: UIImage
-    private func crop(image: UIImage, rectangle: Rectangle, angle: CGFloat) -> UIImage {
-        guard var ciImage: CIImage = .init(image: image) else { return image }
-        var rectangleCoordinates: [String: Any] = [:]
-        rectangleCoordinates["inputTopLeft"] = CIVector(cgPoint: rectangle.topLeft)
-        rectangleCoordinates["inputTopRight"] = CIVector(cgPoint: rectangle.topRight)
-        rectangleCoordinates["inputBottomLeft"] = CIVector(cgPoint: rectangle.bottomLeft)
-        rectangleCoordinates["inputBottomRight"] = CIVector(cgPoint: rectangle.bottomRight)
-        ciImage = ciImage.applyingFilter("CIPerspectiveCorrection", parameters: rectangleCoordinates)
-        
-        let newImage: UIImage = .init(ciImage: ciImage)
-        // 图片大小
-        let rotatedSize = CGRect(origin: .zero, size: newImage.size)
-            .applying(CGAffineTransform(rotationAngle: angle))
-            .size
-        // 创建上下文
-        let renderer = UIGraphicsImageRenderer(size: rotatedSize)
-        
-        let rotatedImage = renderer.image { context in
-            context.cgContext.translateBy(x: rotatedSize.width * 0.5, y: rotatedSize.height * 0.5)
-            context.cgContext.rotate(by: angle)
-            newImage.draw(in: CGRect(x: -newImage.size.width * 0.5, y: -newImage.size.height * 0.5, width: newImage.size.width, height: newImage.size.height))
-        }
-        return rotatedImage
-    }
 }
 
 //MARK: - DDCropViewDelegate

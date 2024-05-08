@@ -103,7 +103,7 @@ class DDMagnifierView: UIWindow {
         target?.layer.render(in: ctx)
     }
     
-    /// “+”锚点
+    /// +
     private func addAccurate() {
         if let sublayers = layer.sublayers {
             for layer in sublayers {

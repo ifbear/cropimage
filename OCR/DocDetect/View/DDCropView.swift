@@ -13,7 +13,7 @@ enum NearstPosition: Int {
     case none = -1, topLeft = 0, topRight, bottomLeft, bottomRight
 }
 
-
+// DDCropViewDelegate
 protocol DDCropViewDelegate: NSObjectProtocol {
     func cropBegin(at point: CGPoint)
     func cropMoved(at point: CGPoint)
@@ -202,7 +202,7 @@ extension DDCropView {
         shadeLayer.path = rectPath.cgPath
         
         // 绘制矩形
-        if checkValid() {
+        if position.checkValid() {
             lineColor.set()
         } else {
             UIColor.red.set()
@@ -228,59 +228,6 @@ extension DDCropView {
         let bottomRightPath = UIBezierPath.init(arcCenter: position.bottomRight, radius: 6.0, startAngle: 0.0, endAngle: 360.0, clockwise: true)
         bottomRightPath.fill()
         
-    }
-    
-    /// checkValid
-    /// - Returns: Bool
-    internal func checkValid() -> Bool {
-        for i in 0...3 {
-            let angle = angle(for: i)
-            if angle < 0 {
-                return false
-            }
-        }
-        return true
-    }
-    
-    /// angleForIndex
-    /// - Parameter index: Double
-    /// - Returns: Double
-    private func angle(for index: Int) -> Double {
-        var p1: CGPoint
-        var p2: CGPoint
-        var p3: CGPoint
-        
-        switch index {
-        case 0:
-            p1 = position.topLeft
-            p2 = position.topRight
-            p3 = position.bottomLeft
-        case 1:
-            p1 = position.topRight
-            p2 = position.bottomRight
-            p3 = position.topLeft
-        case 2:
-            p1 = position.bottomRight
-            p2 = position.bottomLeft
-            p3 = position.topRight
-        default:
-            p1 = position.bottomLeft
-            p2 = position.topLeft
-            p3 = position.bottomRight
-        }
-        // 向量ab
-        let ab = CGPoint(x: p2.x - p1.x, y: p2.y - p1.y)
-        // 向量cd
-        let cb = CGPoint(x: p2.x - p3.x, y: p2.y - p3.y)
-        // AB 和 CB 的点积
-        let dot = ab.x * cb.x + ab.y * cb.y // dot product
-        // AB 和 CB 的叉积
-        let cross = ab.x * cb.y - ab.y * cb.x // cross product
-        // 计算夹角的弧度
-        let alpha = atan2(cross, dot)
-        // 弧度转换为角度
-        let angle = -1 * Double(floor(alpha * 180.0 / .pi + 0.5))
-        return angle
     }
 
 }

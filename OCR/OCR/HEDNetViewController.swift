@@ -28,7 +28,7 @@ class HEDNetViewController: UIViewController {
             $0.edges.equalToSuperview()
         }
         
-        openCVUtils.processUIImage(image) { values, image in
+        openCVUtils.processUIImage(image, callbackQueue: .main) { values, image in
             guard let values = values else { return }
             let p1 = values[0].cgPointValue
             let p2 = values[1].cgPointValue

@@ -50,6 +50,8 @@ class DDControlItem: UIControl {
 
     //MARK: - 生命周期
     
+    /// init
+    /// - Parameter frame: CGRect
     internal override init(frame: CGRect) {
         super.init(frame: frame)
         initialize()

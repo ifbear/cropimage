@@ -15,9 +15,20 @@ typedef void(^ComplationBlock)(NSArray<NSValue *> * _Nullable, UIImage * _Nullab
 
 @interface OpenCVUtils : NSObject
 
-- (void)processUIImage: (UIImage *)uiImage complation: (ComplationBlock)block;
+/// processUIImage
+/// - Parameters:
+///   - uiImage: UIImage
+///   - callbackQueue: dispatch_queue_t
+///   - block: ComplationBlock
+- (void)processUIImage: (UIImage *)uiImage callbackQueue: (nonnull dispatch_queue_t)callbackQueue complationBlock: (ComplationBlock)block;
 
-- (void)processCVImageBuffer: (CMSampleBufferRef)sampleBuffer complation: (ComplationBlock)block;
+
+/// processCVImageBuffer
+/// - Parameters:
+///   - sampleBuffer: CMSampleBufferRef
+///   - callbackQueue: dispatch_queue_t
+///   - block: ComplationBlock
+- (void)processCVImageBuffer: (CMSampleBufferRef)sampleBuffer callbackQueue: (nonnull dispatch_queue_t)callbackQueue complationBlock: (ComplationBlock)block;
 
 @end
 

@@ -10,6 +10,7 @@
 #import <FMHEDNet/FMHEDNet.h>
 #import <FMHEDNet/fm_ocr_scanner.hpp>
 #import "OpenCVUtils+Extensions.h"
+#import <opencv2/core/version.hpp>
 
 
 
@@ -21,39 +22,55 @@
 
 @implementation OpenCVUtils
 
+- (instancetype)init
+{
+    self = [super init];
+    if (self) {
+        NSString *path = [[NSBundle mainBundle] pathForResource:@"hed_graph" ofType:@"pb"];
+        _hedNet = [[FMHEDNet alloc] initWithModelPath:path];
+    }
+    return self;
+}
+
 /// processUIImage
 /// - Parameters:
 ///   - uiImage: UIImage
 ///   - block: ComplationBlock
-- (void)processUIImage: (UIImage *)uiImage complation: (ComplationBlock)block {
+- (void)processUIImage: (UIImage *)uiImage callbackQueue:(nonnull dispatch_queue_t)callbackQueue complationBlock:(nonnull ComplationBlock)block {
     cv::Mat cvImage = [OpenCVUtils cvMatFromUIImage:uiImage];
-    [self processCVImage: cvImage complation:block];
+    [self processCVImage: cvImage callbackQueue:callbackQueue complation:block];
 }
 
-- (void)processCVImageBuffer: (CMSampleBufferRef)sampleBuffer complation: (ComplationBlock)block {
+/// processCVImageBuffer
+/// - Parameters:
+///   - sampleBuffer: CMSampleBufferRef
+///   - callbackQueue: dispatch_queue_t
+///   - block: ComplationBlock
+- (void)processCVImageBuffer: (CMSampleBufferRef)sampleBuffer callbackQueue:(nonnull dispatch_queue_t)callbackQueue complationBlock:(nonnull ComplationBlock)block {
+    
     CVImageBufferRef pixelBuffer = CMSampleBufferGetImageBuffer(sampleBuffer);
-        
+    
     CVPixelBufferLockBaseAddress( pixelBuffer, 0 );
-                                                          
+    
     //Processing here
     size_t bufferWidth = CVPixelBufferGetWidth(pixelBuffer);
     size_t bufferHeight = CVPixelBufferGetHeight(pixelBuffer);
     unsigned char *pixel = (unsigned char *)CVPixelBufferGetBaseAddress(pixelBuffer);
     
     // put buffer in open cv, no memory copied
-    cv::Mat mat = cv::Mat((int)bufferHeight, (int)bufferWidth,CV_8UC4,pixel);
+    cv::Mat mat = cv::Mat((int)bufferHeight, (int)bufferWidth, CV_8UC4, pixel);
     
     //End processing
     CVPixelBufferUnlockBaseAddress( pixelBuffer, 0 );
+    [self processCVImage: mat callbackQueue:callbackQueue complation:block];
     
-    [self processCVImage: mat complation:block];
 }
 
 /// processCVImage
 /// - Parameters:
 ///   - bgraImage: bgraImage
 ///   - block: ComplationBlock
-- (void)processCVImage:(cv::Mat&)bgraImage complation: (ComplationBlock)block {
+- (void)processCVImage:(cv::Mat&)bgraImage callbackQueue:(nonnull dispatch_queue_t)callbackQueue complation: (ComplationBlock)block {
     //NSLog(@"%s", __PRETTY_FUNCTION__);
     /**
      https://stackoverflow.com/questions/10167534/how-to-find-out-what-type-of-a-mat-object-is-with-mattype-in-opencv
@@ -77,12 +94,9 @@
      2018-04-17 16:56:22.995895+0800 DemoWithStaticLib[945:184826] ___log_OpenCV_info___, rgbImage.type() is: 16
      2018-04-17 16:56:22.996490+0800 DemoWithStaticLib[945:184826] ___log_OpenCV_info___, floatRgbImage.type() is: 21
      2018-04-17 16:56:23.082157+0800 DemoWithStaticLib[945:184826] ___log_OpenCV_info___, hedOutputImage.type() is: 5
-    */
-#ifdef DEBUG_SINGLE_IMAGE
-    cv::Mat rawBgraImage = self.inputImageMat;
-#else
+     */
+    
     cv::Mat& rawBgraImage = bgraImage;
-#endif
     
     assert(rawBgraImage.type() == CV_8UC4);
     
@@ -133,7 +147,7 @@
      cv::Mat vggStyleImage;
      cv::merge(channels, vggStyleImage);
      */
-
+    
     
     // run hed net
     cv::Mat hedOutputImage;
@@ -158,45 +172,40 @@
                 
                 cv::Point scaled_point = cv::Point(cv_point.x * original_width / [FMHEDNet inputImageWidth], cv_point.y * original_height / [FMHEDNet inputImageHeight]);
                 scaled_points.push_back(scaled_point);
-                
                 /** convert from cv::Point to CGPoint
                  CGPoint point = CGPointMake(scaled_point.x, scaled_point.y);
-                */
+                 */
             }
-            
+            UIImage *image = [OpenCVUtils UIImageFromCVMat:rawBgraImage];
             if (block) {
-                block(@[
-                    [NSValue valueWithCGPoint:CGPointMake(scaled_points[0].x, scaled_points[0].y)],
-                    [NSValue valueWithCGPoint:CGPointMake(scaled_points[1].x, scaled_points[1].y)],
-                    [NSValue valueWithCGPoint:CGPointMake(scaled_points[2].x, scaled_points[2].y)],
-                    [NSValue valueWithCGPoint:CGPointMake(scaled_points[3].x, scaled_points[3].y)]
-                ], [OpenCVUtils UIImageFromCVMat:bgraImage]);
+                dispatch_async(callbackQueue, ^{
+                    block(@[
+                        [NSValue valueWithCGPoint:CGPointMake(scaled_points[0].x, scaled_points[0].y)],
+                        [NSValue valueWithCGPoint:CGPointMake(scaled_points[1].x, scaled_points[1].y)],
+                        [NSValue valueWithCGPoint:CGPointMake(scaled_points[2].x, scaled_points[2].y)],
+                        [NSValue valueWithCGPoint:CGPointMake(scaled_points[3].x, scaled_points[3].y)]
+                    ], image);
+                });
             }
             
-//            cv::line(rawBgraImage, scaled_points[0], scaled_points[1], CV_RGB(255, 0, 0), 2);
-//            cv::line(rawBgraImage, scaled_points[1], scaled_points[2], CV_RGB(255, 0, 0), 2);
-//            cv::line(rawBgraImage, scaled_points[2], scaled_points[3], CV_RGB(255, 0, 0), 2);
-//            cv::line(rawBgraImage, scaled_points[3], scaled_points[0], CV_RGB(255, 0, 0), 2);
+            //            cv::line(rawBgraImage, scaled_points[0], scaled_points[1], CV_RGB(255, 0, 0), 2);
+            //            cv::line(rawBgraImage, scaled_points[1], scaled_points[2], CV_RGB(255, 0, 0), 2);
+            //            cv::line(rawBgraImage, scaled_points[2], scaled_points[3], CV_RGB(255, 0, 0), 2);
+            //            cv::line(rawBgraImage, scaled_points[3], scaled_points[0], CV_RGB(255, 0, 0), 2);
         } else {
             if (block) {
-                block(nil, nil);
+                dispatch_async(callbackQueue, ^{
+                    block(nil, nil);
+                });
             }
         }
     } else {
         if (block) {
-            block(nil, nil);
+            dispatch_async(callbackQueue, ^{
+                block(nil, nil);
+            });
         }
     }
-}
-
-/// hedNet
-- (FMHEDNet *)hedNet {
-    if (_hedNet == nil) {
-        NSString *path = [[NSBundle mainBundle] pathForResource:@"hed_graph" ofType:@"pb"];
-        _hedNet = [[FMHEDNet alloc] initWithModelPath:path];
-        NSLog(@"%@", _hedNet);
-    }
-    return  _hedNet;
 }
 
 @end

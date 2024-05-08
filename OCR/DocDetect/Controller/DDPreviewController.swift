@@ -9,6 +9,9 @@ import UIKit
 
 class DDPreviewController: UIViewController {
     
+    /// ([URL]) -> Void
+    internal var complateBlock: (([URL]) -> Void)? = nil
+    
     /// titleLabel
     private lazy var titleLabel: UILabel = {
         let _label: UILabel = .init()
@@ -69,22 +72,12 @@ class DDPreviewController: UIViewController {
     }()
     
     /// cropModels
-    private var cropModels: [DDCropModel]
+    private var cropModels: [DDCropModel] {
+        get { (navigationController as! DDNavigationController).cropModels }
+        set { (navigationController as! DDNavigationController).cropModels = newValue }
+    }
     
     //MARK: - 生命周期
-    
-    /// init
-    /// - Parameter cropModels: [DDCropModel]]
-    internal init(cropModels: [DDCropModel]) {
-        self.cropModels = cropModels
-        super.init(nibName: nil, bundle: nil)
-    }
-    
-    /// init
-    /// - Parameter coder: NSCoder
-    internal required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
     
     /// viewDidLoad
     internal override func viewDidLoad() {
@@ -93,23 +86,9 @@ class DDPreviewController: UIViewController {
         initialize()
     }
     
-    /// viewWillAppear
-    /// - Parameter animated: Bool
-    internal override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        let buttonAppearance: UIBarButtonItemAppearance = .init(style: .plain)
-        buttonAppearance.normal.titleTextAttributes = [.foregroundColor: UIColor.white]
-        
-        let appearance: UINavigationBarAppearance = .init()
-        appearance.configureWithOpaqueBackground()
-        appearance.buttonAppearance = buttonAppearance
-        appearance.backButtonAppearance = buttonAppearance
-        
-        navigationController?.navigationBar.standardAppearance = appearance
-        navigationController?.navigationBar.tintColor = UIColor.white
+    deinit {
+        print(#function, #file.hub.lastPathComponent)
     }
-    
-    
 }
 
 extension DDPreviewController {
@@ -174,42 +153,10 @@ extension DDPreviewController {
             let controller: DDSheetViewController = .init(items: items) { [unowned self] item in
                 switch item.tag {
                 case DDSheetItem.image.tag:
-                    break
+                    convertImage()
+                    
                 case DDSheetItem.pdf.tag:
-                    do {
-                        let pdfContext = UIGraphicsPDFRenderer(bounds: .zero, format: .init())
-                        let outputFile = FileManager.default.temporaryDirectory.appendingPathComponent("temp.pdf")
-                        try? FileManager.default.removeItem(at: outputFile)
-                        var prev: CGFloat?
-                        try pdfContext.writePDF(to: outputFile) { context in
-                            let pdfW = context.pdfContextBounds.width
-                            let pdfH = context.pdfContextBounds.height
-                            cropModels.forEach { model in
-                                let image = model.cropImage ?? model.image
-                                let ratio = image.size.width < pdfW ? (image.size.height < pdfH ? 1.0 : pdfH / image.size.height) : pdfW / image.size.width
-                                let w = image.size.width * ratio
-                                let h = image.size.height * ratio
-                                let y: CGFloat
-                                if let prev = prev, prev + h < pdfH {
-                                    y = prev
-                                } else {
-                                    context.beginPage()
-                                    y = 0
-                                }
-                                image.draw(in: CGRect(x: (pdfW - w) * 0.5, y: y, width: w, height: h))
-                                prev = h
-                            }
-                        }
-                        let quickLook: DDQuickLookViewController = .init(items: [.init(file: outputFile, name: outputFile.lastPathComponent)]) { finish in
-                            guard finish == true else { return }
-                            // 添加邮件操作
-                        }
-                        let navi: UINavigationController = .init(rootViewController: quickLook)
-                        navi.modalPresentationStyle = .fullScreen
-                        self.present(navi, animated: true)
-                    } catch {
-                        print("Error creating directory: \(error)")
-                    }
+                    convertPDF()
                     
                 case DDSheetItem.word.tag:
                     break
@@ -236,6 +183,71 @@ extension DDPreviewController {
             navigationController?.popViewController(animated: true)
             
         default: break
+        }
+    }
+    
+    /// 转图片
+    private func convertImage() {
+        var urls: [URL] = []
+        let tempUrl = FileManager.default.temporaryDirectory
+        for model in cropModels {
+            let url = tempUrl.hub.appending(pathComponent: "IMG_\(urls.count + 1).jpg", directoryHint: .notDirectory)
+            try? FileManager.default.removeItem(at: url)
+            guard let image = model.cropImage else { continue }
+            do {
+                try image.jpegData(compressionQuality: 0.75)?.write(to: url)
+                guard FileManager.default.fileExists(atPath: url.path) else { continue }
+                urls.append(url)
+            } catch {
+                print(error)
+            }
+        }
+        guard urls.isEmpty == false else { return }
+        dismiss(animated: true) { [weak self] in
+            guard let this = self else { return }
+            this.complateBlock?(urls)
+        }
+    }
+    
+    /// 转PDF
+    private func convertPDF() {
+        do {
+            let pdfContext = UIGraphicsPDFRenderer(bounds: .zero, format: .init())
+            let outputFile = FileManager.default.temporaryDirectory.appendingPathComponent("temp.pdf")
+            try? FileManager.default.removeItem(at: outputFile)
+            var prev: CGFloat?
+            try pdfContext.writePDF(to: outputFile) { context in
+                let pdfW = context.pdfContextBounds.width
+                let pdfH = context.pdfContextBounds.height
+                cropModels.forEach { model in
+                    let image = model.cropImage ?? model.image
+                    let ratio = image.size.width < pdfW ? (image.size.height < pdfH ? 1.0 : pdfH / image.size.height) : pdfW / image.size.width
+                    let w = image.size.width * ratio
+                    let h = image.size.height * ratio
+                    let y: CGFloat
+                    if let prev = prev, prev + h < pdfH {
+                        y = prev
+                    } else {
+                        context.beginPage()
+                        y = 0
+                    }
+                    image.draw(in: CGRect(x: (pdfW - w) * 0.5, y: y, width: w, height: h))
+                    prev = h
+                }
+            }
+            let quickLook: DDQuickLookViewController = .init(items: [.init(file: outputFile, name: outputFile.lastPathComponent)]) { [weak self] finish in
+                guard let this = self, finish == true else { return }
+                // 添加邮件操作
+                this.dismiss(animated: true) { [weak this] in
+                    guard let this = this else { return }
+                    this.complateBlock?([outputFile])
+                }
+            }
+            let navi: UINavigationController = .init(rootViewController: quickLook)
+            navi.modalPresentationStyle = .fullScreen
+            self.present(navi, animated: true)
+        } catch {
+            print("Error creating directory: \(error)")
         }
     }
 }
@@ -315,11 +327,15 @@ extension DDPreviewController: DDPreviewCellDelegate {
     internal func cell(_ cell: DDPreviewCell, delete model: DDCropModel) {
         guard let index = cropModels.firstIndex(where: { $0 == model }) else { return }
         cropModels.remove(at: index)
-        collectionView.reloadData()
+        collectionView.deleteItems(at: [.init(row: index, section: 0)])
+        if index == cropModels.count {
+            pagesLabel.text = "\(index)/\(cropModels.count)"
+        } else if index < cropModels.count {
+            pagesLabel.text = "\(index + 1)/\(cropModels.count)"
+        }
         if cropModels.isEmpty {
             navigationController?.popViewController(animated: true)
         }
-        NotificationCenter.default.post(name: .corpModelDeleted, object: nil, userInfo: ["model": model])
     }
     
     /// ocr

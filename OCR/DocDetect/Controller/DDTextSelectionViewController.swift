@@ -9,11 +9,15 @@ import UIKit
 import PanModal
 
 extension DDTextSelectionViewController {
+    
+    /// SlideSelectType
     private enum SlideSelectType {
         case none
         case select
         case cancel
     }
+    
+    /// AutoScrollDirection
     private enum AutoScrollDirection {
         case none
         case top

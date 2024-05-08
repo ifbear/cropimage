@@ -1,5 +1,5 @@
 {
-  "originHash" : "b175e77ca8165437c04b16fda85f6ee660e0f59b30f5414ed36249390285c064",
+  "originHash" : "3e1f07d26422bae8cb029a80a6f380a79a817a4edf44cc683eab33bc473052c4",
   "pins" : [
     {
       "identity" : "alamofire",
@@ -8,6 +8,15 @@
       "state" : {
         "revision" : "f455c2975872ccd2d9c81594c658af65716e9b9a",
         "version" : "5.9.1"
+      }
+    },
+    {
+      "identity" : "hero",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/HeroTransitions/Hero.git",
+      "state" : {
+        "revision" : "b307e2d48d582118e5101d04f5187c91595a1095",
+        "version" : "1.6.3"
       }
     },
     {

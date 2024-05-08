@@ -101,6 +101,34 @@ struct Rectangle {
         let br = bottomRight.convert(for: size, scaleBy: scale)
         return .init(topLeft: tl, topRight: tr, bottomLeft: bl, bottomRight: br)
     }
+    
+    /// checkValid
+    /// - Returns: Bool
+    func checkValid() -> Bool {
+        // 获取四个顶点
+        let point1 = topLeft
+        let point2 = topRight
+        let point3 = bottomRight
+        let point4 = bottomLeft
+
+        // 计算任意两个相邻边的向量
+        let vector1 = CGVector(dx: point2.x - point1.x, dy: point2.y - point1.y)
+        let vector2 = CGVector(dx: point3.x - point2.x, dy: point3.y - point2.y)
+        let vector3 = CGVector(dx: point4.x - point3.x, dy: point4.y - point3.y)
+        let vector4 = CGVector(dx: point1.x - point4.x, dy: point1.y - point4.y)
+
+        // 计算叉积
+        let crossProduct1 = vector1.dx * vector2.dy - vector1.dy * vector2.dx
+        let crossProduct2 = vector2.dx * vector3.dy - vector2.dy * vector3.dx
+        let crossProduct3 = vector3.dx * vector4.dy - vector3.dy * vector4.dx
+        let crossProduct4 = vector4.dx * vector1.dy - vector4.dy * vector1.dx
+
+        // 检查叉积的方向
+        let anglesLessThan180 = (crossProduct1 > 0 && crossProduct2 > 0 && crossProduct3 > 0 && crossProduct4 > 0) ||
+                                 (crossProduct1 < 0 && crossProduct2 < 0 && crossProduct3 < 0 && crossProduct4 < 0)
+
+        return anglesLessThan180
+    }
 }
 
 class DDCropModel {

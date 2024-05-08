@@ -9,7 +9,8 @@ import UIKit
 import PanModal
 
 class DDSheetViewController: UIViewController {
-
+    
+    /// headerLabel
     private lazy var headerLabel: UILabel = {
         let _label: UILabel = .init()
         _label.textColor = .init(hex: "#999999")
@@ -18,6 +19,7 @@ class DDSheetViewController: UIViewController {
         return _label
     }()
     
+    /// tableView
     private lazy var tableView: UITableView = {
         let _tableView: UITableView = .init(frame: .zero, style: .plain)
         _tableView.rowHeight = 50.0
@@ -44,10 +46,18 @@ class DDSheetViewController: UIViewController {
         }
     }
     
+    /// items
     private let items: [DDSheetItem]
     
+    /// handler
     private let handler: ((DDSheetItem) -> Void)
     
+    //MARK: - 生命周期
+    
+    /// init
+    /// - Parameters:
+    ///   - items: [DDSheetItem]
+    ///   - handler: (DDSheetItem) -> Void
     internal init(items: [DDSheetItem], handler: @escaping (DDSheetItem) -> Void) {
         self.items = items
         self.handler = handler
@@ -55,18 +65,24 @@ class DDSheetViewController: UIViewController {
         
     }
     
-    required init?(coder: NSCoder) {
+    internal required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
+    /// viewDidLoad
     internal override func viewDidLoad() {
         super.viewDidLoad()
         initialize()
     }
 
+    deinit {
+        print(#function, #file.hub.lastPathComponent)
+    }
 }
 
 extension DDSheetViewController {
+    
+    /// initialize
     private func initialize() {
         view.addSubview(headerLabel)
         headerLabel.snp.makeConstraints {
@@ -84,6 +100,7 @@ extension DDSheetViewController {
     }
 }
 
+//MARK: - UITableViewDelegate, UITableViewDataSource
 extension DDSheetViewController: UITableViewDelegate, UITableViewDataSource {
     
     /// numberOfRowsInSection
@@ -118,6 +135,7 @@ extension DDSheetViewController: UITableViewDelegate, UITableViewDataSource {
     }
 }
 
+//MARK: - PanModalPresentable
 extension DDSheetViewController: PanModalPresentable {
     
     /// panScrollable

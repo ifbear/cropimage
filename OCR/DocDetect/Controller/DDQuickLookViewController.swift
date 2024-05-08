@@ -54,6 +54,7 @@ class DDQuickLookViewController: UIViewController {
     /// QLPreviewController
     private lazy var previewController: QLPreviewController = {
         let _controller: QLPreviewController = .init()
+        _controller.view.backgroundColor = .white
         _controller.dataSource = self
         _controller.addObserver(self, forKeyPath: #keyPath(QLPreviewController.currentPreviewItemIndex), options: [.new], context: nil)
         return _controller
@@ -106,6 +107,12 @@ class DDQuickLookViewController: UIViewController {
         initialize()
     }
     
+    /// observeValue
+    /// - Parameters:
+    ///   - keyPath: String
+    ///   - object: Any
+    ///   - change: [NSKeyValueChangeKey : Any]
+    ///   - context: UnsafeMutableRawPointer
     internal override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
         switch keyPath {
         case #keyPath(QLPreviewController.currentPreviewItemIndex):
@@ -133,8 +140,8 @@ extension DDQuickLookViewController {
         navigationItem.titleView = titleView
         navigationItem.leftBarButtonItem = backItem
         
-        addChild(previewController)
         previewController.view.backgroundColor = .white
+        addChild(previewController)
         view.addSubview(previewController.view)
         previewController.view.snp.makeConstraints {
             $0.top.left.right.equalTo(view.safeAreaLayoutGuide)

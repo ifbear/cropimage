@@ -11,7 +11,7 @@ class DDTextCollectionViewCell: UICollectionViewCell {
     
     /// text
     internal var model: DDOcrModel? {
-        didSet { updateUI() }
+        didSet { refreshUI() }
     }
     
     /// isSelected
@@ -63,7 +63,7 @@ extension DDTextCollectionViewCell {
     }
     
     /// updateUI
-    private func updateUI() {
+    private func refreshUI() {
         guard let model = model else { return }
         textlabel.text = model.text
         textlabel.isHighlighted = model.isSelected
