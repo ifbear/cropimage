@@ -84,6 +84,16 @@ class DDCameraViewController: UIViewController {
         return _button
     }()
     
+    /// imageView
+    private lazy var imageView: UIImageView = {
+        let _view: UIImageView = .init()
+        _view.contentMode = .scaleAspectFit
+        _view.layer.borderWidth = 2.0
+        _view.layer.borderColor = UIColor.black.withAlphaComponent(0.3).cgColor
+        _view.isHidden = true
+        return _view
+    }()
+    
     /// session
     private lazy var session: AVCaptureSession = {
         let session: AVCaptureSession = .init()
@@ -391,18 +401,54 @@ extension DDCameraViewController: AVCaptureVideoDataOutputSampleBufferDelegate {
             let cgPoints = points.map(\.cgPointValue).map { point in
                 return point.convert(for: image.size, scaleBy: 1)
             }
-            let position: Rectangle = .init(topLeft: cgPoints[0], topRight: cgPoints[1], bottomLeft: cgPoints[3], bottomRight: cgPoints[2])
-            if position.checkValid() == false {
-                self?.isScanning = false
-                return
-            }
-            let cropImage = image.hub.crop(rectangle: position, angle: 0)
-            DispatchQueue.main.async {
-                this.cropModels.append(.init(image: image, cropImage: cropImage, cropPosition: position))
-            }
-            DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
-                this.isScanning = false
-            }
+            this.crop(image: image, points: cgPoints)
+        }
+    }
+    
+    /// crop
+    /// - Parameters:
+    ///   - image: UIImage
+    ///   - points: [CGPoint]]
+    private func crop(image: UIImage, points: [CGPoint]) {
+        let position: Rectangle = .init(topLeft: points[0], topRight: points[1], bottomLeft: points[3], bottomRight: points[2])
+        guard position.checkValid() == true else {
+            isScanning = false
+            return
+        }
+        UIImpactFeedbackGenerator(style: .soft).impactOccurred(intensity: 0.5)
+        let cropImage = image.hub.crop(rectangle: position, angle: 0)
+        imageView.isHidden = false
+        imageView.image = cropImage
+        let bounds = view.bounds
+        let imgW: CGFloat
+        let imgH: CGFloat
+        if cropImage.size.width / cropImage.size.height >= 1.0 {
+            imgW = bounds.width * 0.75
+            imgH = cropImage.size.height / cropImage.size.width * imgW
+        } else {
+            imgH = bounds.width * 0.75
+            imgW = cropImage.size.width / cropImage.size.height * imgH
+        }
+        view.addSubview(imageView)
+        view.bringSubviewToFront(bottomView)
+        view.isUserInteractionEnabled = false
+        UIView.animate(withDuration: 0.1) { [weak self] in
+            self?.imageView.frame = .init(x: (bounds.width - imgW) * 0.5, y: (bounds.height - imgH) * 0.5, width: imgW, height: imgH)
+        } completion: { [weak self] _ in
+            UIView.animate(withDuration: 0.5, delay: 2.0, options: [.curveEaseIn], animations: { [weak self] in
+                self?.imageView.transform = .init(translationX: bounds.width * 0.5 - 20, y: bounds.height * 0.5).scaledBy(x: 0.1, y: 0.1)
+            }, completion: { [weak self] _ in
+                self?.cropModels.append(.init(image: image, cropImage: cropImage, cropPosition: position))
+                // 从视图层次结构中移除截屏视图
+                self?.imageView.removeFromSuperview()
+                self?.imageView.transform = .identity
+                self?.imageView.isHidden = true
+                self?.view.isUserInteractionEnabled = true
+            })
+        }
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 6.0) { [weak self] in
+            self?.isScanning = false
         }
     }
 }

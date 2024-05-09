@@ -212,7 +212,7 @@ extension DDPreviewController {
     /// 转PDF
     private func convertPDF() {
         do {
-            let pdfContext = UIGraphicsPDFRenderer(bounds: .zero, format: .init())
+            let pdfContext = UIGraphicsPDFRenderer(bounds: view.bounds, format: .init())
             let outputFile = FileManager.default.temporaryDirectory.appendingPathComponent("temp.pdf")
             try? FileManager.default.removeItem(at: outputFile)
             var prev: CGFloat?

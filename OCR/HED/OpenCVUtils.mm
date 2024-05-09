@@ -176,16 +176,28 @@
                  CGPoint point = CGPointMake(scaled_point.x, scaled_point.y);
                  */
             }
-            UIImage *image = [OpenCVUtils UIImageFromCVMat:rawBgraImage];
-            if (block) {
-                dispatch_async(callbackQueue, ^{
-                    block(@[
-                        [NSValue valueWithCGPoint:CGPointMake(scaled_points[0].x, scaled_points[0].y)],
-                        [NSValue valueWithCGPoint:CGPointMake(scaled_points[1].x, scaled_points[1].y)],
-                        [NSValue valueWithCGPoint:CGPointMake(scaled_points[2].x, scaled_points[2].y)],
-                        [NSValue valueWithCGPoint:CGPointMake(scaled_points[3].x, scaled_points[3].y)]
-                    ], image);
-                });
+            // 面积小于30%
+            double scaled_area = polygon_area(scaled_points);
+            double image_area = original_width * original_height;
+            
+            if (scaled_area < image_area * 0.1) {
+                if (block) {
+                    dispatch_async(callbackQueue, ^{
+                        block(nil, nil);
+                    });
+                }
+            } else {
+                UIImage *image = [OpenCVUtils UIImageFromCVMat:rawBgraImage];
+                if (block) {
+                    dispatch_async(callbackQueue, ^{
+                        block(@[
+                            [NSValue valueWithCGPoint:CGPointMake(scaled_points[0].x, scaled_points[0].y)],
+                            [NSValue valueWithCGPoint:CGPointMake(scaled_points[1].x, scaled_points[1].y)],
+                            [NSValue valueWithCGPoint:CGPointMake(scaled_points[2].x, scaled_points[2].y)],
+                            [NSValue valueWithCGPoint:CGPointMake(scaled_points[3].x, scaled_points[3].y)]
+                        ], image);
+                    });
+                }
             }
             
             //            cv::line(rawBgraImage, scaled_points[0], scaled_points[1], CV_RGB(255, 0, 0), 2);
@@ -206,6 +218,27 @@
             });
         }
     }
+}
+
+
+//  面积   (Shoelace formula)鞋带公式S=|(x2-x1)(y3-y1)-(x3-x1)(y2-y1)|
+static double cross1(cv::Point pi, cv::Point pj, cv::Point pk)
+{
+    return (pj.x - pi.x) * (pk.y - pi.y) - (pj.y - pi.y) * (pk.x - pi.x);
+}
+
+//vector<Point>存储多边形顶点
+static double polygon_area(std::vector<cv::Point>& polygon)
+{
+    double area = 0.0;
+    cv::Point temp;
+    temp.x = 0;
+    temp.y = 0;
+    for (int i = 0; i < polygon.size(); i++)
+    {
+        area += cross1(temp, polygon.data()[(i)], polygon.data()[((i + 1) % polygon.size())]);
+    }
+    return fabs(area * 0.5);
 }
 
 @end
