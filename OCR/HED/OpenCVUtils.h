@@ -5,6 +5,7 @@
 //  Created by dexiong on 2024/5/7.
 //
 
+#import <opencv2/highgui/highgui_c.h>
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 #import <AVFoundation/AVFoundation.h>

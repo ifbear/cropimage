@@ -1,5 +1,5 @@
 //
-//  DDTextSelectionViewController.swift
+//  DDOcrResultsViewController.swift
 //  OCR
 //
 //  Created by dexiong on 2024/4/24.
@@ -8,7 +8,7 @@
 import UIKit
 import PanModal
 
-extension DDTextSelectionViewController {
+extension DDOcrResultsViewController {
     
     /// SlideSelectType
     private enum SlideSelectType {
@@ -25,7 +25,7 @@ extension DDTextSelectionViewController {
     }
 }
 
-class DDTextSelectionViewController: UIViewController {
+class DDOcrResultsViewController: UIViewController {
     
     /// topView
     private lazy var topView: UIView = {
@@ -167,10 +167,13 @@ class DDTextSelectionViewController: UIViewController {
         for i in 0...100 {
             let model: DDOcrModel = .init()
             model.text = "cell: \(i)"
+            model.isSelected = true
             dataList.append(model)
         }
         
         collectionView.reloadData()
+        collectionView.hub.selectAllItems(false)
+        refreshBottomView()
     }
 
     deinit {
@@ -179,7 +182,7 @@ class DDTextSelectionViewController: UIViewController {
 
 }
 
-extension DDTextSelectionViewController {
+extension DDOcrResultsViewController {
     
     /// initialize
     private func initialize() {
@@ -250,7 +253,7 @@ extension DDTextSelectionViewController {
     }
 }
 
-extension DDTextSelectionViewController {
+extension DDOcrResultsViewController {
     
     /// refreshBottomView
     private func refreshBottomView() {
@@ -388,7 +391,7 @@ extension DDTextSelectionViewController {
 }
 
 //MARK: - UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout
-extension DDTextSelectionViewController: UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
+extension DDOcrResultsViewController: UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
     
     /// numberOfItemsInSection
     /// - Parameters:
@@ -406,7 +409,8 @@ extension DDTextSelectionViewController: UICollectionViewDataSource, UICollectio
     /// - Returns: UICollectionViewCell
     internal func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: DDTextCollectionViewCell.reusedID, for: indexPath) as! DDTextCollectionViewCell
-        cell.model = dataList[indexPath.item]
+        let model = dataList[indexPath.item]
+        cell.model = model
         return cell
     }
     
@@ -459,7 +463,7 @@ extension DDTextSelectionViewController: UICollectionViewDataSource, UICollectio
 }
 
 //MARK: - UIGestureRecognizerDelegate
-extension DDTextSelectionViewController: UIGestureRecognizerDelegate {
+extension DDOcrResultsViewController: UIGestureRecognizerDelegate {
     
     /// gestureRecognizerShouldBegin
     /// - Parameter gestureRecognizer: UIGestureRecognizer
@@ -480,7 +484,7 @@ extension DDTextSelectionViewController: UIGestureRecognizerDelegate {
 }
 
 //MARK: - PanModalPresentable
-extension DDTextSelectionViewController: PanModalPresentable {
+extension DDOcrResultsViewController: PanModalPresentable {
     internal var panScrollable: UIScrollView? {
         return nil
     }

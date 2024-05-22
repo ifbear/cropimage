@@ -5,12 +5,11 @@
 //  Created by dexiong on 2024/5/7.
 //
 
+#import <opencv2/core/version.hpp>
 #import "OpenCVUtils.h"
-#import <opencv2/highgui/cap_ios.h>
 #import <FMHEDNet/FMHEDNet.h>
 #import <FMHEDNet/fm_ocr_scanner.hpp>
 #import "OpenCVUtils+Extensions.h"
-#import <opencv2/core/version.hpp>
 
 
 
@@ -241,4 +240,8 @@ static double polygon_area(std::vector<cv::Point>& polygon)
     return fabs(area * 0.5);
 }
 
+- (void)dealloc
+{
+    NSLog(@"%s", __func__);
+}
 @end

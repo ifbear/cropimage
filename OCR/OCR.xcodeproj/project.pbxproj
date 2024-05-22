@@ -44,6 +44,8 @@
 		A0714C422BD8D5AC0018B578 /* UICollectionViewAlignedFlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0714C412BD8D5AC0018B578 /* UICollectionViewAlignedFlowLayout.swift */; };
 		A08326A92BDF71C200EFD3D2 /* Reusable.swift in Sources */ = {isa = PBXBuildFile; fileRef = A08326A82BDF71C200EFD3D2 /* Reusable.swift */; };
 		A08326AB2BDF721300EFD3D2 /* UITableViewCell+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = A08326AA2BDF721300EFD3D2 /* UITableViewCell+Extensions.swift */; };
+		A08B21BD2BEDC1EB00F163E6 /* UICollectionView+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = A08B21BC2BEDC1EB00F163E6 /* UICollectionView+Extensions.swift */; };
+		A08B21BF2BEDC39900F163E6 /* Array+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = A08B21BE2BEDC39900F163E6 /* Array+Extensions.swift */; };
 		A0A5AF732BDA01E90030D13A /* Compatible.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0A5AF722BDA01E90030D13A /* Compatible.swift */; };
 		A0A5AF7B2BDA40630030D13A /* WeakProxy.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0A5AF7A2BDA40630030D13A /* WeakProxy.swift */; };
 		A0A5AF822BDA50A50030D13A /* UIColor+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0A5AF812BDA50A50030D13A /* UIColor+Extensions.swift */; };
@@ -53,13 +55,14 @@
 		A0A5AF8D2BDB82E00030D13A /* UIWindow+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0A5AF8C2BDB82E00030D13A /* UIWindow+Extensions.swift */; };
 		A0A5AF932BDB861A0030D13A /* UIScreen+extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0A5AF922BDB861A0030D13A /* UIScreen+extensions.swift */; };
 		A0A5AF952BDB970A0030D13A /* UIFont+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0A5AF942BDB970A0030D13A /* UIFont+Extensions.swift */; };
+		A0B4D1EE2BFB31840055F187 /* liblibjpeg.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A0B4D1ED2BFB31840055F187 /* liblibjpeg.a */; };
 		A0C2B27C2BBA9215008E9FEF /* View1Controller.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0C2B27B2BBA9215008E9FEF /* View1Controller.swift */; };
 		A0CEF0AF2BE0D15A007C9718 /* DDCameraViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0CEF0902BE0D15A007C9718 /* DDCameraViewController.swift */; };
 		A0CEF0B02BE0D15A007C9718 /* DDCropViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0CEF0912BE0D15A007C9718 /* DDCropViewController.swift */; };
 		A0CEF0B12BE0D15A007C9718 /* DDPreviewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0CEF0922BE0D15A007C9718 /* DDPreviewController.swift */; };
 		A0CEF0B22BE0D15A007C9718 /* DDQuickLookViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0CEF0932BE0D15A007C9718 /* DDQuickLookViewController.swift */; };
 		A0CEF0B32BE0D15A007C9718 /* DDSheetViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0CEF0942BE0D15A007C9718 /* DDSheetViewController.swift */; };
-		A0CEF0B42BE0D15A007C9718 /* DDTextSelectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0CEF0952BE0D15A007C9718 /* DDTextSelectionViewController.swift */; };
+		A0CEF0B42BE0D15A007C9718 /* DDOcrResultsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0CEF0952BE0D15A007C9718 /* DDOcrResultsViewController.swift */; };
 		A0CEF0B52BE0D15A007C9718 /* DDOcrModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0CEF0972BE0D15A007C9718 /* DDOcrModel.swift */; };
 		A0CEF0B62BE0D15A007C9718 /* DDSheetItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0CEF0982BE0D15A007C9718 /* DDSheetItem.swift */; };
 		A0CEF0B72BE0D15A007C9718 /* ScanModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0CEF0992BE0D15A007C9718 /* ScanModels.swift */; };
@@ -117,6 +120,8 @@
 		A0714C412BD8D5AC0018B578 /* UICollectionViewAlignedFlowLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UICollectionViewAlignedFlowLayout.swift; sourceTree = "<group>"; };
 		A08326A82BDF71C200EFD3D2 /* Reusable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Reusable.swift; sourceTree = "<group>"; };
 		A08326AA2BDF721300EFD3D2 /* UITableViewCell+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITableViewCell+Extensions.swift"; sourceTree = "<group>"; };
+		A08B21BC2BEDC1EB00F163E6 /* UICollectionView+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UICollectionView+Extensions.swift"; sourceTree = "<group>"; };
+		A08B21BE2BEDC39900F163E6 /* Array+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Array+Extensions.swift"; sourceTree = "<group>"; };
 		A0A5AF722BDA01E90030D13A /* Compatible.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Compatible.swift; sourceTree = "<group>"; };
 		A0A5AF7A2BDA40630030D13A /* WeakProxy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeakProxy.swift; sourceTree = "<group>"; };
 		A0A5AF812BDA50A50030D13A /* UIColor+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Extensions.swift"; sourceTree = "<group>"; };
@@ -125,13 +130,14 @@
 		A0A5AF8C2BDB82E00030D13A /* UIWindow+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIWindow+Extensions.swift"; sourceTree = "<group>"; };
 		A0A5AF922BDB861A0030D13A /* UIScreen+extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIScreen+extensions.swift"; sourceTree = "<group>"; };
 		A0A5AF942BDB970A0030D13A /* UIFont+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIFont+Extensions.swift"; sourceTree = "<group>"; };
+		A0B4D1ED2BFB31840055F187 /* liblibjpeg.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = liblibjpeg.a; sourceTree = "<group>"; };
 		A0C2B27B2BBA9215008E9FEF /* View1Controller.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = View1Controller.swift; sourceTree = "<group>"; };
 		A0CEF0902BE0D15A007C9718 /* DDCameraViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DDCameraViewController.swift; sourceTree = "<group>"; };
 		A0CEF0912BE0D15A007C9718 /* DDCropViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DDCropViewController.swift; sourceTree = "<group>"; };
 		A0CEF0922BE0D15A007C9718 /* DDPreviewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DDPreviewController.swift; sourceTree = "<group>"; };
 		A0CEF0932BE0D15A007C9718 /* DDQuickLookViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DDQuickLookViewController.swift; sourceTree = "<group>"; };
 		A0CEF0942BE0D15A007C9718 /* DDSheetViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DDSheetViewController.swift; sourceTree = "<group>"; };
-		A0CEF0952BE0D15A007C9718 /* DDTextSelectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DDTextSelectionViewController.swift; sourceTree = "<group>"; };
+		A0CEF0952BE0D15A007C9718 /* DDOcrResultsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DDOcrResultsViewController.swift; sourceTree = "<group>"; };
 		A0CEF0972BE0D15A007C9718 /* DDOcrModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DDOcrModel.swift; sourceTree = "<group>"; };
 		A0CEF0982BE0D15A007C9718 /* DDSheetItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DDSheetItem.swift; sourceTree = "<group>"; };
 		A0CEF0992BE0D15A007C9718 /* ScanModels.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScanModels.swift; sourceTree = "<group>"; };
@@ -179,6 +185,7 @@
 				A05D2E822BC90D4300B4C264 /* CoreVideo.framework in Frameworks */,
 				A05D2E862BC90D5500B4C264 /* AssetsLibrary.framework in Frameworks */,
 				A0DB50E42BE9C3810033B4D9 /* libtensorflow-core.a in Frameworks */,
+				A0B4D1EE2BFB31840055F187 /* liblibjpeg.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -238,6 +245,8 @@
 				A0A5AF942BDB970A0030D13A /* UIFont+Extensions.swift */,
 				A08326AA2BDF721300EFD3D2 /* UITableViewCell+Extensions.swift */,
 				A0A5AF8A2BDB82B60030D13A /* UIApplication+Extensions.swift */,
+				A08B21BE2BEDC39900F163E6 /* Array+Extensions.swift */,
+				A08B21BC2BEDC1EB00F163E6 /* UICollectionView+Extensions.swift */,
 				A0A5AF922BDB861A0030D13A /* UIScreen+extensions.swift */,
 				A0A5AF8C2BDB82E00030D13A /* UIWindow+Extensions.swift */,
 				A02FCCCC2BEB4ED5002983A6 /* URL+Extensions.swift */,
@@ -273,7 +282,7 @@
 				A0CEF0922BE0D15A007C9718 /* DDPreviewController.swift */,
 				A0CEF0932BE0D15A007C9718 /* DDQuickLookViewController.swift */,
 				A0CEF0942BE0D15A007C9718 /* DDSheetViewController.swift */,
-				A0CEF0952BE0D15A007C9718 /* DDTextSelectionViewController.swift */,
+				A0CEF0952BE0D15A007C9718 /* DDOcrResultsViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -343,6 +352,7 @@
 		A0DB50CF2BE9C3810033B4D9 /* FMHEDNet */ = {
 			isa = PBXGroup;
 			children = (
+				A0B4D1ED2BFB31840055F187 /* liblibjpeg.a */,
 				A02FCCC52BEA1A3E002983A6 /* opencv2.framework */,
 				A0DB50CD2BE9C3810033B4D9 /* include */,
 				A0DB50CE2BE9C3810033B4D9 /* libFMHEDNet.a */,
@@ -479,15 +489,17 @@
 				A0714C422BD8D5AC0018B578 /* UICollectionViewAlignedFlowLayout.swift in Sources */,
 				A0CEF0BB2BE0D15A007C9718 /* DDPreviewCell.swift in Sources */,
 				A0A5AF932BDB861A0030D13A /* UIScreen+extensions.swift in Sources */,
+				A08B21BD2BEDC1EB00F163E6 /* UICollectionView+Extensions.swift in Sources */,
 				A0CEF0B22BE0D15A007C9718 /* DDQuickLookViewController.swift in Sources */,
 				A0A5AF822BDA50A50030D13A /* UIColor+Extensions.swift in Sources */,
-				A0CEF0B42BE0D15A007C9718 /* DDTextSelectionViewController.swift in Sources */,
+				A0CEF0B42BE0D15A007C9718 /* DDOcrResultsViewController.swift in Sources */,
 				A01970BF2BD20F5F00778B8A /* CGPoint+Extensions.swift in Sources */,
 				A0A5AF952BDB970A0030D13A /* UIFont+Extensions.swift in Sources */,
 				A0A5AF732BDA01E90030D13A /* Compatible.swift in Sources */,
 				A0CEF0BA2BE0D15A007C9718 /* DDMagnifierView.swift in Sources */,
 				A04EC53F2BB119DB007A7A45 /* AppDelegate.swift in Sources */,
 				A05D2E882BC912EE00B4C264 /* OpenCVPictureOutlineViewController.swift in Sources */,
+				A08B21BF2BEDC39900F163E6 /* Array+Extensions.swift in Sources */,
 				A05D2E8A2BC9133600B4C264 /* UIImage+Extensions.swift in Sources */,
 				A04EC5532BB11A13007A7A45 /* OCRTool.swift in Sources */,
 				A08326AB2BDF721300EFD3D2 /* UITableViewCell+Extensions.swift in Sources */,
@@ -538,7 +550,7 @@
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_CXX_LANGUAGE_STANDARD = "c++0x";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CLANG_ENABLE_OBJC_WEAK = YES;
@@ -601,7 +613,7 @@
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_CXX_LANGUAGE_STANDARD = "c++0x";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CLANG_ENABLE_OBJC_WEAK = YES;
@@ -655,7 +667,9 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CLANG_CXX_LANGUAGE_STANDARD = "c++0x";
 				CLANG_ENABLE_MODULES = YES;
+				CLANG_WARN_CXX0X_EXTENSIONS = YES;
 				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = NO;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
@@ -665,6 +679,7 @@
 					"$(PROJECT_DIR)",
 					"$(PROJECT_DIR)/Libs",
 				);
+				GCC_C_LANGUAGE_STANDARD = c11;
 				GENERATE_INFOPLIST_FILE = YES;
 				HEADER_SEARCH_PATHS = "$(PROJECT_DIR)/Libs/FMHEDNet/include";
 				INFOPLIST_FILE = OCR/Info.plist;
@@ -680,12 +695,12 @@
 				);
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(PROJECT_DIR)/TensorFlow",
 					"$(PROJECT_DIR)/Libs/FMHEDNet",
 					"$(PROJECT_DIR)/Libs/TensorFlow",
 				);
 				MARKETING_VERSION = 1.0;
 				OTHER_LDFLAGS = (
+					"-ObjC",
 					"-force_load",
 					"$(PROJECT_DIR)/Libs/TensorFlow/libtensorflow-core.a",
 				);
@@ -704,7 +719,9 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CLANG_CXX_LANGUAGE_STANDARD = "c++0x";
 				CLANG_ENABLE_MODULES = YES;
+				CLANG_WARN_CXX0X_EXTENSIONS = YES;
 				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = NO;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
@@ -714,6 +731,7 @@
 					"$(PROJECT_DIR)",
 					"$(PROJECT_DIR)/Libs",
 				);
+				GCC_C_LANGUAGE_STANDARD = c11;
 				GENERATE_INFOPLIST_FILE = YES;
 				HEADER_SEARCH_PATHS = "$(PROJECT_DIR)/Libs/FMHEDNet/include";
 				INFOPLIST_FILE = OCR/Info.plist;
@@ -729,12 +747,12 @@
 				);
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(PROJECT_DIR)/TensorFlow",
 					"$(PROJECT_DIR)/Libs/FMHEDNet",
 					"$(PROJECT_DIR)/Libs/TensorFlow",
 				);
 				MARKETING_VERSION = 1.0;
 				OTHER_LDFLAGS = (
+					"-ObjC",
 					"-force_load",
 					"$(PROJECT_DIR)/Libs/TensorFlow/libtensorflow-core.a",
 				);

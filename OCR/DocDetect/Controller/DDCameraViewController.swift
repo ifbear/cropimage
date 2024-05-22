@@ -256,13 +256,13 @@ extension DDCameraViewController {
             connection.hub.videoOrientation = .portrait
         }
         
-        /// addOutput photoOutput
-        if session.canAddOutput(photoOutput) {
-            session.addOutput(photoOutput)
-        }
-        if let connection = photoOutput.connection(with: .video), connection.hub.isVideoOrientationSupported {
-            connection.hub.videoOrientation = .portrait
-        }
+//        /// addOutput photoOutput
+//        if session.canAddOutput(photoOutput) {
+//            session.addOutput(photoOutput)
+//        }
+//        if let connection = photoOutput.connection(with: .video), connection.hub.isVideoOrientationSupported {
+//            connection.hub.videoOrientation = .portrait
+//        }
         
         /// previewLayer
         previewLayer.frame = videoLayerView.bounds
