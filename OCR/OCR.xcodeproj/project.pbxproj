@@ -7,6 +7,13 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		A00C81BF2BFEDF5900308B2D /* GeneralBasicOCRViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A00C81BE2BFEDF5900308B2D /* GeneralBasicOCRViewController.swift */; };
+		A00C81C12BFEE01900308B2D /* GeneralHandwritingOCRViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A00C81C02BFEE01900308B2D /* GeneralHandwritingOCRViewController.swift */; };
+		A00C81C32BFF039D00308B2D /* TencentGeneralModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A00C81C22BFF039D00308B2D /* TencentGeneralModel.swift */; };
+		A00C81C72BFF12B100308B2D /* CryptoSwift in Frameworks */ = {isa = PBXBuildFile; productRef = A00C81C62BFF12B100308B2D /* CryptoSwift */; };
+		A00C81CA2BFF287900308B2D /* AlibabacloudOcrApi20210707 in Frameworks */ = {isa = PBXBuildFile; productRef = A00C81C92BFF287900308B2D /* AlibabacloudOcrApi20210707 */; };
+		A00C81CC2BFF2C4A00308B2D /* AlibabaGeneralModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A00C81CB2BFF2C4A00308B2D /* AlibabaGeneralModel.swift */; };
+		A00C81CE2BFF2EFF00308B2D /* BaseOCRViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A00C81CD2BFF2EFF00308B2D /* BaseOCRViewController.swift */; };
 		A01970B92BD0F59000778B8A /* UIImageView+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = A01970B82BD0F59000778B8A /* UIImageView+Extensions.swift */; };
 		A01970BD2BD20D9200778B8A /* CIDetector+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = A01970BC2BD20D9200778B8A /* CIDetector+Extensions.swift */; };
 		A01970BF2BD20F5F00778B8A /* CGPoint+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = A01970BE2BD20F5F00778B8A /* CGPoint+Extensions.swift */; };
@@ -84,6 +91,11 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		A00C81BE2BFEDF5900308B2D /* GeneralBasicOCRViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeneralBasicOCRViewController.swift; sourceTree = "<group>"; };
+		A00C81C02BFEE01900308B2D /* GeneralHandwritingOCRViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeneralHandwritingOCRViewController.swift; sourceTree = "<group>"; };
+		A00C81C22BFF039D00308B2D /* TencentGeneralModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TencentGeneralModel.swift; sourceTree = "<group>"; };
+		A00C81CB2BFF2C4A00308B2D /* AlibabaGeneralModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlibabaGeneralModel.swift; sourceTree = "<group>"; };
+		A00C81CD2BFF2EFF00308B2D /* BaseOCRViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseOCRViewController.swift; sourceTree = "<group>"; };
 		A01970B82BD0F59000778B8A /* UIImageView+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImageView+Extensions.swift"; sourceTree = "<group>"; };
 		A01970BC2BD20D9200778B8A /* CIDetector+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CIDetector+Extensions.swift"; sourceTree = "<group>"; };
 		A01970BE2BD20F5F00778B8A /* CGPoint+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CGPoint+Extensions.swift"; sourceTree = "<group>"; };
@@ -168,6 +180,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A00C81C72BFF12B100308B2D /* CryptoSwift in Frameworks */,
 				A02FCCC92BEB3C0C002983A6 /* Hero in Frameworks */,
 				A05D2E7A2BC90D2200B4C264 /* AVFoundation.framework in Frameworks */,
 				A05D2E802BC90D3C00B4C264 /* Accelerate.framework in Frameworks */,
@@ -177,6 +190,7 @@
 				A05D2E842BC90D4D00B4C264 /* CoreMedia.framework in Frameworks */,
 				A05D2E7E2BC90D3400B4C264 /* QuartzCore.framework in Frameworks */,
 				A05D2E7C2BC90D2C00B4C264 /* CoreImage.framework in Frameworks */,
+				A00C81CA2BFF287900308B2D /* AlibabacloudOcrApi20210707 in Frameworks */,
 				A04EC56A2BB1730D007A7A45 /* SnapKit in Frameworks */,
 				A02233872BC68FD1006E6EB7 /* Alamofire in Frameworks */,
 				A02FCCC62BEA1A3E002983A6 /* opencv2.framework in Frameworks */,
@@ -228,6 +242,11 @@
 				A0F00FB82BD6083100F77B57 /* ScanningViewController.swift */,
 				A0714C3C2BD8D39E0018B578 /* MultipleSelectionViewController.swift */,
 				A0CEF0C02BE0D1E9007C9718 /* HEDNetViewController.swift */,
+				A00C81CD2BFF2EFF00308B2D /* BaseOCRViewController.swift */,
+				A00C81BE2BFEDF5900308B2D /* GeneralBasicOCRViewController.swift */,
+				A00C81C02BFEE01900308B2D /* GeneralHandwritingOCRViewController.swift */,
+				A00C81C22BFF039D00308B2D /* TencentGeneralModel.swift */,
+				A00C81CB2BFF2C4A00308B2D /* AlibabaGeneralModel.swift */,
 				A04EC5442BB119DB007A7A45 /* Main.storyboard */,
 				A04EC5472BB119DC007A7A45 /* Assets.xcassets */,
 				A04EC5492BB119DC007A7A45 /* LaunchScreen.storyboard */,
@@ -401,6 +420,8 @@
 				A0714C3F2BD8D3F30018B578 /* PanModal */,
 				A0A5AF842BDB4EA50030D13A /* Kingfisher */,
 				A02FCCC82BEB3C0C002983A6 /* Hero */,
+				A00C81C62BFF12B100308B2D /* CryptoSwift */,
+				A00C81C92BFF287900308B2D /* AlibabacloudOcrApi20210707 */,
 			);
 			productName = OCR;
 			productReference = A04EC53B2BB119DB007A7A45 /* OCR.app */;
@@ -437,6 +458,9 @@
 				A0714C3E2BD8D3F30018B578 /* XCRemoteSwiftPackageReference "PanModal" */,
 				A0A5AF832BDB4EA50030D13A /* XCRemoteSwiftPackageReference "Kingfisher" */,
 				A02FCCC72BEB3C0C002983A6 /* XCRemoteSwiftPackageReference "Hero" */,
+				A00C81C42BFF110F00308B2D /* XCRemoteSwiftPackageReference "RxSwift" */,
+				A00C81C52BFF12B100308B2D /* XCRemoteSwiftPackageReference "CryptoSwift" */,
+				A00C81C82BFF287900308B2D /* XCRemoteSwiftPackageReference "ocr-api-20210707" */,
 			);
 			productRefGroup = A04EC53C2BB119DB007A7A45 /* Products */;
 			projectDirPath = "";
@@ -471,6 +495,7 @@
 				A0A5AF8B2BDB82B60030D13A /* UIApplication+Extensions.swift in Sources */,
 				A01970B92BD0F59000778B8A /* UIImageView+Extensions.swift in Sources */,
 				A02FCCCB2BEB4154002983A6 /* DDNavigationController.swift in Sources */,
+				A00C81C32BFF039D00308B2D /* TencentGeneralModel.swift in Sources */,
 				A0A5AF872BDB7B140030D13A /* String+Extensions.swift in Sources */,
 				A0F00FB92BD6083100F77B57 /* ScanningViewController.swift in Sources */,
 				A0CEF0B12BE0D15A007C9718 /* DDPreviewController.swift in Sources */,
@@ -494,12 +519,15 @@
 				A0A5AF822BDA50A50030D13A /* UIColor+Extensions.swift in Sources */,
 				A0CEF0B42BE0D15A007C9718 /* DDOcrResultsViewController.swift in Sources */,
 				A01970BF2BD20F5F00778B8A /* CGPoint+Extensions.swift in Sources */,
+				A00C81CC2BFF2C4A00308B2D /* AlibabaGeneralModel.swift in Sources */,
 				A0A5AF952BDB970A0030D13A /* UIFont+Extensions.swift in Sources */,
 				A0A5AF732BDA01E90030D13A /* Compatible.swift in Sources */,
 				A0CEF0BA2BE0D15A007C9718 /* DDMagnifierView.swift in Sources */,
 				A04EC53F2BB119DB007A7A45 /* AppDelegate.swift in Sources */,
 				A05D2E882BC912EE00B4C264 /* OpenCVPictureOutlineViewController.swift in Sources */,
 				A08B21BF2BEDC39900F163E6 /* Array+Extensions.swift in Sources */,
+				A00C81C12BFEE01900308B2D /* GeneralHandwritingOCRViewController.swift in Sources */,
+				A00C81BF2BFEDF5900308B2D /* GeneralBasicOCRViewController.swift in Sources */,
 				A05D2E8A2BC9133600B4C264 /* UIImage+Extensions.swift in Sources */,
 				A04EC5532BB11A13007A7A45 /* OCRTool.swift in Sources */,
 				A08326AB2BDF721300EFD3D2 /* UITableViewCell+Extensions.swift in Sources */,
@@ -518,6 +546,7 @@
 				A0CEF0B02BE0D15A007C9718 /* DDCropViewController.swift in Sources */,
 				A02233722BC687AA006E6EB7 /* View3Controller.swift in Sources */,
 				A04EC5412BB119DB007A7A45 /* SceneDelegate.swift in Sources */,
+				A00C81CE2BFF2EFF00308B2D /* BaseOCRViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -595,7 +624,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
@@ -652,7 +681,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
@@ -688,7 +717,7 @@
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -740,7 +769,7 @@
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -789,6 +818,30 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		A00C81C42BFF110F00308B2D /* XCRemoteSwiftPackageReference "RxSwift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/ReactiveX/RxSwift.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 6.7.1;
+			};
+		};
+		A00C81C52BFF12B100308B2D /* XCRemoteSwiftPackageReference "CryptoSwift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/krzyzanowskim/CryptoSwift.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.8.2;
+			};
+		};
+		A00C81C82BFF287900308B2D /* XCRemoteSwiftPackageReference "ocr-api-20210707" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/alibabacloud-sdk-swift/ocr-api-20210707.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.0.6;
+			};
+		};
 		A02233852BC68FD1006E6EB7 /* XCRemoteSwiftPackageReference "Alamofire" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/Alamofire/Alamofire.git";
@@ -832,6 +885,16 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		A00C81C62BFF12B100308B2D /* CryptoSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = A00C81C52BFF12B100308B2D /* XCRemoteSwiftPackageReference "CryptoSwift" */;
+			productName = CryptoSwift;
+		};
+		A00C81C92BFF287900308B2D /* AlibabacloudOcrApi20210707 */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = A00C81C82BFF287900308B2D /* XCRemoteSwiftPackageReference "ocr-api-20210707" */;
+			productName = AlibabacloudOcrApi20210707;
+		};
 		A02233862BC68FD1006E6EB7 /* Alamofire */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = A02233852BC68FD1006E6EB7 /* XCRemoteSwiftPackageReference "Alamofire" */;
